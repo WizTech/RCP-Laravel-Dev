@@ -38,7 +38,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('campus', 'rcpadmin\CampusController');
 
-    Route::post('property/{id}/images', 'rcpadmin\PropertyController@images_update');
+    Route::post('property/{id}/images-save', 'rcpadmin\PropertyController@store_images');
+  //  Route::post('property/{id}/images', 'rcpadmin\PropertyController@images_update');
     Route::get('property/{id}/images', 'rcpadmin\PropertyController@images');
 
     Route::post('property/{id}/feature', 'rcpadmin\PropertyController@feature_update');
@@ -79,10 +80,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/multifileupload', 'FileController@multifileupload')->name('multifileupload');
-Route::post('multifileupload', 'FileController@store')->name('multifileupload');
-
 
 Route::get('/', 'UploadImagesController@create');
 Route::post('/images-save', 'UploadImagesController@store');

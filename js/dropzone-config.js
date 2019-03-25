@@ -1,7 +1,5 @@
 var total_photos_counter = 0;
-if (typeof Dropzone != 'undefined') {
-  Dropzone.autoDiscover = false;
-  Dropzone.options.myDropzone = {
+Dropzone.options.myDropzone = {
     uploadMultiple: true,
     parallelUploads: 2,
     maxFilesize: 16,
@@ -12,21 +10,22 @@ if (typeof Dropzone != 'undefined') {
     timeout: 10000,
 
     init: function () {
-      this.on("removedfile", function (file) {
-        $.post({
-          url: '/images-delete',
-          data: {id: file.name, _token: $('[name="_token"]').val()},
-          dataType: 'json',
-          success: function (data) {
-            total_photos_counter--;
-            $("#counter").text("# " + total_photos_counter);
-          }
+        console.log('ddaa')
+        this.on("removedfile", function (file) {
+            $.post({
+                url: '/images-delete',
+                data: {id: file.name, _token: $('[name="_token"]').val()},
+                dataType: 'json',
+                success: function (data) {
+                    total_photos_counter--;
+                    $("#counter").text("# " + total_photos_counter);
+                }
+            });
         });
-      });
     },
     success: function (file, done) {
-      total_photos_counter++;
-      $("#counter").text("# " + total_photos_counter);
+        console.log('aa')
+        total_photos_counter++;
+        $("#counter").text("# " + total_photos_counter);
     }
-  };
-}
+};

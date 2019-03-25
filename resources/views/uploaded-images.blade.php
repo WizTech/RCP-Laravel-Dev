@@ -18,7 +18,7 @@
             <tbody>
             @foreach($photos as $photo)
                 <tr>
-                    <td><img src="/images/{{ $photo->resized_name }}"></td>
+                    <td><img src="public/images/{{ $photo->resized_name }}"></td>
                     <td>{{ $photo->filename }}</td>
                     <td>{{ $photo->original_name }}</td>
                     <td>{{ $photo->resized_name }}</td>
