@@ -64,7 +64,9 @@
                         <li class="mr-3"><a href="{{ url('rcpadmin/property/'.$property['id'].'/feature')}}"
                                             class="text-secondary"><i
                               class="fa fa-folder-open" title="Features"></i></a></li>
-
+                        <li class="mr-3"><a href="{{ url('rcpadmin/property/'.$property['id'].'/images')}}"
+                                            class="text-secondary"><i
+                              class="fa fa-image" title="Photos"></i></a></li>
                         <li><a data-admin-id="{{$property['id']}}" href="javascript:void(0)"
                                data-method="delete" class="text-danger jquery-postback"><i class="ti-trash"></i></a>
                         </li>

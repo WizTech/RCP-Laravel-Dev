@@ -31,23 +31,31 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="form-group">
-                      <div class="form-row">
 
-                        @if(count($features) > 0)
-                          @foreach($features as $feature)
-                            <div class="col-md-3 mb-2">
-                              <div class="custom-control custom-checkbox">
 
-                                {!! Form::checkbox('customCheck'.$feature['id'],'no', $feature['id'],['class' => 'custom-control-input','id' => 'customCheck'.$feature['id']]) !!}
-                                {!! Form::label('customCheck'.$feature['id'],$feature['name'],['class' => 'custom-control-label','for' => 'customCheck']) !!}
+                      @if(count($features) > 0)
+
+                        @foreach ($features as $featureType => $featureData)
+
+                          <h4 class="header-title"
+                              style="text-transform: uppercase">{{$featureData[0]['type']['name']}}</h4>
+                          @foreach ($featureData as $feature)
+                            <div class="form-row">
+                              <div class="col-md-3 mb-2">
+                                <div class="custom-control custom-checkbox">
+                                  <input type="checkbox" name="feature_id[]" {{(in_array($feature['id'], $property_features)) ? 'checked':''}}  class="custom-control-input" value="{{$feature['id']}}" id="customCheck{{$feature['id']}}">
+{{--                                  {!! Form::checkbox('customCheck'.$feature['id'],null, $feature['id'],['class' => 'custom-control-input','id' => 'customCheck'.$feature['id'],'checked'=>false]) !!}--}}
+                                  {!! Form::label('customCheck'.$feature['id'],$feature['name'],['class' => 'custom-control-label','for' => 'customCheck']) !!}
+
+                                </div>
+
 
                               </div>
-
-
                             </div>
                           @endforeach
-                        @endif
-                      </div>
+                        @endforeach
+                      @endif
+
                     </div>
 
                     <div class="form-group">

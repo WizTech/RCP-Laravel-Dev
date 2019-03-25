@@ -12,7 +12,7 @@ class PropertyFeatureModel extends Model
   ];
   public $timestamps = false;
 
-  public function features()
+  public function property()
   {
     return $this->belongsTo('App\Property');
   }
