@@ -65,6 +65,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('careerslider', 'rcpadmin\CareerSliderController');
     Route::resource('maps', 'rcpadmin\MapController');
 
+    Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
+    Route::resource('team-member', 'rcpadmin\TeamController');
 
 
 });

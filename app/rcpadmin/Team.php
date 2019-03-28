@@ -1,0 +1,13 @@
+<?php
+
+namespace App\rcpadmin;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Team extends Model
+{
+
+  protected $fillable = [
+    'name', 'position','photo'
+  ];
+}

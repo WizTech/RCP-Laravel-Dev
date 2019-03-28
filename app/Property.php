@@ -11,6 +11,7 @@ use App\FeatureType;
 use App\PropertyImage;
 
 use App\PropertyFeatureModel;
+use App\User;
 
 class Property extends Model
 {
@@ -22,6 +23,10 @@ class Property extends Model
   public function campus()
   {
     return $this->belongsTo('App\CampusModel');
+  }
+  public function landlord()
+  {
+    return $this->belongsTo('App\User');
   }
 
   public function category()
@@ -67,5 +72,12 @@ class Property extends Model
 
 
     return $features;
+  }
+
+  public static function expired()
+  {
+    $currentDate = date('Y-m-d H:i:s');
+    $properties = Property::where('property_expiry_date', '>', $currentDate)->with('campus')->with('landlord')->get()->toArray();
+    return $properties;
   }
 }
