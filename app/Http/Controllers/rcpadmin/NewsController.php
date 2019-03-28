@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\rcpadmin\News;
+use App\Http\Requests\NewsRequest;
+use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
@@ -13,7 +15,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::all()->toArray();
+        return view('rcpadmin.news', compact('news'));
     }
 
     /**
@@ -23,35 +26,37 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('rcpadmin.news.add');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/news');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $news = news::find($id);
+        return view('rcpadmin.news.edit', compact('news'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,23 +67,26 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NewsRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/news');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $news = News::find($id);
+        $news->delete();
+        return redirect('rcpadmin/news');
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\rcpadmin\CareerType;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CareerTypeRequest;
+
 
 class CareerTypeController extends Controller
 {
@@ -13,7 +16,8 @@ class CareerTypeController extends Controller
      */
     public function index()
     {
-        //
+        $career_types = CareerType::all()->toArray();
+        return view('rcpadmin.careertype', compact('career_types'));
     }
 
     /**
@@ -23,7 +27,7 @@ class CareerTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('rcpadmin.careertype.add');
     }
 
     /**
@@ -32,9 +36,10 @@ class CareerTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CareerTypeRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/careertype');
     }
 
     /**
@@ -45,7 +50,8 @@ class CareerTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        $careertype = CareerType::find($id);
+        return view('rcpadmin.careertype.edit', compact('careertype'));
     }
 
     /**
@@ -66,10 +72,12 @@ class CareerTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CareerTypeRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/careertype');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +87,8 @@ class CareerTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = CareerType::find($id);
+        $news->delete();
+        return redirect('rcpadmin/careertype');
     }
 }

@@ -19,6 +19,7 @@ Route::get('/clear-cache', function () {
 
 Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function () {
 
+
     Route::get('/', 'rcpadmin\DashboardController@index');
     Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
     Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
@@ -58,12 +59,12 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
     Route::resource('feature', 'rcpadmin\FeatureController');
     Route::resource('template', 'rcpadmin\TemplateController');
-    Route::resource('testimonials', 'rcpadmin\TestimonialController');
+   Route::resource('testimonials', 'rcpadmin\TestimonialController');
     Route::resource('news', 'rcpadmin\NewsController');
-    Route::resource('careers', 'rcpadmin\CareerController');
-    Route::resource('careerstype', 'rcpadmin\CareerTypeController');
+    Route::resource('career', 'rcpadmin\CareerController');
+    Route::resource('careertype', 'rcpadmin\CareerTypeController');
     Route::resource('careerslider', 'rcpadmin\CareerSliderController');
-    Route::resource('maps', 'rcpadmin\MapController');
+    Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');

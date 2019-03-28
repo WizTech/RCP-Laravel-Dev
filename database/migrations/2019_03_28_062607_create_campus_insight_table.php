@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePropertyFeaturesTable extends Migration
+class CreateCampusInsightTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreatePropertyFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_features', function (Blueprint $table) {
+        Schema::create('campus_insight', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('property_id')->unsigned();
-            $table->integer('feature_id')->unsigned();
+            $table->string('title');
+            $table->integer('campus_id');
+            $table->string('pdf_file')->nullable();
+            $table->string('link')->nullable();
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreatePropertyFeaturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_features');
+        Schema::dropIfExists('campus_insight');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePropertyFeaturesTable extends Migration
+class CreateCareerTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreatePropertyFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_features', function (Blueprint $table) {
+        Schema::create('career_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('property_id')->unsigned();
-            $table->integer('feature_id')->unsigned();
+            $table->string('careers_type');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreatePropertyFeaturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_features');
+        Schema::dropIfExists('career_type');
     }
 }
