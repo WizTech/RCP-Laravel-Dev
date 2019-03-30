@@ -18,7 +18,7 @@
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
-          {!! Form::model($user,['method'=>'PATCH'],['action' => ['rcpadmin/TeamController@update',$user['id']] ,'class' => 'col s12']) !!}
+          {!! Form::model($user,['method'=>'PATCH', 'files' => true],['action' => ['rcpadmin/TeamController@update',$user['id']],'class' => 'col s12']) !!}
           {!! Form::hidden('id') !!}
           @include('rcpadmin.team.partials.form',['buttonText'=>'Update','linked_campuses'=>''])
           {!! Form::close() !!}
