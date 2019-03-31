@@ -29,7 +29,7 @@ class PropertyController extends Controller
 
     public function __construct()
     {
-        $this->photos_path = public_path('/images');
+        $this->photos_path = storage_path('/app/public/uploads/property_images');
     }
 
     public function index()
@@ -276,7 +276,7 @@ class PropertyController extends Controller
         return view('rcpadmin.property.image', compact('images', 'propertyData'));
     }
 
-    public function store_images($id,Requests\UploadImage $request)
+    public function store_images($id, Requests\UploadImage $request)
     {
         $photos = $request->file('file');
 
@@ -288,31 +288,63 @@ class PropertyController extends Controller
             mkdir($this->photos_path, 0777);
         }
 
+        if (!is_dir($this->photos_path . '/thumbs')) {
+            mkdir($this->photos_path . '/thumbs', 0777);
+        }
+
+        if (!is_dir($this->photos_path . '/mid_thumb')) {
+            mkdir($this->photos_path . '/mid_thumb', 0777);
+        }
+
+        if (!is_dir($this->photos_path . '/slider_images')) {
+            mkdir($this->photos_path . '/slider_images', 0777);
+        }
+
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
             $name = sha1(date('YmdHis') . str_random(30));
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
             $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
-
+/*
             Image::make($photo)
                 ->resize(250, null, function ($constraints) {
                     $constraints->aspectRatio();
                 })
-                ->save($this->photos_path . '/' . $resize_name);
+                ->save($this->photos_path . '/thumbs/'. $resize_name);*/
 
-            $photo->move($this->photos_path, $save_name);
+
+            //create small thumbnail
+            $smallthumbnailpath = $this->photos_path . '/thumbs/'. $resize_name;
+            $this->createThumbnail($photo,$smallthumbnailpath, 150, 93);
+
+
+            //create medium thumbnail
+            $mediumthumbnailpath = $this->photos_path . '/mid_thumb/'. $resize_name;
+            $this->createThumbnail($photo,$mediumthumbnailpath, 300, 185);
+
+            //create large thumbnail
+            $largethumbnailpath = $this->photos_path . '/slider_images/'. $resize_name;;
+            $this->createThumbnail($photo,$largethumbnailpath, 550, 340);
+
+            $photo->move($this->photos_path, $resize_name);
 
             $upload = new PropertyImage();
             $upload->property_id = $id;
-            $upload->image = $save_name;
+            $upload->image = $resize_name;
             $upload->date = date('Y-m-d');
-         /*   $upload->filename = $save_name;
-            $upload->resized_name = $resize_name;
-            $upload->original_name = basename($photo->getClientOriginalName());*/
             $upload->save();
         }
         return Response::json([
             'message' => 'Image saved Successfully'
         ], 200);
+    }
+
+    public function createThumbnail($photo,$path, $width, $height)
+    {
+        Image::make($photo)
+            ->resize($width, $height, function ($constraints) {
+                $constraints->aspectRatio();
+            })
+            ->save($path);
     }
 }
