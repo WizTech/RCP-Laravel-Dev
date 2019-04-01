@@ -80,4 +80,10 @@ class Property extends Model
     $properties = Property::where('property_expiry_date', '>', $currentDate)->with('campus')->with('landlord')->get()->toArray();
     return $properties;
   }
+  public static function premium_listings()
+  {
+
+    $properties = Property::where('domain_name', '>', '')->with('campus')->with('landlord')->get()->toArray();
+    return $properties;
+  }
 }

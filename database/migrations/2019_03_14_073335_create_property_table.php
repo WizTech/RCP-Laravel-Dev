@@ -37,6 +37,7 @@ class CreatePropertyTable extends Migration
       $table->double('duration_from_campus', 10, 2)->nullable();
 
       $table->string('slug')->nullable();
+      $table->string('domain_name')->nullable();
       $table->string('twilio_number')->nullable();
       $table->string('email')->nullable();
       $table->string('phone')->nullable();

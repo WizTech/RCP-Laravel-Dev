@@ -21,6 +21,7 @@ class CreateLandlordDetails extends Migration
       $table->enum('activate_twilio', ['ACTIVE', 'INACTIVE'])->default('INACTIVE');
       $table->string('twilio_number');
       $table->string('h1')->comment('Landlord Dashboard Data');
+      $table->string('domain_name')->comment('Landord Website Domain')->nullable();
       $table->string('h2')->comment('Landlord Dashboard Data');
       $table->string('meta_title')->comment('Landlord Dashboard Data');
       $table->text('about_details')->comment('Landlord Dashboard Data');

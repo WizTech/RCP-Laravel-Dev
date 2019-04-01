@@ -19,7 +19,7 @@
       <div class="card">
         <div class="card-body">
 
-          {!! Form::open(['url' => 'rcpadmin/team-member','class' => 'col s12']) !!}
+          {!! Form::open(['url' => 'rcpadmin/team-member','class' => 'col s12', 'files' => true]) !!}
           {!! Form::hidden('id') !!}
           @include('rcpadmin.team.partials.form',['buttonText'=>'Add','linked_campuses'=>''])
           {!! Form::close() !!}

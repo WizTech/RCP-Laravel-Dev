@@ -41,6 +41,10 @@ class User extends Authenticatable
   {
     return $this->belongsTo('App\Role');
   }
+  public function landlord_details()
+  {
+    return $this->hasOne('App\LandlordDetails');
+  }
 
 
   public static function getUserDetail($id)
@@ -75,15 +79,17 @@ class User extends Authenticatable
     $landlords = User::where('role_id', '=', 3)->get();
     return $landlords;
   }
+
   public static function entrata_landlords()
   {
-    $landlords = User::where('role_id', '=', 3)->join('user_details AS u','u.user_id','=','users.id')->join('landlord_details AS l','l.user_id','=','users.id')->where('l.is_entrata','=','Active');
+    $landlords = User::where('role_id', '=', 3)->join('user_details AS u', 'u.user_id', '=', 'users.id')->join('landlord_details AS l', 'l.user_id', '=', 'users.id')->where('l.is_entrata', '=', 'Active');
 
     return $landlords;
   }
+
   public static function yardi_landlords()
   {
-    $landlords = User::where('role_id', '=', 3)->join('user_details AS u','u.user_id','=','users.id')->join('landlord_details AS l','l.user_id','=','users.id')->where('l.is_yardi','=','Active');
+    $landlords = User::where('role_id', '=', 3)->join('user_details AS u', 'u.user_id', '=', 'users.id')->join('landlord_details AS l', 'l.user_id', '=', 'users.id')->where('l.is_yardi', '=', 'Active');
 
     return $landlords;
   }
@@ -91,5 +97,11 @@ class User extends Authenticatable
   public function details()
   {
     return $this->hasOne('App\UserDetails');
+  }
+
+  public static function premium_lanlords()
+  {
+    $landlrods = LandlordDetails::where('domain_name', '>', '')->with('user')->get()->toArray();
+     return $landlrods;
   }
 }

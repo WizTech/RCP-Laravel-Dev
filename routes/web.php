@@ -68,6 +68,16 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
+  Route::resource('premimum-landlord', 'rcpadmin\PreimumLandlordController');
+  Route::resource('premimum-listings', 'rcpadmin\PreimumListingsController');
+
+  Route::resource('resources', 'rcpadmin\ResourceController');
+
+  Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
+
+  Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
+
+  Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
 
 
 });
