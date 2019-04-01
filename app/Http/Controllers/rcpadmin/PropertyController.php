@@ -14,7 +14,8 @@ use App\PropertyImage;
 use App\Upload;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Response;
-use Intervention\Image\Facades\Image;
+//use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image as Image;
 use Request;
 
 class PropertyController extends Controller

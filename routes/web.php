@@ -68,8 +68,16 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
+ Route::resource('premimum-landlord', 'rcpadmin\PreimumLandlordController');
+  Route::resource('premimum-listings', 'rcpadmin\PreimumListingsController');
 
-
+    Route::resource('resources', 'rcpadmin\ResourceController');
+    
+    Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
+    
+    Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
+    
+    Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
 });
 
 
@@ -83,8 +91,3 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/', 'UploadImagesController@create');
-Route::post('/images-save', 'UploadImagesController@store');
-Route::post('/images-delete', 'UploadImagesController@destroy');
-Route::get('/images-show', 'UploadImagesController@index');
