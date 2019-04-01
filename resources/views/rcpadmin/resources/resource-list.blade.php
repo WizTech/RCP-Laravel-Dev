@@ -26,8 +26,8 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <?php $campus_id  = $resources['campus']['id']; echo $campus_id; ?>
-                    <a href="{{ url('rcpadmin/resources/create_resource/'.$campus_id)}}" class="btn btn-outline-dark header-title">Add New
+                    <?php  $campus_id  = $resources['campus_id']; ?>
+                    <a href="{{ url('rcpadmin/create-resource/'.$campus_id)}}" class="btn btn-outline-dark header-title">Add New
                         Resource</a>
                     <div class="data-tables datatable-dark">
                         <table id="dataTable3" class="text-center">
@@ -37,29 +37,26 @@
                                 <th>Title</th>
                                 <th>Image</th>
                                 <th>Link</th>
-                                <th>Description</th>
-                                <th>status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($resources))
+                            @if(!empty($resources['res']))
                                 <?php $x = 1; ?>
-                                @foreach($resources as $resource)
+                                @foreach($resources['res'] as $r)
                                     <tr>
                                         <td> {{ $x }}</td>
-                                        <td> {{$resource['title']}} </td>
-                                        <td> {{$resource['image']}} </td>
-                                        <td> {{$resource['link']}} </td>
-                                        <td> {{$resource['description']}} </td>
-                                        <td> {{$resource['status']}} </td>
+                                        <td> {{$r['title']}} </td>
+                                        <td><img style="float: right;" height="60" width="60"
+                                                 src="{{ env('APP_URL').'storage/uploads/resources/'.$r['image']}}"></td>
+                                        <td> {{$r['link']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3">
-                                                    <a href="{{ url('rcpadmin/resources/'.$resource['id'])}}"
+                                                    <a href="{{ url('rcpadmin/resources/'.$r['id'])}}"
                                                        class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
-                                                <form method="POST" action="resources/{{$resource['id']}}">
+                                                <form method="POST" action="{{url('rcpadmin/delete-resource/'.$r['id'])}}">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     <div class="form-group">

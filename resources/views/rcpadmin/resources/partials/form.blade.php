@@ -28,12 +28,12 @@
                                         {!! Form::label('Link',null,['class' => 'col-form-label']) !!}
                                         {!! Form::text('link',null,['class' => 'form-control', 'required']) !!}
                                     </div>
-                                    @if (!empty($news['image']))
+                                    @if (!empty($resources['image']))
                                         <div class="col-md-6 mb-6">
                                             {!! Form::label('Image ',null,['class' => 'col-form-label']) !!}
                                                 <span>
                                             <img style="float: inside;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/resources/'.$news['image']}}">
+                                                 src="{{ env('APP_URL').'storage/uploads/resources/'.$resources['image']}}">
                                         </span>
                                         </div>
                                         <div class="col-md-6 mb-6">
@@ -50,7 +50,11 @@
                                         {!! Form::label('Description',null,['class' => 'input-group-text']) !!}
                                         {!! Form::textarea('description',null,['class' => 'form-control']) !!}
                                     </div>
-                                    <input type="hidden" name="campus_id" value="<?php $resources['campus_id'] ?>">
+                                    <?php if(!empty($campus_id)):  ?>
+                                    <input type="hidden" name="campus_id" value="<?= $campus_id ?>">
+                                    <?php elseif(!empty($resources)): ?>
+                                    <input type="hidden" name="campus_id" value="<?= $resources->campus_id ?>">
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="form-group">

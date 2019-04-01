@@ -16,7 +16,7 @@
                 <div class="card-body">
                     {!! Form::model($resources,['method'=>'PATCH', 'files'=>true],['action' => ['rcpadmin/ResourceController@update',$resources['id']] ,'class' => 'col s12']) !!}
                     {!! Form::hidden('id') !!}
-                    @include('rcpadmin.news.partials.form',['buttonText'=>'Update'])
+                    @include('rcpadmin.resources.partials.form',['buttonText'=>'Update'])
                     {!! Form::close() !!}
                 </div>
             </div>

@@ -45,7 +45,7 @@
                                         <td>
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3">
-                                                    <a href="{{ url('rcpadmin/resources/'.$c['id'])}}"
+                                                    <a href="{{ url('rcpadmin/show-resource/'.$c['id'])}}"
                                                        class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
                                             </ul>

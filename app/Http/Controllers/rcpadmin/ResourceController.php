@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ResourceRequest;
+use App\rcpadmin\Resource;
+use App\CampusModel;
 
 class ResourceController extends Controller
 {
@@ -13,7 +16,8 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //
+        $campus = CampusModel::all()->toArray();
+        return view('rcpadmin.resources', compact('campus'));
     }
 
     /**
@@ -21,64 +25,82 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function createResource($id)
     {
-        //
+        $campus_id = $id;
+        return view('rcpadmin.resources.add', compact('campus_id'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ResourceRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/resources');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $resources = Resource::find($id);
+        return view('rcpadmin.resources.edit', compact('resources'));
+    }
+
+    public function showResource($id)
+    {
+        $campus = CampusModel::find($id);
+        $campus_id = $campus['id'];
+        $resources['campus_id'] = $campus_id;
+        $resources['res'] = Resource::where('campus_id', $campus_id)->get();
+        return view('rcpadmin.resources.resource-list', compact('resources'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+
     }
+
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ResourceRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/resources');
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+
+    public function deleteResource($id){
+        $resource = Resource::find($id);
+        $resource->delete();
+        return redirect('rcpadmin/resources');
     }
 }
