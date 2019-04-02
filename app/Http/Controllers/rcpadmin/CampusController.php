@@ -7,6 +7,7 @@ use App\CampusNeighborhood;
 use App\CampusRentingQuestion;
 use App\CampusDestination;
 use App\CampusModel;
+use App\CampusApartment;
 use App\User;
 use App\LinkedCampusModel;
 use Illuminate\Http\File;
@@ -172,6 +173,13 @@ class CampusController extends Controller
     return view('rcpadmin.campus.map', compact('campus'));
   }
 
+  public function apartment($id)
+  {
+    $campus = CampusModel::getCampusApartmentDetail($id);
+
+    return view('rcpadmin.campus.apartment', compact('campus'));
+  }
+
   public function renting($id)
   {
     $campusData = CampusModel::find($id)->toArray();
@@ -214,6 +222,22 @@ class CampusController extends Controller
       $campus_guide->update($input);
     } else {
       CampusGuideModel::create($input);
+    }
+
+
+    return redirect('rcpadmin/campus');
+  }
+
+  public function apartment_update($id, Requests\ApartmentRequest $request)
+  {
+    $input = Request::all();
+
+    $campus_apartment = CampusApartment::where('campus_id', '=', $id)->first();
+
+    if ($campus_apartment) {
+      $campus_apartment->update($input);
+    } else {
+      CampusApartment::create($input);
     }
 
 

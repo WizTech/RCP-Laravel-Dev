@@ -13,71 +13,75 @@
 
 
 Route::get('/clear-cache', function () {
-    $exitCode = Artisan::call('cache:clear');
-    // return what you want
+  $exitCode = Artisan::call('cache:clear');
+  // return what you want
 });
 
 Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function () {
+  Route::get('/', 'rcpadmin\DashboardController@index');
+  Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
+  Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
+  Route::resource('admin_users', 'rcpadmin\AdminUsers');
+  Route::resource('users', 'rcpadmin\UsersController');
+  Route::post('campus/{id}/map', 'rcpadmin\CampusController@map_update');
+  Route::get('campus/{id}/map', 'rcpadmin\CampusController@map');
 
+  Route::post('campus/{id}/apartment', 'rcpadmin\CampusController@apartment_update');
+  Route::get('campus/{id}/apartment', 'rcpadmin\CampusController@apartment');
 
-    Route::get('/', 'rcpadmin\DashboardController@index');
-    Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
-    Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
-    Route::resource('admin_users', 'rcpadmin\AdminUsers');
-    Route::resource('users', 'rcpadmin\UsersController');
-    Route::post('campus/{id}/map', 'rcpadmin\CampusController@map_update');
-    Route::get('campus/{id}/map', 'rcpadmin\CampusController@map');
+  Route::post('campus/{id}/destination', 'rcpadmin\CampusController@destination_update');
+  Route::get('campus/{id}/destination', 'rcpadmin\CampusController@destination');
+  Route::post('campus/{id}/neighborhood', 'rcpadmin\CampusController@neighborhood_update');
+  Route::get('campus/{id}/neighborhood', 'rcpadmin\CampusController@neighborhood');
+  Route::post('campus/{id}/renting', 'rcpadmin\CampusController@renting_update');
+  Route::get('campus/{id}/renting', 'rcpadmin\CampusController@renting');
+  Route::get('campus/addNeighborhood', 'rcpadmin\CampusController@addNeighborhood');
+  Route::get('campus/addDestination', 'rcpadmin\CampusController@addDestination');
 
-    Route::post('campus/{id}/destination', 'rcpadmin\CampusController@destination_update');
-    Route::get('campus/{id}/destination', 'rcpadmin\CampusController@destination');
-    Route::post('campus/{id}/neighborhood', 'rcpadmin\CampusController@neighborhood_update');
-    Route::get('campus/{id}/neighborhood', 'rcpadmin\CampusController@neighborhood');
-    Route::post('campus/{id}/renting', 'rcpadmin\CampusController@renting_update');
-    Route::get('campus/{id}/renting', 'rcpadmin\CampusController@renting');
-    Route::get('campus/addNeighborhood', 'rcpadmin\CampusController@addNeighborhood');
-    Route::get('campus/addDestination', 'rcpadmin\CampusController@addDestination');
+  Route::resource('campus', 'rcpadmin\CampusController');
 
-    Route::resource('campus', 'rcpadmin\CampusController');
+  Route::post('property/{id}/images-save', 'rcpadmin\PropertyController@store_images');
+  Route::get('property/{id}/images', 'rcpadmin\PropertyController@images');
 
-    Route::post('property/{id}/images-save', 'rcpadmin\PropertyController@store_images');
-  //  Route::post('property/{id}/images', 'rcpadmin\PropertyController@images_update');
-    Route::get('property/{id}/images', 'rcpadmin\PropertyController@images');
+  Route::post('property/{id}/feature', 'rcpadmin\PropertyController@feature_update');
+  Route::get('property/{id}/feature', 'rcpadmin\PropertyController@feature');
 
-    Route::post('property/{id}/feature', 'rcpadmin\PropertyController@feature_update');
-    Route::get('property/{id}/feature', 'rcpadmin\PropertyController@feature');
+  Route::post('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan_update');
 
-    Route::post('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan_update');
-    Route::get('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan');
-    Route::get('property/addFloorplan', 'rcpadmin\PropertyController@addFloorplan');
-    Route::resource('property', 'rcpadmin\PropertyController');
-    Route::resource('entrata', 'rcpadmin\EntrataController');
-    Route::resource('yardi', 'rcpadmin\YardiController');
-    Route::resource('category', 'rcpadmin\CategoryController');
-    Route::resource('price', 'rcpadmin\PriceController');
-    Route::resource('block_email', 'rcpadmin\BlockEmailController');
-    Route::resource('block_ip', 'rcpadmin\BlockIPController');
-    Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
-    Route::resource('feature', 'rcpadmin\FeatureController');
-    Route::resource('template', 'rcpadmin\TemplateController');
-   Route::resource('testimonials', 'rcpadmin\TestimonialController');
-    Route::resource('news', 'rcpadmin\NewsController');
-    Route::resource('career', 'rcpadmin\CareerController');
-    Route::resource('careertype', 'rcpadmin\CareerTypeController');
-    Route::resource('careerslider', 'rcpadmin\CareerSliderController');
-    Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
+  Route::get('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan');
+  Route::get('property/addFloorplan', 'rcpadmin\PropertyController@addFloorplan');
+  Route::resource('property', 'rcpadmin\PropertyController');
+  Route::resource('entrata', 'rcpadmin\EntrataController');
+  Route::resource('yardi', 'rcpadmin\YardiController');
+  Route::resource('category', 'rcpadmin\CategoryController');
+  Route::resource('price', 'rcpadmin\PriceController');
+  Route::resource('block_email', 'rcpadmin\BlockEmailController');
+  Route::resource('block_ip', 'rcpadmin\BlockIPController');
+  Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
+  Route::resource('feature', 'rcpadmin\FeatureController');
+  Route::resource('template', 'rcpadmin\TemplateController');
+  Route::resource('testimonials', 'rcpadmin\TestimonialController');
+  Route::resource('news', 'rcpadmin\NewsController');
+  Route::resource('career', 'rcpadmin\CareerController');
+  Route::resource('careertype', 'rcpadmin\CareerTypeController');
+  Route::resource('careerslider', 'rcpadmin\CareerSliderController');
+  Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
 
-    Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
-    Route::resource('team-member', 'rcpadmin\TeamController');
- Route::resource('premimum-landlord', 'rcpadmin\PreimumLandlordController');
+  Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
+  Route::resource('team-member', 'rcpadmin\TeamController');
+  Route::resource('premimum-landlord', 'rcpadmin\PreimumLandlordController');
   Route::resource('premimum-listings', 'rcpadmin\PreimumListingsController');
 
-    Route::resource('resources', 'rcpadmin\ResourceController');
-    
-    Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
-    
-    Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
-    
-    Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
+  Route::post('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController@store');
+  Route::resource('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController');
+
+  Route::resource('resources', 'rcpadmin\ResourceController');
+
+  Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
+
+  Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
+
+  Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
 });
 
 
@@ -85,7 +89,7 @@ Route::get('/articles', 'ArticlesController@index');
 
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();

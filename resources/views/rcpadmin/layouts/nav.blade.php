@@ -69,8 +69,8 @@
               </li>
               <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
               </li>
-              <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a>
-              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a> </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword Text</a> </li>
             </ul>
           </div>
         </li>

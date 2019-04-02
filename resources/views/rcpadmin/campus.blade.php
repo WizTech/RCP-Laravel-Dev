@@ -55,6 +55,9 @@
                         <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'].'/map')}}"
                                             class="text-secondary" title="Map"><i
                               class="fa fa-map"></i></a></li>
+                        <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'].'/apartment')}}"
+                                            class="text-secondary" title="Apartment"><i
+                              class="fa fa-building"></i></a></li>
                         <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'].'/renting')}}"
                                             class="text-secondary" title="Renting Question"><i
                               class="fa fa-question-circle"></i></a></li>

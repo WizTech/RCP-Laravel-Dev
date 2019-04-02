@@ -64,7 +64,7 @@
 
                 @foreach($images as $photo)
 
-                    <img src="{{env('APP_URL')}}public/storage/uploads/property_images/{{ $photo['image'] }}"
+                    <img src="{{env('APP_URL')}}public/storage/uploads/property_images/mid_thumb/{{ $photo['image'] }}"
                          width="220"/>
                 @endforeach
 

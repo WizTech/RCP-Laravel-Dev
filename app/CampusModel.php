@@ -10,6 +10,7 @@ use App\CampusRentingQuestion;
 use App\CampusNeighborhood;
 use App\CampusDestination;
 use App\Property;
+use App\CampusApartment;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +39,11 @@ class CampusModel extends Model
   public function guide()
   {
     return $this->hasOne('App\CampusGuideModel');
+  }
+
+  public function apartment()
+  {
+    return $this->hasOne('App\CampusApartment');
   }
 
   public function neighborhood()
@@ -70,6 +76,24 @@ class CampusModel extends Model
 
 
     return array_merge($campus, $guide_details);
+  }
+
+  public static function getCampusApartmentDetail($id)
+  {
+    $campus = self::find($id)->pluck('id')->toArray();
+
+    $campus['id'] = $id;
+    $campus['campus_id'] = $id;
+
+    $apartment_details = CampusApartment::where('campus_id', '=', $id)->first();
+    if (isset($apartment_details->id)) {
+      $apartment_details = $apartment_details->toArray();
+      unset($apartment_details['id']);
+    } else {
+      $apartment_details = [];
+    }
+
+    return array_merge($campus, $apartment_details);
   }
 
   public static function getRentingDetail($id)
