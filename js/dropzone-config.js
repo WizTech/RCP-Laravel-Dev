@@ -10,10 +10,9 @@ Dropzone.options.myDropzone = {
     timeout: 10000,
 
     init: function () {
-        console.log('ddaa')
         this.on("removedfile", function (file) {
             $.post({
-                url: '/images-delete',
+                url: '/rcpadmin/property/images-delete',
                 data: {id: file.name, _token: $('[name="_token"]').val()},
                 dataType: 'json',
                 success: function (data) {
@@ -24,7 +23,6 @@ Dropzone.options.myDropzone = {
         });
     },
     success: function (file, done) {
-        console.log('aa')
         total_photos_counter++;
         $("#counter").text("# " + total_photos_counter);
     }

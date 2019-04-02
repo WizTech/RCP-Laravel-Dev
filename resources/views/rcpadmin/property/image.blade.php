@@ -21,21 +21,51 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab"
-               aria-controls="upload"
-               aria-selected="true">Upload Images</a>
-        </li>
-
-
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                aria-controls="profile"
                aria-selected="false">View Images</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab"
+               aria-controls="upload"
+               aria-selected="true">Upload Images</a>
+        </li>
     </ul>
     <div class="tab-content mt-12 " id="myTabContent">
-        <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            <div class="table-responsive-sm">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($images as $photo)
+                        <tr>
+                            <td>
+                                <img src="{{env('APP_URL')}}public/storage/uploads/property_images/thumbs/{{ $photo['image'] }}">
+                            </td>
+                            <td>
+                                <ul class="d-flex justify-content-center">
+                                    <li><a data-admin-id="{{$photo['id']}}"
+                                           href="{{url('rcpadmin/property/'.$photo['id'].'/delete')}}"
+                                           data-method="delete" class="text-danger jquery-postback"><i
+                                                    class="ti-trash"></i></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-10 offset-sm-1">
@@ -58,18 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-            <div class="table-responsive-sm">
-
-                @foreach($images as $photo)
-
-                    <img src="{{env('APP_URL')}}public/storage/uploads/property_images/mid_thumb/{{ $photo['image'] }}"
-                         width="220"/>
-                @endforeach
-
-            </div>
-        </div>
     </div>
 
     {{--Dropzone Preview Template--}}

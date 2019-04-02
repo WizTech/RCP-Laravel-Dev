@@ -17,6 +17,7 @@ class CreatePropertyImagesTable extends Migration
       $table->increments('id');
       $table->integer('property_id')->unsigned();
       $table->integer('floorplan_id')->unsigned()->nullable();
+      $table->string('original_name');
       $table->string('image');
       $table->integer('order')->unsigned()->nullable();
       $table->integer('featured')->unsigned()->nullable();

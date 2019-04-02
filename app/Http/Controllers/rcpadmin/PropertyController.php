@@ -14,8 +14,8 @@ use App\PropertyImage;
 use App\Upload;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Response;
-//use Intervention\Image\Facades\Image;
-use Intervention\Image\Facades\Image as Image;
+use Intervention\Image\Facades\Image;
+
 use Request;
 
 class PropertyController extends Controller
@@ -306,32 +306,25 @@ class PropertyController extends Controller
             $name = sha1(date('YmdHis') . str_random(30));
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
             $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
-/*
-            Image::make($photo)
-                ->resize(250, null, function ($constraints) {
-                    $constraints->aspectRatio();
-                })
-                ->save($this->photos_path . '/thumbs/'. $resize_name);*/
-
-
             //create small thumbnail
-            $smallthumbnailpath = $this->photos_path . '/thumbs/'. $resize_name;
-            $this->createThumbnail($photo,$smallthumbnailpath, 150, 93);
+            $smallthumbnailpath = $this->photos_path . '/thumbs/' . $resize_name;
+            $this->createThumbnail($photo, $smallthumbnailpath, 150, 93);
 
 
             //create medium thumbnail
-            $mediumthumbnailpath = $this->photos_path . '/mid_thumb/'. $resize_name;
-            $this->createThumbnail($photo,$mediumthumbnailpath, 300, 185);
+            $mediumthumbnailpath = $this->photos_path . '/mid_thumb/' . $resize_name;
+            $this->createThumbnail($photo, $mediumthumbnailpath, 300, 185);
 
             //create large thumbnail
-            $largethumbnailpath = $this->photos_path . '/slider_images/'. $resize_name;;
-            $this->createThumbnail($photo,$largethumbnailpath, 550, 340);
+            $largethumbnailpath = $this->photos_path . '/slider_images/' . $resize_name;;
+            $this->createThumbnail($photo, $largethumbnailpath, 550, 340);
 
             $photo->move($this->photos_path, $resize_name);
 
             $upload = new PropertyImage();
             $upload->property_id = $id;
             $upload->image = $resize_name;
+            $upload->original_name = basename($photo->getClientOriginalName());
             $upload->date = date('Y-m-d');
             $upload->save();
         }
@@ -340,7 +333,83 @@ class PropertyController extends Controller
         ], 200);
     }
 
-    public function createThumbnail($photo,$path, $width, $height)
+    public function destroy_images()
+    {
+        $request = Request::all();
+        $filename = $request['id'];
+        $uploaded_image = PropertyImage::where('original_name', basename($filename))->first();
+
+        if (empty($uploaded_image)) {
+            return Response::json(['message' => 'Sorry file does not exist'], 400);
+        }
+
+        $orignal_image = $this->photos_path . '/' . $uploaded_image->image;;
+        $slider_images = $this->photos_path . '/slider_images/' . $uploaded_image->image;;
+        $midthumb_images = $this->photos_path . '/mid_thumb/' . $uploaded_image->image;;
+        $thumb_images = $this->photos_path . '/thumbs/' . $uploaded_image->image;;
+
+        if (file_exists($orignal_image)) {
+            unlink($orignal_image);
+        }
+
+        if (file_exists($slider_images)) {
+            unlink($slider_images);
+        }
+
+        if (file_exists($midthumb_images)) {
+            unlink($midthumb_images);
+        }
+
+        if (file_exists($thumb_images)) {
+            unlink($thumb_images);
+        }
+
+        if (!empty($uploaded_image)) {
+            $uploaded_image->delete();
+        }
+
+        return Response::json(['message' => 'File successfully delete'], 200);
+    }
+    public function delete_images($id)
+    {
+
+        $uploaded_image = PropertyImage::where('id', $id)->first();
+
+        if (empty($uploaded_image)) {
+            return Response::json(['message' => 'Sorry file does not exist'], 400);
+        }
+
+        $orignal_image = $this->photos_path . '/' . $uploaded_image->image;;
+        $slider_images = $this->photos_path . '/slider_images/' . $uploaded_image->image;;
+        $midthumb_images = $this->photos_path . '/mid_thumb/' . $uploaded_image->image;;
+        $thumb_images = $this->photos_path . '/thumbs/' . $uploaded_image->image;;
+
+        if (file_exists($orignal_image)) {
+            unlink($orignal_image);
+        }
+
+        if (file_exists($slider_images)) {
+            unlink($slider_images);
+        }
+
+        if (file_exists($midthumb_images)) {
+            unlink($midthumb_images);
+        }
+
+        if (file_exists($thumb_images)) {
+            unlink($thumb_images);
+        }
+
+        if (!empty($uploaded_image)) {
+            $uploaded_image->delete();
+        }
+
+        return redirect('rcpadmin/property/'.$uploaded_image->property_id.'/images');
+
+    }
+
+
+    public function createThumbnail($photo, $path, $width, $height)
     {
         Image::make($photo)
             ->resize($width, $height, function ($constraints) {
