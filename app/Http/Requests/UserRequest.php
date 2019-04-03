@@ -32,12 +32,12 @@ class UserRequest extends FormRequest
 
           'status' => 'required',
           'phone_no' => 'required',
-          'twilio_number' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required|unique:landlord_details':'',
-          'activate_twilio' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required':'',
-          'email_leads' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required':'',
-          'landlord_dashboard_status' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required':'',
-          'free_trial' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required':'',
-          'type' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3)?'required':'',
+          'twilio_number' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3 && $_REQUEST['activate_twilio'] == 'ACTIVE') ? 'required|unique:landlord_details' : '',
+          'activate_twilio' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3) ? 'required' : '',
+          'email_leads' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3) ? 'required' : '',
+          'landlord_dashboard_status' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3) ? 'required' : '',
+          'free_trial' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3) ? 'required' : '',
+          'type' => (isset($_REQUEST['role_id']) && $_REQUEST['role_id'] == 3) ? 'required' : '',
           'role_id' => 'required',
           'address' => 'required|unique:user_details|min:3',
           'name' => 'required|unique:users|min:3',
@@ -51,15 +51,16 @@ class UserRequest extends FormRequest
       }
       case 'PUT':
       case 'PATCH': {
+
         return [
           'role_id' => 'required',
-          'twilio_number' => 'required|unique:landlord_details,user_id,' . $this->id,
+          'twilio_number' => isset($this->activate_twilio) && $this->activate_twilio == 'ACTIVE' ? 'sometimes|required|unique:landlord_details,user_id,' . $this->id : '',
           'phone_no' => 'required',
           'status' => 'required',
           'last_name' => 'required',
           'first_name' => 'required',
           'is_entrata' => 'required',
-                    'is_yardi' => 'required',
+          'is_yardi' => 'required',
           'address' => 'required|unique:user_details,user_id,' . $this->id,
           'name' => 'required|unique:users,name,' . $this->id,
           'email' => 'unique:users,email,' . $this->id

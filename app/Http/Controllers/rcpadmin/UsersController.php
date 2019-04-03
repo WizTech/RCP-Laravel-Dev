@@ -44,14 +44,13 @@ class UsersController extends Controller
     $campuses = CampusModel::all('id', 'title')->toArray();
 
 
-
     $campusSelect = [];
 
     //$campusSelect[''] = 'Campus (es)';
     foreach ($campuses as $campus) {
       $campusSelect[$campus['id']] = $campus['title'];
     }
-   // echo '<pre>';print_r($user_campuses );echo '</pre>';
+    // echo '<pre>';print_r($user_campuses );echo '</pre>';
     //echo '<pre>';print_r($campusSelect );echo '</pre>';die('Call');
     return view('rcpadmin.users.edit', compact('user', 'campusSelect', 'user_campuses'));
 
@@ -63,7 +62,7 @@ class UsersController extends Controller
     $user = User::create($input);
 
     if ($user && !empty($input['first_name'])) {
-      
+
       UserDetails::create(['user_id' => $user->id, 'first_name' => $input['first_name'], 'last_name' => $input['last_name'], 'address' => $input['address'], 'phone_no' => $input['phone_no']]);
     }
 
@@ -91,7 +90,6 @@ class UsersController extends Controller
   {
 
 
-
     $user = User::find($id);
 
 
@@ -101,7 +99,7 @@ class UsersController extends Controller
 
 
     $input = Request::all();
-//    echo '<pre>';print_r($input );echo '</pre>';die('Call');
+
     $input['password'] = bcrypt($input['password']);
 
     $user->update($input);
@@ -110,7 +108,14 @@ class UsersController extends Controller
       $user_details->update(['first_name' => $input['first_name'], 'last_name' => $input['last_name'], 'address' => $input['address'], 'phone_no' => $input['phone_no']]);
     }
     if ($landlord_details && $input['role_id'] == 3) {
-      $landlord_details->update(['h1' => $input['h1'], 'h2' => $input['h2'], 'meta_title' => $input['meta_title'], 'about_details' => $input['about_details'], 'meta_description' => $input['meta_description'], 'activate_twilio' => $input['activate_twilio'], 'seo_block' => $input['seo_block'], 'twilio_number' => $input['twilio_number'], 'email_leads' => $input['email_leads'], 'landlord_dashboard_status' => $input['landlord_dashboard_status']]);
+      $landlordData = array('h1' => $input['h1'], 'h2' => $input['h2'], 'meta_title' => $input['meta_title'],
+        'about_details' => $input['about_details'], 'meta_description' => $input['meta_description'],
+        'activate_twilio' => $input['activate_twilio'], 'seo_block' => $input['seo_block'], 'domain_name' => $input['domain_name'],
+        'twilio_number' => $input['twilio_number'], 'activate_twilio' => $input['activate_twilio'], 'is_yardi' => $input['is_yardi'], 'is_entrata' => $input['is_entrata'],
+        'email_leads' => $input['email_leads'], 'landlord_dashboard_status' => $input['landlord_dashboard_status']);
+
+
+      $landlord_details->update($landlordData);
     }
 
 

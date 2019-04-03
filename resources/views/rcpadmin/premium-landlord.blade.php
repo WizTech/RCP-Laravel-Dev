@@ -36,6 +36,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Domain</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
@@ -46,6 +47,14 @@
                     <td> {{$data['user']['email']}}</td>
 
                     <td> {{$data['domain_name']}} </td>
+                    <td>
+                      <ul class="d-flex justify-content-center">
+                        <li class="mr-3"><a href="{{ url('rcpadmin/premium-landlord/'.$data['user_id'])}}"
+                                            class="text-secondary"><i
+                              class="fa fa-edit"></i></a></li>
+
+                      </ul>
+                    </td>
                   </tr>
                 @endforeach
               @endif

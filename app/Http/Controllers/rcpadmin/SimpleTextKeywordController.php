@@ -17,6 +17,7 @@ class SimpleTextKeywordController extends Controller
   {
     $this->token = '59b764e83a80bd99af1c0b5ffa5cc322';
   }
+
   public function index()
   {
     return view('rcpadmin.simple-text-keyword');
@@ -33,7 +34,7 @@ class SimpleTextKeywordController extends Controller
     $data = $this->get_array($file);
     if (!empty($data)) {
       $this->requestedParams($data);
-    }else{
+    } else {
       return redirect('rcpadmin/simple-keyword-text');
     }
   }
