@@ -15,11 +15,11 @@ class CreateCareerTable extends Migration
     {
         Schema::create('career', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('career_type');
-            $table->string('location');
-            $table->string('hours');
-            $table->text('description');
+            $table->string('title')->nullable();
+            $table->string('career_type')->nullable();
+            $table->string('location')->nullable();
+            $table->string('hours')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status', ['Active','Inactive'])->default('Active');
             $table->timestamps();
         });

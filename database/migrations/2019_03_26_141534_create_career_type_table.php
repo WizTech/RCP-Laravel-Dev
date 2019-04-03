@@ -15,7 +15,7 @@ class CreateCareerTypeTable extends Migration
     {
         Schema::create('career_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('careers_type');
+            $table->string('careers_type')->nullable();
             $table->timestamps();
         });
     }
