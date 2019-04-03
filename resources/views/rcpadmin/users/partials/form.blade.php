@@ -99,14 +99,19 @@
   </div>
   <div class="form-row">
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       {!! Form::label('Company',null,['class' => 'col-form-label']) !!}
       {!! Form::text('company',null,['class' => 'form-control']) !!}
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       {!! Form::label('Website',null,['class' => 'col-form-label']) !!}
       {!! Form::text('website',null,['class' => 'form-control']) !!}
+    </div>
+
+    <div class="col-md-4 mb-3">
+      {!! Form::label('Domain',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
     </div>
 
 

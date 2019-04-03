@@ -71,8 +71,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
-    Route::resource('premimum-landlord', 'rcpadmin\PreimumLandlordController');
-    Route::resource('premimum-listings', 'rcpadmin\PreimumListingsController');
+    Route::resource('premium-landlord', 'rcpadmin\PreimumLandlordController');
+    Route::resource('premium-listings', 'rcpadmin\PreimumListingsController');
 
     Route::post('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController@store');
     Route::resource('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController');
