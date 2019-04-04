@@ -43,16 +43,18 @@
                             @if(!empty($appLeads))
                                 <?php $x = 1; ?>
                                 @foreach($appLeads as $appLead)
-                                    <tr>
-                                        <td>{{ $x }}</td>
-                                        <td>{{$appLead['username']}} </td>
-                                        <td>{{$appLead['email']}} </td>
-                                        <td>{{$appLead['phone']}} </td>
-                                        <td>{{$appLead['campus_name']}}</td>
-                                        <td>{{$appLead['lead_type']}} </td>
-                                        <td>{{$appLead['date']}}</td>
-                                    </tr>
-                                    <?php $x++; ?>
+                                    @foreach($appLead as $lead)
+                                        <tr>
+                                            <td>{{ $x }}</td>
+                                            <td>{{$lead['name']}} </td>
+                                            <td>{{$lead['email']}} </td>
+                                            <td>{{$lead['phone_no']}} </td>
+                                            <td>{{$lead['title']}} </td>
+                                            <td>{{$lead['type']}}</td>
+                                            <td>{{date("Y-m-d",strtotime($lead['date']))}}</td>
+                                        </tr>
+                                        <?php $x++; ?>
+                                    @endforeach
                                 @endforeach
                             @endif
                             </tbody>

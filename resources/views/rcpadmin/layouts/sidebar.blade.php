@@ -37,6 +37,8 @@
                 <ul class="collapse">
                     <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
                     </li>
+                    <li class="child-element"><a href="{{ url('rcpadmin/').'/app-leads'}}">App Leads</a>
+                    </li>
                 </ul>
             </li>
 

@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
+use App\rcpadmin\AppFavourite;
 use App\rcpadmin\AppLead;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-class AppLeadController extends Controller
+class AppFavouriteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-        $leads = AppLead::all()->toArray();
+        $leads = AppFavourite::all()->toArray();
         if (!empty($leads)){
-            $appLeads = AppLead::app_leads();
-            return view('rcpadmin/app-leads', compact('appLeads'));
+            $appLeads = AppFavourite::app_favourite();
+            return view('rcpadmin/app-favourites', compact('appLeads'));
         }
-        return view('rcpadmin/app-leads');
+        return view('rcpadmin/app-favourites');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +37,7 @@ class AppLeadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +48,7 @@ class AppLeadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +59,7 @@ class AppLeadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +70,8 @@ class AppLeadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,7 +82,7 @@ class AppLeadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
