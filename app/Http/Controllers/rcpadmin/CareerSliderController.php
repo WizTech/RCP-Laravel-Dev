@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CareerSliderRequest;
+use App\rcpadmin\CareerSlider;
 
 class CareerSliderController extends Controller
 {
@@ -13,7 +15,8 @@ class CareerSliderController extends Controller
      */
     public function index()
     {
-        //
+        $career_sliders = CareerSlider::all()->toArray();
+        return view('rcpadmin.careerslider', compact('career_sliders'));
     }
 
     /**
@@ -23,7 +26,7 @@ class CareerSliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('rcpadmin.career-slider.add');
     }
 
     /**
@@ -32,9 +35,10 @@ class CareerSliderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CareerSliderRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/careerslider');
     }
 
     /**
@@ -45,7 +49,8 @@ class CareerSliderController extends Controller
      */
     public function show($id)
     {
-        //
+        $careerslider = CareerSlider::find($id);
+        return view('rcpadmin.career-slider.edit', compact('careerslider'));
     }
 
     /**
@@ -66,9 +71,10 @@ class CareerSliderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CareerSliderRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/careerslider');
     }
 
     /**
@@ -79,6 +85,8 @@ class CareerSliderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $careerslider = CareerSlider::find($id);
+        $careerslider->delete();
+        return redirect('rcpadmin/careerslider');
     }
 }

@@ -57,14 +57,15 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
     Route::resource('feature', 'rcpadmin\FeatureController');
     Route::resource('template', 'rcpadmin\TemplateController');
+
     Route::resource('testimonials', 'rcpadmin\TestimonialController');
     Route::resource('news', 'rcpadmin\NewsController');
-    Route::resource('careers', 'rcpadmin\CareerController');
-    Route::resource('careerstype', 'rcpadmin\CareerTypeController');
+    Route::resource('career', 'rcpadmin\CareerController');
+    Route::resource('careertype', 'rcpadmin\CareerTypeController');
     Route::resource('careerslider', 'rcpadmin\CareerSliderController');
+    Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
+
     Route::resource('maps', 'rcpadmin\MapController');
-
-
 
 });
 

@@ -53,6 +53,26 @@
         @endif
       @endforeach
 
+        <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i
+                    class="mdi-editor-insert-comment"></i> Content Managment</a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
+              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/testimonials'}}">Testimonials</a>
+              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/careertype'}}">Careers Type</a>
+              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/career'}}">Careers</a>
+              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a>
+              </li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
       <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i
             class="mdi-editor-insert-comment"></i> Settings</a>
         <div class="collapsible-body">

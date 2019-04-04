@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\rcpadmin\CampusInsight;
+use App\CampusModel;
+use App\Http\Requests\CampusInsightRequest;
 use App\Http\Controllers\Controller;
+
 
 class CampusInsightController extends Controller
 {
@@ -14,7 +17,8 @@ class CampusInsightController extends Controller
      */
     public function index()
     {
-        //
+        $campus= CampusInsight::all()->toArray();
+        return view('rcpadmin.campus_insight', compact('campus'));
     }
 
     /**
@@ -24,7 +28,8 @@ class CampusInsightController extends Controller
      */
     public function create()
     {
-        //
+        $campus= CampusModel::all()->toArray();
+        return view('rcpadmin.campus-insight.add', compact('campus'));
     }
 
     /**
@@ -33,9 +38,10 @@ class CampusInsightController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CampusInsightRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/campus-insight');
     }
 
     /**
@@ -46,7 +52,17 @@ class CampusInsightController extends Controller
      */
     public function show($id)
     {
-        //
+        $campusInight['campus_insight'] = CampusInsight::find($id);
+        $campusInight['campus_list']= CampusModel::all()->toArray();
+        /*$file = $campusInight['campus_insight']['pdf_file'];
+        if ($file)
+        {
+            $file = File::get('storage/uploads/campusinsight/'.$file);
+            $response = Response::make($file, 200);
+            $finalFile = $response->header('Content-Type', 'application/pdf');
+            $campusInight['file'] = $finalFile;
+        }*/
+        return view('rcpadmin.campus-insight.edit', compact('campusInight'));
     }
 
     /**
@@ -67,9 +83,10 @@ class CampusInsightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CampusInsightRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/campus-insight');
     }
 
     /**
@@ -80,6 +97,8 @@ class CampusInsightController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = Career::find($id);
+        $news->delete();
+        return redirect('rcpadmin/career');
     }
 }

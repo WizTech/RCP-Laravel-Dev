@@ -8,6 +8,25 @@
               class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
       @endforeach
 
+          <li>
+              <a href="javascript:void(0)" aria-expanded="true"><i
+                          class="ti-view-list"></i><span>Content Manager</span></a>
+              <ul class="collapse">
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
+                  </li>
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/testimonials'}}">Testimonials</a>
+                  </li>
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/careertype'}}">Careers Type</a>
+                  </li>
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/career'}}">Careers</a>
+                  </li>
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a>
+                  </li>
+                  <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
+                  </li>
+              </ul>
+          </li>
+
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-list"></i><span>Settings</span></a>
         <ul class="collapse">

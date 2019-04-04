@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\rcpadmin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CareerRequest;
+use App\rcpadmin\Career;
+use App\rcpadmin\CareerType;
 
 class CareerController extends Controller
 {
@@ -13,7 +16,8 @@ class CareerController extends Controller
      */
     public function index()
     {
-        //
+        $careers= Career::all()->toArray();
+        return view('rcpadmin.career', compact('careers'));
     }
 
     /**
@@ -23,7 +27,8 @@ class CareerController extends Controller
      */
     public function create()
     {
-        //
+        $careertypes= CareerType::all()->toArray();
+        return view('rcpadmin.career.add', compact('careertypes'));
     }
 
     /**
@@ -32,9 +37,10 @@ class CareerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CareerRequest $form)
     {
-        //
+        $form->saveRequest();
+        return redirect('rcpadmin/career');
     }
 
     /**
@@ -45,7 +51,9 @@ class CareerController extends Controller
      */
     public function show($id)
     {
-        //
+        $careers['career'] = Career::find($id);
+        $careers['career_type']= CareerType::all()->toArray();
+        return view('rcpadmin.career.edit', compact('careers'));
     }
 
     /**
@@ -66,9 +74,10 @@ class CareerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CareerRequest $form, $id)
     {
-        //
+        $form->updateRequest($id);
+        return redirect('rcpadmin/career');
     }
 
     /**
@@ -79,6 +88,8 @@ class CareerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = Career::find($id);
+        $news->delete();
+        return redirect('rcpadmin/career');
     }
 }

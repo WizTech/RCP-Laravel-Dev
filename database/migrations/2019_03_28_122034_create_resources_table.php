@@ -15,6 +15,12 @@ class CreateResourcesTable extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('campus_id');
+            $table->string('title');
+            $table->string('link');
+            $table->string('image');
+            $table->text('description');
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();
         });
     }
