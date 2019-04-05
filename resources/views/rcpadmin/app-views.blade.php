@@ -35,26 +35,24 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Campus</th>
-                                <th>Lead Type</th>
+                                <th>Page</th>
                                 <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($appLeads))
+                            @if(!empty($appViews))
                                 <?php $x = 1; ?>
-                                @foreach($appLeads as $lead)
-                                    @if(!empty($lead->username && $lead->campus_title))
+                                @foreach($appViews as $view)
                                         <tr>
                                             <td>{{ $x }}</td>
-                                            <td>{{$lead->username}} </td>
-                                            <td>{{$lead->email}} </td>
-                                            <td>{{$lead->phone_no}} </td>
-                                            <td>{{$lead->campus_title}} </td>
-                                            <td>{{$lead->lead_type}}</td>
-                                            <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
+                                            <td>{{$view->username}} </td>
+                                            <td>{{$view->email}}  </td>
+                                            <td>{{$view->phone_no}}</td>
+                                            <td>{{$view->campus_title}} </td>
+                                            <td>{{$view->page_type}} </td>
+                                            <td>{{date("Y-m-d",strtotime($view->date))}}</td>
                                         </tr>
-                                        <?php $x++; ?>
-                                        @endif
+                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>

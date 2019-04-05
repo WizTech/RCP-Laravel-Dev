@@ -31,30 +31,20 @@
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
-                                <th>User Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Campus</th>
-                                <th>Lead Type</th>
-                                <th>Date</th>
+                                <th>Screen </th>
+                                <th>Visits</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($appLeads))
+                            @if(!empty($screenVisits))
                                 <?php $x = 1; ?>
-                                @foreach($appLeads as $lead)
-                                    @if(!empty($lead->username && $lead->campus_title))
-                                        <tr>
-                                            <td>{{ $x }}</td>
-                                            <td>{{$lead->username}} </td>
-                                            <td>{{$lead->email}} </td>
-                                            <td>{{$lead->phone_no}} </td>
-                                            <td>{{$lead->campus_title}} </td>
-                                            <td>{{$lead->lead_type}}</td>
-                                            <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
-                                        </tr>
-                                        <?php $x++; ?>
-                                        @endif
+                                @foreach($screenVisits as $visit)
+                                    <tr>
+                                        <td>{{ $x }}</td>
+                                        <td>{{$visit->page_type}} </td>
+                                        <td>{{$visit->count}}  </td>
+                                    </tr>
+                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>

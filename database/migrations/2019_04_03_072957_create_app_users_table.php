@@ -24,8 +24,8 @@ class CreateAppUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('device_type')->nullable();
-            $table->string('date_created')->nullable();
+            $table->enum('device_type',['ios','android'])->nullable();
+            $table->integer('date_created')->nullable();
             $table->date('fcm_modified_date')->nullable();
             $table->timestamps();
         });

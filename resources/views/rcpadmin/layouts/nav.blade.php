@@ -82,7 +82,13 @@
                         <ul>
                             <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
                             </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/visits'}}">Visits</a>
+                            </li>
                             <li class="child-element"><a href="{{ url('rcpadmin/').'/app-leads'}}">App Leads</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/app-favourites'}}">App Favourites</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/screen-visits'}}">Screen Visits</a>
                             </li>
                         </ul>
                     </div>

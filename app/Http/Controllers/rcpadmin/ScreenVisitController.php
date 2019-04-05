@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-use App\rcpadmin\AppFavourite;
+use App\rcpadmin\AppView;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
-class AppFavouriteController extends Controller
+class ScreenVisitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,12 @@ class AppFavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = AppFavourite::all()->toArray();
-        if (!empty($favourites)) {
-            $appFavourites = AppFavourite::app_favourite();
-            return view('rcpadmin/app-favourites', compact('appFavourites'));
-        }
-        return view('rcpadmin/app-favourites');
+        $screenVisits = DB::table('rentcoll_stats.app_views')
+            ->select('page_type', DB::raw('COUNT(*) as `count`'))
+            ->groupBy('page_type')
+            ->havingRaw('COUNT(*) > 0')
+            ->get();
+        return view('rcpadmin/screen-visits', compact('screenVisits'));
     }
 
     /**

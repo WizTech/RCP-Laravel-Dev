@@ -84,7 +84,9 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('app-users', 'rcpadmin\AppUserController');
     Route::resource('app-leads', 'rcpadmin\AppLeadController');
     Route::resource('app-favourites', 'rcpadmin\AppFavouriteController');
-
+    Route::resource('visits', 'rcpadmin\AppViewController');
+    Route::resource('screen-visits', 'rcpadmin\ScreenVisitController');
+    Route::resource('time-on-app', 'rcpadmin\TimeOnAppController');
 
 });
 

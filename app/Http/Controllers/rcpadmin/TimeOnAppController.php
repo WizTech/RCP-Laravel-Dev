@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-use App\rcpadmin\AppFavourite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AppFavouriteController extends Controller
+class TimeOnAppController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +14,7 @@ class AppFavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = AppFavourite::all()->toArray();
-        if (!empty($favourites)) {
-            $appFavourites = AppFavourite::app_favourite();
-            return view('rcpadmin/app-favourites', compact('appFavourites'));
-        }
-        return view('rcpadmin/app-favourites');
+        //
     }
 
     /**
@@ -36,7 +30,7 @@ class AppFavouriteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +41,7 @@ class AppFavouriteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -58,7 +52,7 @@ class AppFavouriteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -69,8 +63,8 @@ class AppFavouriteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -81,7 +75,7 @@ class AppFavouriteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

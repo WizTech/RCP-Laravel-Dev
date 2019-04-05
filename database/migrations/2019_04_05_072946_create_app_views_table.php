@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppLeadsTable extends Migration
+class CreateAppViewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateAppLeadsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql2')->create('app_leads', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('app_views', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable();
             $table->string('session_id')->nullable();
-            $table->integer('property_id')->nullable();
-            $table->enum('type',['email','call','fav'])->nullable();
+            $table->integer('campus_id')->nullable();
+            $table->integer('listing_id')->nullable();
+            $table->enum('page_type', ['Home','Campus','Detail','Favorite','Contact','Call-Landlord','Email-Landlord','Settings','My_Account','Messages','Home-Map','Home-Listing','Roommats-Detail','Subleases-Detail'])->nullable();
             $table->string('date')->nullable();
             $table->integer('date_created')->nullable();
-            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateAppLeadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_leads');
+        Schema::dropIfExists('app_views');
     }
 }
