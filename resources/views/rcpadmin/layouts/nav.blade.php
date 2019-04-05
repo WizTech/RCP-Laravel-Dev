@@ -90,6 +90,10 @@
                             </li>
                             <li class="child-element"><a href="{{ url('rcpadmin/').'/screen-visits'}}">Screen Visits</a>
                             </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/time-on-app'}}">Time On App</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/bounce-rate'}}">Bounce Rate</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

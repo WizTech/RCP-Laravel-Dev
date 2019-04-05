@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-use App\rcpadmin\TimeOnApp;
+use App\rcpadmin\BounceRate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
-class TimeOnAppController extends Controller
+class BounceRateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +16,12 @@ class TimeOnAppController extends Controller
      */
     public function index()
     {
-        $data = TimeOnApp::all();
-        if (!empty($data)){
-            $time = TimeOnApp::appTime();
-            return view('rcpadmin/time-on-app', compact('time'));
-        }else{
-            return view('rcpadmin/time-on-app');
-        }
+        $bounceRate = DB::table('rentcoll_stats.app_views')
+            ->select('page_type', DB::raw('COUNT(*) as `count`'))
+            ->groupBy('page_type')
+            ->havingRaw('COUNT(*) > 0')
+            ->get();
+        return view('rcpadmin/bounce-rate', compact('bounceRate'));
     }
 
     /**

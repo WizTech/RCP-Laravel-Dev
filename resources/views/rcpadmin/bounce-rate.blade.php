@@ -31,20 +31,22 @@
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
-                                <th>User Name</th>
-                                <th>Time</th>
-                                <th>Date</th>
+                                <th>Screen</th>
+                                <th>Bounce Type</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($time))
+                            @if(!empty($bounceRate))
+                                <?php  $total = count($bounceRate); ?>
                                 <?php $x = 1; ?>
-                                @foreach($time as $t)
+                                @foreach($bounceRate as $br)
                                     <tr>
                                         <td>{{ $x }}</td>
-                                        <td>{{$t->username}} </td>
-                                        <td>{{$t->date}}  </td>
-                                        <td>{{$t->date_created}}</td>
+                                        <td>{{$br->page_type}} </td>
+                                        <?php $percent  = $br->count*100/$total;
+                                        $percentage= number_format((float)$percent, 2, '.', '');
+                                        ?>
+                                        <td>{{$percentage}}%</td>
                                     </tr>
                                     <?php $x++; ?>
                                 @endforeach
