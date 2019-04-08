@@ -5,6 +5,10 @@ namespace App\Http\Controllers\rcpadmin;
 use App\rcpadmin\AppView;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\GeneralHelper;
+use DB;
+use Excel;
+
 
 class AppViewController extends Controller
 {
@@ -16,9 +20,14 @@ class AppViewController extends Controller
     public function index()
     {
         $views = AppView::all()->toArray();
-        //echo "<pre>"; print_r($views); die();
+        $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
+        $pages = GeneralHelper::getColumn('rentcoll_stats.app_views', 'page_type');
+        foreach ($pages as $page) {
+            $allPages[] = $page->page_type;
+        }
+        $appViews['pages'] = array_unique($allPages);
         if (!empty($views)) {
-            $appViews = AppView::app_views();
+            $appViews['visits'] = AppView::app_views();
             return view('rcpadmin/app-views', compact('appViews'));
         }
         return view('rcpadmin/app-views');
@@ -29,15 +38,40 @@ class AppViewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    function create()
     {
         //
+    }
+
+    function csvExport()
+    {
+        $views = AppView::all()->toArray();
+        if (!empty($views)) {
+            $appViews = AppView::app_views();
+            $customer_data = $appViews->toArray();
+            $customer_array[] = array('User Name', 'Email', 'Phone No', 'Campus Title', 'Page Type');
+            foreach ($customer_data as $customer) {
+                $customer_array[] = array(
+                    'User Name' => $customer->username,
+                    'Email' => $customer->email,
+                    'Phone No' => $customer->phone_no,
+                    'Campus Title' => $customer->campus_title,
+                    'Page Type' => $customer->page_type
+                );
+            }
+            return Excel::create('Customer Data', function ($excel) use ($customer_array) {
+                $excel->setTitle('Customer Data');
+                $excel->sheet('Customer Data', function ($sheet) use ($customer_array) {
+                    $sheet->fromArray($customer_array, null, 'A1', false, false);
+                });
+            })->download('csv');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,7 +82,7 @@ class AppViewController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,7 +93,7 @@ class AppViewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,8 +104,8 @@ class AppViewController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,7 +116,7 @@ class AppViewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

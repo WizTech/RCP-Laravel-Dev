@@ -22,8 +22,46 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
+            <div align="center">
+                Date From <input class="filter-box" type="date" name="date_from">
+                To <input class="filter-box" type="date" name="date_to">
+                <select class="filter-box" name="campus">
+                    <option value="">All Campuses</option>
+                    @if(!empty($appViews['campuses']))
+                        @foreach($appViews['campuses'] as $campus)
+                            <option value="">{{$campus->title}}</option>
+                            @endforeach
+                        @endif
+                </select>
+                <select class="filter-box" name="page">
+                    <option value="">All Pages</option>
+                    @if(!empty($appViews['pages']))
+                        @foreach($appViews['pages'] as $page)
+                            <option value="">{{$page}}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> Export List </a>
+            </div>
+            <div align="right" style="padding-right: 15%;">
+                <select class="select-box" name="page">
+                    <option value="">All Pages</option>
+                    @if(!empty($appViews['pages']))
+                        @foreach($appViews['pages'] as $page)
+                            <option value="">{{$page}}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <select class="select-box" name="campus">
+                    <option value="">All Campuses</option>
+                    @if(!empty($appViews['campuses']))
+                        @foreach($appViews['campuses'] as $campus)
+                            <option value="">{{$campus->title}}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="data-tables datatable-dark">
@@ -42,16 +80,16 @@
                             <tbody>
                             @if(!empty($appViews))
                                 <?php $x = 1; ?>
-                                @foreach($appViews as $view)
-                                        <tr>
-                                            <td>{{ $x }}</td>
-                                            <td>{{$view->username}} </td>
-                                            <td>{{$view->email}}  </td>
-                                            <td>{{$view->phone_no}}</td>
-                                            <td>{{$view->campus_title}} </td>
-                                            <td>{{$view->page_type}} </td>
-                                            <td>{{date("Y-m-d",strtotime($view->date))}}</td>
-                                        </tr>
+                                @foreach($appViews['visits'] as $view)
+                                    <tr>
+                                        <td>{{ $x }}</td>
+                                        <td>{{$view->username}} </td>
+                                        <td>{{$view->email}}  </td>
+                                        <td>{{$view->phone_no}}</td>
+                                        <td>{{$view->campus_title}} </td>
+                                        <td>{{$view->page_type}} </td>
+                                        <td>{{date("Y-m-d",strtotime($view->date))}}</td>
+                                    </tr>
                                     <?php $x++; ?>
                                 @endforeach
                             @endif

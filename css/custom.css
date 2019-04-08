@@ -23,3 +23,14 @@
     padding: 90px 0;
     vertical-align: baseline;
 }
+ .filter-box{
+     border: solid;
+     height: 30px;
+     width: 18%;
+ }
+.select-box{
+    border: solid;
+    height: 30px;
+    width: 21%;
+    margin-top: 20px;
+}

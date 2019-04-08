@@ -22,8 +22,50 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
+            <div align="center">
+                Date From <input class="filter-box" type="date" name="date_from">
+                To <input class="filter-box" type="date" name="date_to">
+                <select class="filter-box" name="lead">
+                    <option value="">All Leads</option>
+                    @if(!empty($appViews['leads']))
+                        @foreach($appViews['leads'] as $page)
+                            <option value="">{{$page}}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <select class="filter-box" name="campus">
+                    <option value="">All Campuses</option>
+                    @if(!empty($appLeads))
+                        @foreach($appLeads as $appLead)
+                            @if(!empty($appLead->campus_id && $appLead->campus_title))
+                                <option value="{{$appLead->campus_id}}">{{$appLead->campus_title}}</option>
+                            @endif
+                        @endforeach
+                    @endif
+                </select>
+                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> Export List </a>
+            </div>
+            <div align="right" style="padding-right: 15%;">
+                <select class="select-box" name="page">
+                    <option value="">All Leads</option>
+                    @if(!empty($appLeads))
+                        @foreach($appLeads as $appLead)
+                            <option value="{{$appLead->id}}">{{$appLead->lead_type}}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <select class="select-box" name="campus">
+                    <option value="">All Campuses</option>
+                    @if(!empty($appLeads))
+                        @foreach($appLeads as $appLead)
+                            @if(!empty($appLead->campus_id && $appLead->campus_title))
+                                <option value="{{$appLead->campus_id}}">{{$appLead->campus_title}}</option>
+                            @endif
+                        @endforeach
+                    @endif
+                </select>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="data-tables datatable-dark">
@@ -54,7 +96,7 @@
                                             <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
                                         </tr>
                                         <?php $x++; ?>
-                                        @endif
+                                    @endif
                                 @endforeach
                             @endif
                             </tbody>

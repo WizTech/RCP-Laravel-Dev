@@ -16,7 +16,7 @@ class AppLead extends Model
             ->leftJoin('user_details', 'app_leads.user_id', '=', 'user_details.user_id')
             ->leftJoin('property', 'app_leads.property_id', '=', 'property.id')
             ->leftJoin('campus', 'property.campus_id', '=', 'campus.id')
-            ->select('users.name as username', 'users.email', 'user_details.phone_no', 'app_leads.type as lead_type','property.campus_id', 'campus.title as campus_title', 'app_leads.date')
+            ->select('app_leads.id','users.name as username', 'users.email', 'user_details.phone_no', 'app_leads.type as lead_type','property.campus_id', 'campus.title as campus_title', 'app_leads.date')
             ->get();
         return $appLeads;
     }

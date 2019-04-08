@@ -12,6 +12,14 @@ class GeneralHelper
         return $columnName;
     }
 
+    static function getColumn($table, $columnName){
+        $column  = DB::table($table)
+            ->select($columnName)->orderBy($columnName, 'ASC')
+            ->get()
+            ->toArray();
+        return $column;
+    }
+
 
 }
 

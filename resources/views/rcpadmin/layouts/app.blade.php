@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/metisMenu.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/owl.carousel.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/slicknav.min.css">
+  <link rel="stylesheet" href="{{ env('APP_URL') }}/css/custom.css">
 
 
 
