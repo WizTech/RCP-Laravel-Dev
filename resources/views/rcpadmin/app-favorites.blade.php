@@ -29,11 +29,9 @@
                 To <input class="filter-box" type="date" name="date_to">
                 <select class="filter-box" name="campus">
                     <option value="">All Campuses</option>
-                    @if(!empty($appLeads))
-                        @foreach($appLeads as $appLead)
-                            @if(!empty($appLead->campus_id && $appLead->campus_title))
-                                <option value="{{$appLead->campus_id}}">{{$appLead->campus_title}}</option>
-                            @endif
+                    @if(!empty( $appFavorites['campuses']))
+                        @foreach( $appFavorites['campuses'] as $campus)
+                                <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -54,9 +52,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($appFavorites))
+                            @if(!empty($appFavorites['favs']))
                                 <?php $x = 1; ?>
-                                @foreach($appFavorites as $favorite)
+                                @foreach($appFavorites['favs'] as $favorite)
                                     @if(!empty($favorite->username && $favorite->property_title))
                                         <tr>
                                             <td>{{ $x }}</td>

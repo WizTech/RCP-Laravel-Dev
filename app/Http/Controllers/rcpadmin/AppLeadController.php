@@ -5,7 +5,7 @@ namespace App\Http\Controllers\rcpadmin;
 use App\rcpadmin\AppLead;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Helpers\GeneralHelper;
 
 class AppLeadController extends Controller
 {
@@ -18,11 +18,12 @@ class AppLeadController extends Controller
     public function index()
     {
         $leads = AppLead::all()->toArray();
+        $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
         if (!empty($leads)){
-            $appLeads = AppLead::app_leads();
+            $appLeads['leads'] = AppLead::app_leads();
             return view('rcpadmin/app-leads', compact('appLeads'));
         }
-        return view('rcpadmin/app-leads');
+        return view('rcpadmin/app-leads', compact('appLeads'));
     }
 
 

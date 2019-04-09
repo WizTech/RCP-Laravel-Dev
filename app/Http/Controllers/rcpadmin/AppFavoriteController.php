@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcpadmin;
 use App\rcpadmin\AppFavorite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\GeneralHelper;
 
 class AppFavoriteController extends Controller
 {
@@ -16,11 +17,11 @@ class AppFavoriteController extends Controller
     public function index()
     {
         $favorites = AppFavorite::all()->toArray();
+        $appFavorites['campuses'] = GeneralHelper::getColumn('campus', 'title');
         if (!empty($favorites)) {
-            $appFavorites = AppFavorite::app_favourite();
-            return view('rcpadmin/app-favorites', compact('appFavorites'));
+            $appFavorites['favs'] = AppFavorite::app_favourite();
         }
-        return view('rcpadmin/app-favorites');
+        return view('rcpadmin/app-favorites', compact('appFavorites'));
     }
 
     /**

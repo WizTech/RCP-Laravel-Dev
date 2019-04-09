@@ -30,34 +30,52 @@
                     <option value="">All Campuses</option>
                     @if(!empty($appViews['campuses']))
                         @foreach($appViews['campuses'] as $campus)
-                            <option value="">{{$campus->title}}</option>
+                            <option value="{{$campus->id}}">{{$campus->title}}</option>
                             @endforeach
                         @endif
                 </select>
-                <select class="filter-box" name="page">
+                <select class="select-box" name="page">
                     <option value="">All Pages</option>
-                    @if(!empty($appViews['pages']))
-                        @foreach($appViews['pages'] as $page)
-                            <option value="">{{$page}}</option>
-                        @endforeach
-                    @endif
+                    <option value="home">Home</option>
+                    <option value="campus">Campus</option>
+                    <option value="detail">Detail</option>
+                    <option value="favorite">Favorite</option>
+                    <option value="contact">Contact</option>
+                    <option value="call-landlord">Call-Landlord</option>
+                    <option value="email-landlord">Email-Landlord</option>
+                    <option value="settings">Settings</option>
+                    <option value="settings">Settings</option>
+                    <option value="messages">Messages</option>
+                    <option value="home-map">Home-Map</option>
+                    <option value="home-listing">Home-Listing</option>
+                    <option value="roommats-detail">Roommats-Detail</option>
+                    <option value="subleases-detail">Subleases-Detail</option>
                 </select>
                 <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> EXPORT LIST </a>
             </div>
             <div align="right" style="padding-right: 15%;">
                 <select class="select-box" name="page">
                     <option value="">All Pages</option>
-                    @if(!empty($appViews['pages']))
-                        @foreach($appViews['pages'] as $page)
-                            <option value="">{{$page}}</option>
-                        @endforeach
-                    @endif
+                            <option value="home">Home</option>
+                            <option value="campus">Campus</option>
+                            <option value="detail">Detail</option>
+                            <option value="favorite">Favorite</option>
+                            <option value="contact">Contact</option>
+                            <option value="call-landlord">Call-Landlord</option>
+                            <option value="email-landlord">Email-Landlord</option>
+                            <option value="settings">Settings</option>
+                            <option value="settings">Settings</option>
+                            <option value="messages">Messages</option>
+                            <option value="home-map">Home-Map</option>
+                            <option value="home-listing">Home-Listing</option>
+                            <option value="roommats-detail">Roommats-Detail</option>
+                            <option value="subleases-detail">Subleases-Detail</option>
                 </select>
                 <select class="select-box" name="campus">
                     <option value="">All Campuses</option>
                     @if(!empty($appViews['campuses']))
                         @foreach($appViews['campuses'] as $campus)
-                            <option value="">{{$campus->title}}</option>
+                            <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -78,7 +96,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($appViews))
+                            @if(!empty($appViews['visits']))
                                 <?php $x = 1; ?>
                                 @foreach($appViews['visits'] as $view)
                                     <tr>

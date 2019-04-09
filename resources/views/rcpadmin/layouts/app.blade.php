@@ -11,7 +11,7 @@
   <title> {{ env('ADMIN_TITLE') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="{{ env('THEME_ASSETS_NEW') }}assets/images/favicon.ico">
-  <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/bootstrap.min.css?v=7">
+  <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/themify-icons.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/metisMenu.css">
@@ -84,10 +84,7 @@
             <li id="full-view"><i class="ti-fullscreen"></i></li>
             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                         
-                             
-                     <li class="settings-btn">
-              <i class="ti-settings"></i>
-            </li>
+               
           </ul>
         </div>
       </div>

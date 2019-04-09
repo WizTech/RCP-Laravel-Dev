@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcpadmin;
 use App\rcpadmin\AppView;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\GeneralHelper;
 use DB;
 
 class ScreenVisitController extends Controller
@@ -16,7 +17,8 @@ class ScreenVisitController extends Controller
      */
     public function index()
     {
-        $screenVisits = DB::table('rentcp_stats_laravel.app_views')
+        $screenVisits['campuses'] = GeneralHelper::getColumn('campus', 'title');
+        $screenVisits['screen_v'] = DB::table('rentcp_stats_laravel.app_views')
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')

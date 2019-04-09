@@ -13,51 +13,17 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">Application Leads</h4>
+        <h4 class="page-title pull-left">App Leads</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Leads</span></li>
+            <li><span>App Leads</span></li>
         </ul>
     </div>
 @stop
 @section('content')
     <div class="row">
+
         <div class="col-12 mt-5">
-            <div align="center">
-                Date From <input class="filter-box" type="date" name="date_from">
-                To <input class="filter-box" type="date" name="date_to">
-                <select class="select-box" name="page">
-                    <option value="">All Leads</option>
-                    <option value="call">Call</option>
-                    <option value="email">Email</option>
-                    <option value="favorites">Favorites</option>
-                </select>
-                <select class="filter-box" name="campus">
-                    <option value="">All Campuses</option>
-                    @if(!empty($appLeads['campuses']))
-                        @foreach($appLeads['campuses'] as $campus)
-                                <option value="{{$campus->id}}">{{$campus->title}}</option>
-                        @endforeach
-                    @endif
-                </select>
-                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> EXPORT LIST </a>
-            </div>
-            <div align="right" style="padding-right: 15%;">
-                <select class="select-box" name="page">
-                    <option value="">All Leads</option>
-                    <option value="call">Call</option>
-                    <option value="email">Email</option>
-                    <option value="favorites">Favorites</option>
-                </select>
-                <select class="select-box" name="campus">
-                    <option value="">All Campuses</option>
-                    @if(!empty($appLeads['campuses']))
-                        @foreach($appLeads['campuses'] as $campus)
-                                <option value="{{$campus->id}}">{{$campus->title}}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="data-tables datatable-dark">
@@ -74,9 +40,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty( $appLeads['leads']))
+                            @if(!empty($appLeads))
                                 <?php $x = 1; ?>
-                                @foreach( $appLeads['leads'] as $lead)
+                                @foreach($appLeads as $lead)
                                     @if(!empty($lead->username && $lead->campus_title))
                                         <tr>
                                             <td>{{ $x }}</td>
@@ -88,7 +54,7 @@
                                             <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
                                         </tr>
                                         <?php $x++; ?>
-                                    @endif
+                                        @endif
                                 @endforeach
                             @endif
                             </tbody>

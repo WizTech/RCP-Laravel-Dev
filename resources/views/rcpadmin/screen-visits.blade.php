@@ -29,11 +29,9 @@
                 To <input class="filter-box" type="date" name="date_to">
                 <select class="filter-box" name="campus">
                     <option value="">All Campuses</option>
-                    @if(!empty($appLeads))
-                        @foreach($appLeads as $appLead)
-                            @if(!empty($appLead->campus_id && $appLead->campus_title))
-                                <option value="{{$appLead->campus_id}}">{{$appLead->campus_title}}</option>
-                            @endif
+                    @if(!empty($screenVisits['campuses']))
+                        @foreach($screenVisits['campuses'] as $campus)
+                                <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -51,9 +49,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($screenVisits))
+                            @if(!empty($screenVisits['screen_v']))
                                 <?php $x = 1; ?>
-                                @foreach($screenVisits as $visit)
+                                @foreach($screenVisits['screen_v'] as $visit)
                                     <tr>
                                         <td>{{ $x }}</td>
                                         <td>{{$visit->page_type}} </td>

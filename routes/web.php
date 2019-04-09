@@ -76,11 +76,15 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::post('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController@store');
     Route::resource('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController');
-    Route::resource('resources', 'rcpadmin\ResourceController');
-    Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
-    Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
-    Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
 
+    Route::resource('resources', 'rcpadmin\ResourceController');
+
+    Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
+
+    Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
+
+    Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
+    
     Route::resource('app-users', 'rcpadmin\AppUserController');
     Route::resource('app-leads', 'rcpadmin\AppLeadController');
     Route::resource('app-favorites', 'rcpadmin\AppFavoriteController');

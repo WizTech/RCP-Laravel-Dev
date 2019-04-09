@@ -6,6 +6,7 @@ use App\rcpadmin\AppView;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\GeneralHelper;
+use Illuminate\Pagination\Paginator;
 use DB;
 use Excel;
 
@@ -21,16 +22,11 @@ class AppViewController extends Controller
     {
         $views = AppView::all()->toArray();
         $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        $pages = GeneralHelper::getColumn('rentcp_stats_laravel.app_views', 'page_type');
-        foreach ($pages as $page) {
-            $allPages[] = $page->page_type;
-        }
-        $appViews['pages'] = array_unique($allPages);
+        $appViews['campuses'];
         if (!empty($views)) {
             $appViews['visits'] = AppView::app_views();
-            return view('rcpadmin/app-views', compact('appViews'));
         }
-        return view('rcpadmin/app-views');
+        return view('rcpadmin/app-views', compact('appViews'));
     }
 
     /**
