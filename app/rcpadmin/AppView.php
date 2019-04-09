@@ -12,7 +12,7 @@ class AppView extends Model
 
     static function app_views()
     {
-        $appLeads = DB::table('rentcoll_stats.app_views')
+        $appLeads = DB::table('rentcp_stats_laravel.app_views')
             ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
             ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
             ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')

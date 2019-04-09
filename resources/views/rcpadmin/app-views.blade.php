@@ -13,10 +13,10 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">App Leads</h4>
+        <h4 class="page-title pull-left">Application Visits</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>App Leads</span></li>
+            <li><span>Application Stats / Visits</span></li>
         </ul>
     </div>
 @stop
@@ -42,7 +42,7 @@
                         @endforeach
                     @endif
                 </select>
-                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> Export List </a>
+                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> EXPORT LIST </a>
             </div>
             <div align="right" style="padding-right: 15%;">
                 <select class="select-box" name="page">

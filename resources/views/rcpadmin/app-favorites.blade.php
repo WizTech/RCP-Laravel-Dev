@@ -13,10 +13,10 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">App Leads</h4>
+        <h4 class="page-title pull-left">Application Favorites</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>App Leads</span></li>
+            <li><span>Application Stats / Favorites</span></li>
         </ul>
     </div>
 @stop
@@ -54,17 +54,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($appFavourites))
+                            @if(!empty($appFavorites))
                                 <?php $x = 1; ?>
-                                @foreach($appFavourites as $favourite)
-                                    @if(!empty($favourite->username && $favourite->property_title))
+                                @foreach($appFavorites as $favorite)
+                                    @if(!empty($favorite->username && $favorite->property_title))
                                         <tr>
                                             <td>{{ $x }}</td>
-                                            <td>{{$favourite->campus_title}} </td>
-                                            <td>{{$favourite->property_title}} </td>
-                                            <td>{{$favourite->username}} </td>
-                                            <td>{{$favourite->email}}  </td>
-                                            <td>{{$favourite->phone_no}}</td>
+                                            <td>{{$favorite->campus_title}} </td>
+                                            <td>{{$favorite->property_title}} </td>
+                                            <td>{{$favorite->username}} </td>
+                                            <td>{{$favorite->email}}  </td>
+                                            <td>{{$favorite->phone_no}}</td>
                                         </tr>
                                     @endif
                                     <?php $x++; ?>

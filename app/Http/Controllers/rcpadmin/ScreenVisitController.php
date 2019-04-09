@@ -16,7 +16,7 @@ class ScreenVisitController extends Controller
      */
     public function index()
     {
-        $screenVisits = DB::table('rentcoll_stats.app_views')
+        $screenVisits = DB::table('rentcp_stats_laravel.app_views')
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')

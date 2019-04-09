@@ -13,16 +13,15 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">App Users</h4>
+        <h4 class="page-title pull-left">Application Users</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>App Users</span></li>
+            <li><span> Application Stats  / App Users </span></li>
         </ul>
     </div>
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">

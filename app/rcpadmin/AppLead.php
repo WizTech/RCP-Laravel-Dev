@@ -11,7 +11,7 @@ class AppLead extends Model
     protected $table = "app_leads";
 
     static function app_leads(){
-        $appLeads = DB::table('rentcoll_stats.app_leads')
+        $appLeads = DB::table('rentcp_stats_laravel.app_leads')
             ->leftJoin('users', 'app_leads.user_id', '=', 'users.id')
             ->leftJoin('user_details', 'app_leads.user_id', '=', 'user_details.user_id')
             ->leftJoin('property', 'app_leads.property_id', '=', 'property.id')

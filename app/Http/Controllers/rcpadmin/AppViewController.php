@@ -21,7 +21,7 @@ class AppViewController extends Controller
     {
         $views = AppView::all()->toArray();
         $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        $pages = GeneralHelper::getColumn('rentcoll_stats.app_views', 'page_type');
+        $pages = GeneralHelper::getColumn('rentcp_stats_laravel.app_views', 'page_type');
         foreach ($pages as $page) {
             $allPages[] = $page->page_type;
         }
@@ -59,9 +59,10 @@ class AppViewController extends Controller
                     'Page Type' => $customer->page_type
                 );
             }
-            return Excel::create('Customer Data', function ($excel) use ($customer_array) {
-                $excel->setTitle('Customer Data');
-                $excel->sheet('Customer Data', function ($sheet) use ($customer_array) {
+            $sheetName  = date('d-m-y his');
+            return Excel::create($sheetName, function ($excel) use ($customer_array) {
+                $excel->setTitle('visits');
+                $excel->sheet('visits', function ($sheet) use ($customer_array) {
                     $sheet->fromArray($customer_array, null, 'A1', false, false);
                 });
             })->download('csv');

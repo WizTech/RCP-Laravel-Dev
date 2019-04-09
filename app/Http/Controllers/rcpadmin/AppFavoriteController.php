@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-use App\rcpadmin\AppFavourite;
+use App\rcpadmin\AppFavorite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AppFavouriteController extends Controller
+class AppFavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,12 @@ class AppFavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = AppFavourite::all()->toArray();
-        if (!empty($favourites)) {
-            $appFavourites = AppFavourite::app_favourite();
-            return view('rcpadmin/app-favourites', compact('appFavourites'));
+        $favorites = AppFavorite::all()->toArray();
+        if (!empty($favorites)) {
+            $appFavorites = AppFavorite::app_favourite();
+            return view('rcpadmin/app-favorites', compact('appFavorites'));
         }
-        return view('rcpadmin/app-favourites');
+        return view('rcpadmin/app-favorites');
     }
 
     /**

@@ -13,10 +13,10 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">App Leads</h4>
+        <h4 class="page-title pull-left">Time On Application</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>App Leads</span></li>
+            <li><span>Application Stats / Time On App</span></li>
         </ul>
     </div>
 @stop
