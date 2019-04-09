@@ -17,7 +17,7 @@ class Property extends Model
 {
   protected $table = 'property';
   protected $fillable = [
-    'title', 'address', 'campus_id', 'category_id', 'landlord_id', 'status', 'twilio_number', 'free_trial', 'street_address_short', 'description', 'meta_title', 'meta_description', 'email', 'phone', 'spcial', 'property_expiry_date', 'lat', 'lng'
+    'title', 'address', 'campus_id', 'category_id', 'landlord_id', 'status', 'twilio_number', 'free_trial', 'street_address_short', 'description', 'meta_title', 'meta_description', 'email', 'phone', 'spcial', 'property_expiry_date', 'lat', 'lng', 'domain_name'
   ];
 
   public function campus()

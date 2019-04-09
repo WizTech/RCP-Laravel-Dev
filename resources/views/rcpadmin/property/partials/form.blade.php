@@ -116,6 +116,11 @@
       {!! Form::text('special_expiry',null,['class' => 'form-control']) !!}
     </div>
 
+    <div class="col-md-3 mb-2">
+      {!! Form::label('Domain',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
+    </div>
+
 
   </div>
 

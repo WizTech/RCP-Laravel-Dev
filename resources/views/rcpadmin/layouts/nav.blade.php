@@ -69,8 +69,11 @@
               </li>
               <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
               </li>
+<<<<<<< HEAD
               <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a> </li>
               <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword Text</a> </li>
+=======
+>>>>>>> 6938e5deaeac254535dfa7ee6c47fc99e7de569d
             </ul>
           </div>
         </li>

@@ -62,12 +62,14 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
     Route::resource('feature', 'rcpadmin\FeatureController');
     Route::resource('template', 'rcpadmin\TemplateController');
+
     Route::resource('testimonials', 'rcpadmin\TestimonialController');
     Route::resource('news', 'rcpadmin\NewsController');
     Route::resource('career', 'rcpadmin\CareerController');
     Route::resource('careertype', 'rcpadmin\CareerTypeController');
     Route::resource('careerslider', 'rcpadmin\CareerSliderController');
     Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
+<<<<<<< HEAD
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
@@ -80,6 +82,10 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('resources', 'rcpadmin\ResourceController');
 
     Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
+=======
+
+    Route::resource('maps', 'rcpadmin\MapController');
+>>>>>>> 6938e5deaeac254535dfa7ee6c47fc99e7de569d
 
     Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
 
