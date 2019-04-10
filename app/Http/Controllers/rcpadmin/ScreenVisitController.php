@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\GeneralHelper;
 use DB;
+use Excel;
 
 class ScreenVisitController extends Controller
 {
@@ -17,14 +18,52 @@ class ScreenVisitController extends Controller
      */
     public function index()
     {
-        $screenVisits['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        $screenVisits['screen_v'] = DB::table('rentcp_stats_laravel.app_views')
+        $screenVisits = DB::table('rentcoll_stats.app_views')
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')
             ->get();
         return view('rcpadmin/screen-visits', compact('screenVisits'));
     }
+
+
+    function screenExport()
+    {
+        echo "<pre>"; print_r($_GET['date_from']); die();
+        $visit[] = ['Screen','Visits'];
+        if (!empty($_GET)) {
+            if ($_GET['page_type'] === 'All'){
+                $screenVisits = DB::table('rentcoll_stats.app_views')
+                    ->select('page_type', DB::raw('COUNT(*) as `count`'))
+                    ->whereBetween('date', [$_GET['date_from'], $_GET['date_to']])
+                    ->groupBy('page_type')
+                    ->havingRaw('COUNT(*) > 0')
+                    ->get();
+            }else{
+                    $screenVisits = DB::table('rentcoll_stats.app_views')
+                        ->select('page_type', DB::raw('COUNT(*) as `count`'))
+                        ->whereBetween('date', [$_GET['date_from'], $_GET['date_to']])
+                        ->where('page_type', $_GET['page_type'])
+                        ->groupBy('page_type')
+                        ->havingRaw('COUNT(*) > 0')
+                        ->get();
+            }
+            foreach ($screenVisits as $screenVisit) {
+                $visit[] = array(
+                    'Screen' => $screenVisit->page_type ?  $screenVisit->page_type : '',
+                    'Visits' => $screenVisit->count ? $screenVisit->count : '',
+                );
+            }
+            $sheetName  = date('d-m-y his');
+            return Excel::create($sheetName, function ($excel) use ($visit) {
+                $excel->setTitle('visits');
+                $excel->sheet('visits', function ($sheet) use ($visit) {
+                    $sheet->fromArray($visit, null, 'A1', false, false);
+                });
+            })->download('csv');
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.

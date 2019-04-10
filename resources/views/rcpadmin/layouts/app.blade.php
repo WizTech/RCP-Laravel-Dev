@@ -10,6 +10,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title> {{ env('ADMIN_TITLE') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="shortcut icon" type="image/png" href="{{ env('THEME_ASSETS_NEW') }}assets/images/favicon.ico">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/font-awesome.min.css">
@@ -18,9 +19,6 @@
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/owl.carousel.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/slicknav.min.css">
   <link rel="stylesheet" href="{{ env('APP_URL') }}/css/custom.css">
-
-
-
   <!-- modernizr css -->
 
   @yield('styles')
@@ -29,6 +27,8 @@
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/default-css.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/styles.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/responsive.css">
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+        rel = "stylesheet">
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -320,6 +320,13 @@
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/metisMenu.min.js"></script>
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slimscroll.min.js"></script>
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slicknav.min.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( ".datePicker" ).datepicker();
+    $( ".datePicker" ).datepicker("show");
+  });
+</script>
 
 @yield('scripts')
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/plugins.js"></script>

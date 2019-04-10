@@ -25,17 +25,19 @@
 
         <div class="col-12 mt-5">
             <div align="center">
-                Date From <input class="filter-box" type="date" name="date_from">
-                To <input class="filter-box" type="date" name="date_to">
+                <form action="{{url('rcpadmin/favorite-export')}}" method="get">
+                Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>" class="filter-box datePicker" id="dateFrom">
+                To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker" id="dateTo">
                 <select class="filter-box" name="campus">
-                    <option value="">All Campuses</option>
+                    <option value="All">All Campuses</option>
                     @if(!empty( $appFavorites['campuses']))
                         @foreach( $appFavorites['campuses'] as $campus)
                                 <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
-                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success"> Export List </a>
+                    <button type="submit" class="btn btn-success">Export List</button>
+                </form>
             </div>
             <div class="card">
                 <div class="card-body">

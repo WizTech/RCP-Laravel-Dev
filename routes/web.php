@@ -93,6 +93,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('time-on-app', 'rcpadmin\TimeOnAppController');
     Route::resource('bounce-rate', 'rcpadmin\BounceRateController');
     Route::get('csv-export', 'rcpadmin\AppViewController@csvExport');
+    Route::get('screen-export', 'rcpadmin\ScreenVisitController@screenExport');
+    Route::get('favorite-export', 'rcpadmin\AppFavoriteController@favroiteExport');
 
 });
 
