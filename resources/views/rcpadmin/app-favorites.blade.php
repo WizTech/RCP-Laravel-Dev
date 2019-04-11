@@ -26,8 +26,8 @@
         <div class="col-12 mt-5">
             <div align="center">
                 <form action="{{url('rcpadmin/favorite-export')}}" method="get">
-                Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>" class="filter-box datePicker" id="dateFrom">
-                To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker" id="dateTo">
+                Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>" class="filter-box datePicker">
+                To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker">
                 <select class="filter-box" name="campus">
                     <option value="All">All Campuses</option>
                     @if(!empty( $appFavorites['campuses']))

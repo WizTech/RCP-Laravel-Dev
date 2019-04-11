@@ -24,39 +24,44 @@
     <div class="row">
         <div class="col-12 mt-5">
             <div align="center">
-                Date From <input class="filter-box" type="date" name="date_from">
-                To <input class="filter-box" type="date" name="date_to">
-                <select class="select-box" name="page">
-                    <option value="">All Leads</option>
-                    <option value="call">Call</option>
-                    <option value="email">Email</option>
-                    <option value="favorites">Favorites</option>
-                </select>
-                <select class="filter-box" name="campus">
-                    <option value="">All Campuses</option>
-                    @if(!empty($appLeads['campuses']))
-                        @foreach($appLeads['campuses'] as $campus)
+                <form action="{{url('rcpadmin/lead-export')}}" method="get">
+                    Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
+                                     class="filter-box datePicker">
+                    To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker">
+                    <select class="select-box" name="lead_type">
+                        <option value="All">All Leads</option>
+                        <option value="call">Call</option>
+                        <option value="email">Email</option>
+                        <option value="fav">Favorites</option>
+                    </select>
+                    <select class="filter-box" name="campus_id">
+                        <option value="All">All Campuses</option>
+                        @if(!empty($appLeads['campuses']))
+                            @foreach($appLeads['campuses'] as $campus)
                                 <option value="{{$campus->id}}">{{$campus->title}}</option>
-                        @endforeach
-                    @endif
-                </select>
-                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> EXPORT LIST </a>
+                            @endforeach
+                        @endif
+                    </select>
+                    <button type="submit" class="btn btn-success btn-lg"> EXPORT LIST</button>
+                </form>
             </div>
             <div align="right" style="padding-right: 15%;">
-                <select class="select-box" name="page">
-                    <option value="">All Leads</option>
-                    <option value="call">Call</option>
-                    <option value="email">Email</option>
-                    <option value="favorites">Favorites</option>
-                </select>
+                <form action="{{url('rcpadmin/app-leads')}}" method="get">
+                    <select class="select-box" name="lead_type" id="leadType">
+                        <option value="All">All Leads</option>
+                        <option value="call">Call</option>
+                        <option value="email">Email</option>
+                        <option value="fav">Favorites</option>
+                    </select>
                 <select class="select-box" name="campus">
                     <option value="">All Campuses</option>
                     @if(!empty($appLeads['campuses']))
                         @foreach($appLeads['campuses'] as $campus)
-                                <option value="{{$campus->id}}">{{$campus->title}}</option>
+                            <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
+                </form>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -146,9 +151,16 @@
         })
 
     </script>
-    <script>
-        $('.delete').click(function () {
-            return confirm("Are you sure you want to delete?");
-        })
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#leadType').on('change', function (e) {
+                e.preventDefault();
+                this.form.submit();
+            });
+            $('#campusId').on('change', function (e) {
+                e.preventDefault();
+                this.form.submit();
+            });
+        });
     </script>
 @stop

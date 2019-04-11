@@ -48,7 +48,7 @@
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
-                                <th>Screen </th>
+                                <th>Screen</th>
                                 <th>Visits</th>
                             </tr>
                             </thead>

@@ -29,7 +29,6 @@ class ScreenVisitController extends Controller
 
     function screenExport()
     {
-        echo "<pre>"; print_r($_GET['date_from']); die();
         $visit[] = ['Screen','Visits'];
         if (!empty($_GET)) {
             if ($_GET['page_type'] === 'All'){
