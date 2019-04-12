@@ -96,6 +96,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::get('screen-export', 'rcpadmin\ScreenVisitController@screenExport');
     Route::get('favorite-export', 'rcpadmin\AppFavoriteController@favroiteExport');
     Route::get('lead-export', 'rcpadmin\AppLeadController@leadExport');
+    Route::get('visit-export', 'rcpadmin\AppViewController@visitExport');
 
 });
 

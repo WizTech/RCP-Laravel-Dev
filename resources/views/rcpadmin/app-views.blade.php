@@ -24,18 +24,20 @@
     <div class="row">
         <div class="col-12 mt-5">
             <div align="center">
-                Date From <input class="filter-box" type="date" name="date_from">
-                To <input class="filter-box" type="date" name="date_to">
-                <select class="filter-box" name="campus">
-                    <option value="">All Campuses</option>
+                <form action="{{url('rcpadmin/visit-export')}}" method="get">
+                Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
+                                 class="filter-box datePicker">
+                To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker">
+                <select class="filter-box" name="campus_id">
+                    <option value="All">All Campuses</option>
                     @if(!empty($appViews['campuses']))
                         @foreach($appViews['campuses'] as $campus)
                             <option value="{{$campus->id}}">{{$campus->title}}</option>
                             @endforeach
                         @endif
                 </select>
-                <select class="select-box" name="page">
-                    <option value="">All Pages</option>
+                <select class="select-box" name="page_type">
+                    <option value="All">All Pages</option>
                     <option value="home">Home</option>
                     <option value="campus">Campus</option>
                     <option value="detail">Detail</option>
@@ -51,11 +53,13 @@
                     <option value="roommats-detail">Roommats-Detail</option>
                     <option value="subleases-detail">Subleases-Detail</option>
                 </select>
-                <a href="{{ url('rcpadmin/csv-export') }}" class="btn btn-success btn-lg"> EXPORT LIST </a>
+                    <button type="submit" class="btn btn-success btn-lg"> EXPORT LIST </button>
+                </form>
             </div>
             <div align="right" style="padding-right: 15%;">
-                <select class="select-box" name="page">
-                    <option value="">All Pages</option>
+                <form action="{{url('rcpadmin/visits')}}" method="get">
+                <select class="select-box" name="page_type" id="pageId">
+                    <option value="All">All Pages</option>
                             <option value="home">Home</option>
                             <option value="campus">Campus</option>
                             <option value="detail">Detail</option>
@@ -71,14 +75,15 @@
                             <option value="roommats-detail">Roommats-Detail</option>
                             <option value="subleases-detail">Subleases-Detail</option>
                 </select>
-                <select class="select-box" name="campus">
-                    <option value="">All Campuses</option>
+                <select class="select-box" name="campus_id" id="campusId">
+                    <option value="All">All Campuses</option>
                     @if(!empty($appViews['campuses']))
                         @foreach($appViews['campuses'] as $campus)
                             <option value="{{$campus->id}}">{{$campus->title}}</option>
                         @endforeach
                     @endif
                 </select>
+                </form>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -166,9 +171,30 @@
         })
 
     </script>
-    <script>
-        $('.delete').click(function () {
-            return confirm("Are you sure you want to delete?");
-        })
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#leadType').on('change', function (e) {
+                e.preventDefault();
+                this.form.submit();
+            });
+            $('#campusId').on('change', function (e) {
+                e.preventDefault();
+                this.form.submit();
+            });
+        });
     </script>
+    <script>
+        $(document).ready(function () {
+           $('#pageId').on('change', function (e) {
+               e.preventDefault();
+               this.form.submit();
+           })
+            $('#campusId').on('change', function (e) {
+                e.preventDefault();
+                this.form.submit();
+            })
+        });
+    </script>
+
 @stop

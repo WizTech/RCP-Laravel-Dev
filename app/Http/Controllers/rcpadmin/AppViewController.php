@@ -23,8 +23,22 @@ class AppViewController extends Controller
         $views = AppView::all()->toArray();
         $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
         $appViews['campuses'];
-        if (!empty($views)) {
-            $appViews['visits'] = AppView::app_views();
+        if (!empty($_GET)){
+            if (!empty($_GET['page_type']) && $_GET['campus_id'] == 'All'){
+                $page_type = $_GET['page_type'];
+                if (!empty($page_type)) {
+                    $appViews['visits'] = AppView::filter_visits($page_type,'');
+                }
+            }elseif(!empty($_GET['campus_id']) && $_GET['page_type'] == 'All'){
+                $campus_id = $_GET['campus_id'];
+                if (!empty($campus_id)) {
+                    $appViews['visits'] = AppView::filter_visits('',$campus_id);
+                }
+            }
+        }else{
+            if (!empty($views)) {
+                $appViews['visits'] = AppView::app_views();
+            }
         }
         return view('rcpadmin/app-views', compact('appViews'));
     }
@@ -37,6 +51,37 @@ class AppViewController extends Controller
     function create()
     {
         //
+    }
+
+    function visitExport(){
+        $views = AppView::all()->toArray();
+        if (!empty($views)) {
+            if (!empty($_GET)){
+                $date_from = $_GET['date_from'];
+                $date_to = $_GET['date_to'];
+                $campus_id = $_GET['campus_id'];
+                $page_type = $_GET['page_type'];
+                $appVisits = AppView::visitExport($date_from, $date_to, $campus_id, $page_type)->toArray();
+                $visits[] = array('User Name', 'Email', 'Phone No', 'Campus Title', 'Page Type');
+                foreach ($appVisits as $appVisit) {
+                    $visits[] = array(
+                        'User Name' => $appVisit->username,
+                        'Email' => $appVisit->email,
+                        'Phone No' => $appVisit->phone_no,
+                        'Campus Title' => $appVisit->campus_title,
+                        'Page Type' => $appVisit->page_type
+                    );
+                }
+            }
+
+            $sheetName  = date('d-m-y his');
+            return Excel::create($sheetName, function ($excel) use ($visits) {
+                $excel->setTitle('visits');
+                $excel->sheet('visits', function ($sheet) use ($visits) {
+                    $sheet->fromArray($visits, null, 'A1', false, false);
+                });
+            })->download('csv');
+        }
     }
 
     function csvExport()

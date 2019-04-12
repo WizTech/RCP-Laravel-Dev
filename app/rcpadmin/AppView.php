@@ -12,7 +12,7 @@ class AppView extends Model
 
     static function app_views()
     {
-        $appLeads = DB::table('rentcp_stats_laravel.app_views')
+        $appLeads = DB::table('rentcoll_stats.app_views')
             ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
             ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
             ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
@@ -20,4 +20,74 @@ class AppView extends Model
             ->get();
         return $appLeads;
     }
+
+    static function filter_visits($page_type,$campus_id){
+        if (!empty($page_type) && $page_type != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->where('page_type', $page_type)
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }elseif(!empty($campus_id) && $campus_id != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->where('campus_id', $campus_id)
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }
+    }
+
+    static function visitExport($date_from, $date_to, $campus_id, $page_type)
+    {
+        if ($campus_id != 'All' && $page_type == 'All'){
+
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->where('campus_id', $campus_id)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }elseif ($campus_id == 'All' && $page_type != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->where('page_type', $page_type)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }elseif ($campus_id != 'All' && $page_type != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->where('campus_id', $campus_id)
+                ->where('page_type', $page_type)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }else{
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->whereBetween('date', [$date_from, $date_to])
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->get();
+            return $appLeads;
+        }
+    }
+
+
 }
