@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampusNeighborhood extends Migration
+class CreateContactusTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,13 +13,16 @@ class CreateCampusNeighborhood extends Migration
    */
   public function up()
   {
-    Schema::create('campus_neighborhood', function (Blueprint $table) {
+    Schema::create('contact_us', function (Blueprint $table) {
       $table->increments('id');
-      $table->integer('campus_id')->unsigned();
-      $table->string('title');
-      $table->string('alt');
-      $table->string('image');
-      $table->text('description');
+      $table->string('name');
+      $table->string('email');
+      $table->string('phone');
+      $table->string('company');
+      $table->string('fax');
+      $table->string('message');
+      $table->dateTime('add_date');
+
       $table->timestamps();
     });
   }
@@ -31,6 +34,6 @@ class CreateCampusNeighborhood extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('campus_neighborhood');
+    Schema::dropIfExists('contact_us');
   }
 }

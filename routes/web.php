@@ -69,7 +69,6 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::resource('careertype', 'rcpadmin\CareerTypeController');
     Route::resource('careerslider', 'rcpadmin\CareerSliderController');
     Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
-<<<<<<< HEAD
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
@@ -78,14 +77,14 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::post('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController@store');
     Route::resource('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController');
+    Route::resource('list-contact-form', 'rcpadmin\ListContactFormController');
+    Route::resource('meta-details', 'rcpadmin\MetaDetailsController');
 
     Route::resource('resources', 'rcpadmin\ResourceController');
 
     Route::get('create-resource/{id}', 'rcpadmin\ResourceController@createResource');
-=======
 
     Route::resource('maps', 'rcpadmin\MapController');
->>>>>>> 6938e5deaeac254535dfa7ee6c47fc99e7de569d
 
     Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
 
@@ -97,7 +96,7 @@ Route::get('/articles', 'ArticlesController@index');
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
 
 Auth::routes();

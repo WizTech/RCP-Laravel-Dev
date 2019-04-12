@@ -17,7 +17,6 @@ class CreatePropertyFeaturesTable extends Migration
             $table->increments('id');
             $table->integer('property_id')->unsigned();
             $table->integer('feature_id')->unsigned();
-            
             $table->timestamps();
         });
     }
