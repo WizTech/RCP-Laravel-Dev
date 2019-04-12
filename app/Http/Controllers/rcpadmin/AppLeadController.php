@@ -6,6 +6,7 @@ use App\rcpadmin\AppLead;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\GeneralHelper;
+use Illuminate\Pagination\Paginator;
 use Excel;
 
 class AppLeadController extends Controller
@@ -18,21 +19,21 @@ class AppLeadController extends Controller
 
     public function index()
     {
+        $leads = AppLead::all()->toArray();
+        $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
         if (!empty($_GET)){
-            $leads = AppLead::all()->toArray();
-            $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
-            if (!empty($leads && $_GET['lead_type'])){
+            if (!empty($_GET['lead_type']) && $_GET['campus_id'] == 'All'){
                 $leadType  = $_GET['lead_type'];
-                $appLeads['leads'] = AppLead::app_lead_type($leadType);
+                $appLeads['leads'] = AppLead::filter_leads($leadType, '');
                 return view('rcpadmin/app-leads', compact('appLeads'));
             }
-        }else{
-            $leads = AppLead::all()->toArray();
-            $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
-            if (!empty($leads)){
+            if (!empty($_GET['campus_id']) && $_GET['lead_type'] == 'All'){
+                $campusId  = $_GET['campus_id'];
+                $appLeads['leads'] = AppLead::filter_leads('',$campusId);
+                return view('rcpadmin/app-leads', compact('appLeads'));
+            }
+        }elseif (!empty($leads)){
                 $appLeads['leads'] = AppLead::app_leads();
-                return view('rcpadmin/app-leads', compact('appLeads'));
-            }
         }
 
         return view('rcpadmin/app-leads', compact('appLeads'));
@@ -43,13 +44,13 @@ class AppLeadController extends Controller
      * */
 
     function leadExport(){
-        $lead[] = ['User Name', 'Email', 'Phone', 'Campus', 'Lead Type', 'Date'];
         if (!empty($_GET)) {
             $date_from = $_GET['date_from'];
             $date_to = $_GET['date_to'];
             $lead_type = $_GET['lead_type'];
             $campus_id = $_GET['campus_id'];
             $leads = AppLead::all()->toArray();
+            $lead[] = ['User Name', 'Email', 'Phone', 'Campus', 'Lead Type', 'Date'];
             if (!empty($leads)) {
                 $appLeads = AppLead::lead_export($date_from, $date_to, $campus_id, $lead_type);
             }

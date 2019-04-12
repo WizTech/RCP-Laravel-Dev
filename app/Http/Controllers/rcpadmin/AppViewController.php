@@ -22,7 +22,6 @@ class AppViewController extends Controller
     {
         $views = AppView::all()->toArray();
         $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        $appViews['campuses'];
         if (!empty($_GET)){
             if (!empty($_GET['page_type']) && $_GET['campus_id'] == 'All'){
                 $page_type = $_GET['page_type'];
@@ -35,10 +34,8 @@ class AppViewController extends Controller
                     $appViews['visits'] = AppView::filter_visits('',$campus_id);
                 }
             }
-        }else{
-            if (!empty($views)) {
+        }elseif(!empty($views)) {
                 $appViews['visits'] = AppView::app_views();
-            }
         }
         return view('rcpadmin/app-views', compact('appViews'));
     }
@@ -56,7 +53,7 @@ class AppViewController extends Controller
     function visitExport(){
         $views = AppView::all()->toArray();
         if (!empty($views)) {
-            if (!empty($_GET)){
+            if (!empty($_GET['date_from'] && $_GET['date_to'])){
                 $date_from = $_GET['date_from'];
                 $date_to = $_GET['date_to'];
                 $campus_id = $_GET['campus_id'];

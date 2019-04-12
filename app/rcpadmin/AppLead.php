@@ -21,15 +21,27 @@ class AppLead extends Model
         return $appLeads;
     }
 
-    static function app_lead_type($leadType){
-        $appLeads = DB::table('rentcoll_stats.app_leads')
-            ->leftJoin('users', 'app_leads.user_id', '=', 'users.id')
-            ->leftJoin('user_details', 'app_leads.user_id', '=', 'user_details.user_id')
-            ->leftJoin('property', 'app_leads.property_id', '=', 'property.id')
-            ->leftJoin('campus', 'property.campus_id', '=', 'campus.id')
-            ->where('type',$leadType)
-            ->select('app_leads.id','users.name as username', 'users.email', 'user_details.phone_no', 'app_leads.type as lead_type','property.campus_id', 'campus.title as campus_title', 'app_leads.date')
-            ->get();
+    static function filter_leads($lead_type,$campus_id){
+        if (!empty($lead_type) && $lead_type != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_leads')
+                ->leftJoin('users', 'app_leads.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_leads.user_id', '=', 'user_details.user_id')
+                ->leftJoin('property', 'app_leads.property_id', '=', 'property.id')
+                ->leftJoin('campus', 'property.campus_id', '=', 'campus.id')
+                ->where('type',$lead_type)
+                ->select('app_leads.id','users.name as username', 'users.email', 'user_details.phone_no', 'app_leads.type as lead_type','property.campus_id', 'campus.title as campus_title', 'app_leads.date')
+                ->get();
+        }elseif(!empty($campus_id) && $campus_id != 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_leads')
+                ->leftJoin('users', 'app_leads.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_leads.user_id', '=', 'user_details.user_id')
+                ->leftJoin('property', 'app_leads.property_id', '=', 'property.id')
+                ->leftJoin('campus', 'property.campus_id', '=', 'campus.id')
+                ->where('property.campus_id',$campus_id)
+                ->select('app_leads.id','users.name as username', 'users.email', 'user_details.phone_no', 'app_leads.type as lead_type','property.campus_id', 'campus.title as campus_title', 'app_leads.date')
+                ->get();
+        }
+
         return $appLeads;
     }
 

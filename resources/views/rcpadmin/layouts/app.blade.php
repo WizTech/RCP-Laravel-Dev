@@ -321,10 +321,21 @@
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slimscroll.min.js"></script>
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slicknav.min.js"></script>
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 <script>
-  $(function() {
-    $( ".datePicker" ).datepicker();
-    $( ".datePicker" ).datepicker("show");
+  $(document).ready(function () {
+    var initialized = false;
+    $(function () {
+      $(".datePicker").focus();
+      $(".datePicker").blur(function(){
+        if(!initialized){
+          $(".datePicker").datepicker({
+            autoOpen: false
+          });
+          initialized = true;
+        }
+      });
+    });
   });
 </script>
 

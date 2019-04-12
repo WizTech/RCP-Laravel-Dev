@@ -53,8 +53,8 @@
                         <option value="email">Email</option>
                         <option value="fav">Favorites</option>
                     </select>
-                <select class="select-box" name="campus">
-                    <option value="">All Campuses</option>
+                <select class="select-box" name="campus_id" id="campusId">
+                    <option value="All">All Campuses</option>
                     @if(!empty($appLeads['campuses']))
                         @foreach($appLeads['campuses'] as $campus)
                             <option value="{{$campus->id}}">{{$campus->title}}</option>
