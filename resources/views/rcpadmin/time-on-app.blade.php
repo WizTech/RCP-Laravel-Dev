@@ -27,8 +27,8 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table  class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -49,8 +49,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($times) && $times > 0)
                         {{$times->links()}}
                         Showing {{$times->firstItem()}} to {{$times->lastItem()}} of {{$times->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
