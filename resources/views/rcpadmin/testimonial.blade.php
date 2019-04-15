@@ -22,15 +22,13 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
                     <a href="{{ url('rcpadmin/testimonials/create')}}" class="btn btn-outline-dark header-title">Add
                         Testimonial</a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -49,21 +47,24 @@
                                         <td> {{ $x }}</td>
                                         <td> {{$testimonial['person_name']}} </td>
                                         <td><img style="float: right;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/testimonials/'.$testimonial['photo']}}"></td>
+                                                 src="{{ env('APP_URL').'storage/uploads/testimonials/'.$testimonial['photo']}}">
+                                        </td>
                                         <td> {{$testimonial['title']}} </td>
                                         <td> {{$testimonial['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/testimonials/'.$testimonial['id'])}}"
-                                                                    class="text-secondary"><i
+                                                <li class="mr-3"><a
+                                                            href="{{ url('rcpadmin/testimonials/'.$testimonial['id'])}}"
+                                                            class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
-                                                    <form method="POST" action="testimonials/{{$testimonial['id']}}">
-                                                        {{ csrf_field() }}
-                                                        {{ method_field('DELETE') }}
-                                                        <div class="form-group">
-                                                          <input  type="submit" class="btn btn-danger btn-xs delete" value="Delete">
-                                                        </div>
-                                                    </form>
+                                                <form method="POST" action="testimonials/{{$testimonial['id']}}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-danger btn-xs delete"
+                                                               value="Delete">
+                                                    </div>
+                                                </form>
                                             </ul>
                                         </td>
                                     </tr>
@@ -72,6 +73,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(count($testimonials) > 0)
+                            {{$testimonials->links()}}
+                            Showing {{$testimonials->firstItem()}} to {{$testimonials->lastItem()}} of {{$testimonials->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
@@ -126,7 +131,7 @@
 
     </script>
     <script>
-        $('.delete').click(function(){
+        $('.delete').click(function () {
             return confirm("Are you sure you want to delete?");
         })
     </script>

@@ -16,7 +16,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-        $careers= Career::all()->toArray();
+        $careers= Career::paginate(10);
         return view('rcpadmin.career', compact('careers'));
     }
 

@@ -22,15 +22,13 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
                     <a href="{{ url('rcpadmin/careerslider/create')}}" class="btn btn-outline-dark header-title">Add
                         Career Slider</a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -51,21 +49,24 @@
                                         <td> {{ $x }}</td>
                                         <td> {{$career_slider['slider_type']}} </td>
                                         <td><img style="float: right;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/careerSlider/'.$career_slider['slider_image']}}"></td>
+                                                 src="{{ env('APP_URL').'storage/uploads/careerSlider/'.$career_slider['slider_image']}}">
+                                        </td>
                                         <td> {{$career_slider['slider_heading_one']}}</td>
                                         <td> {{$career_slider['slider_heading_two']}}</td>
                                         <td> {{$career_slider['slider_minute']}}</td>
                                         <td> {{$career_slider['status']}}</td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/careerslider/'.$career_slider['id'])}}"
-                                                                    class="text-secondary"><i
+                                                <li class="mr-3"><a
+                                                            href="{{ url('rcpadmin/careerslider/'.$career_slider['id'])}}"
+                                                            class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
                                                 <form method="POST" action="careerslider/{{$career_slider['id']}}">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     <div class="form-group">
-                                                        <input  type="submit" class="btn btn-danger btn-xs delete" value="Delete">
+                                                        <input type="submit" class="btn btn-danger btn-xs delete"
+                                                               value="Delete">
                                                     </div>
                                                 </form>
                                             </ul>
@@ -76,6 +77,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(count($career_sliders) > 0)
+                            {{$career_sliders->links()}}
+                            Showing {{$career_sliders->firstItem()}} to {{$career_sliders->lastItem()}} of {{$career_sliders->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
@@ -130,7 +135,7 @@
 
     </script>
     <script>
-        $('.delete').click(function(){
+        $('.delete').click(function () {
             return confirm("Are you sure you want to delete?");
         })
     </script>

@@ -22,15 +22,13 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
                     <a href="{{ url('rcpadmin/news/create')}}" class="btn btn-outline-dark header-title">Add
                         News</a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -61,7 +59,8 @@
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     <div class="form-group">
-                                                        <input  type="submit" class="btn btn-danger btn-xs delete" value="Delete">
+                                                        <input type="submit" class="btn btn-danger btn-xs delete"
+                                                               value="Delete">
                                                     </div>
                                                 </form>
                                             </ul>
@@ -72,6 +71,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(count($news) > 0)
+                            {{$news->links()}}
+                            Showing {{$news->firstItem()}} to {{$news->lastItem()}} of {{$news->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
@@ -126,7 +129,7 @@
 
     </script>
     <script>
-        $('.delete').click(function(){
+        $('.delete').click(function () {
             return confirm("Are you sure you want to delete?");
         })
     </script>

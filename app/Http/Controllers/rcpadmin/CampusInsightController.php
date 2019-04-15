@@ -17,7 +17,7 @@ class CampusInsightController extends Controller
      */
     public function index()
     {
-        $campus= CampusInsight::all()->toArray();
+        $campus= CampusInsight::paginate(10);
         return view('rcpadmin.campus_insight', compact('campus'));
     }
 

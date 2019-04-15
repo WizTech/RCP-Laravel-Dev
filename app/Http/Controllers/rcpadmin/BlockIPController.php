@@ -12,8 +12,8 @@ class BlockIPController extends Controller
 {
   public function index()
   {
-    $ip = BlockIPModel::all()->toArray();
-    return view('rcpadmin.block-ip', compact('ip'));
+    $ips = BlockIPModel::paginate(10);
+    return view('rcpadmin.block-ip', compact('ips'));
   }
 
   public function create()

@@ -14,7 +14,7 @@ class YardiController extends Controller
   public function index()
   {
     
-    $webUsers = User::yardi_landlords()->get()->toArray();
+    $webUsers = User::yardi_landlords()->paginate(10);
 
     return view('rcpadmin.yardi', compact('webUsers'));
   }

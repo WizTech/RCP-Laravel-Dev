@@ -36,7 +36,7 @@ class PropertyController extends Controller
     public function index()
     {
         //
-        $properties = Property::with('category')->get()->toArray();
+        $properties = Property::with('category')->paginate(10);
         return view('rcpadmin.property', compact('properties'));
     }
 

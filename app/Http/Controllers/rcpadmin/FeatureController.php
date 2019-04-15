@@ -12,8 +12,7 @@ class FeatureController extends Controller
 {
   public function index()
   {
-    $features = FeatureModel::with('type')->get()->toArray();
-    //echo '<pre>';print_r($features );echo '</pre>';die('Call');
+    $features = FeatureModel::with('type')->paginate(10);
     return view('rcpadmin.feature', compact('features'));
   }
 

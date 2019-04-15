@@ -11,7 +11,7 @@ class BlockEmailController extends Controller
 {
   public function index()
   {
-    $emails = BlockEmailModel::all()->toArray();
+    $emails = BlockEmailModel::paginate(10);
     return view('rcpadmin.block-email', compact('emails'));
   }
 

@@ -13,7 +13,7 @@ class PriceController extends Controller
 {
   public function index()
   {
-    $price = PriceModel::all()->toArray();
+    $price = PriceModel::paginate(10);
     return view('rcpadmin.price', compact('price'));
   }
 

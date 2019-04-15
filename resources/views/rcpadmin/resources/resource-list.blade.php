@@ -22,15 +22,15 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <?php  $campus_id  = $resources['campus_id']; ?>
-                    <a href="{{ url('rcpadmin/create-resource/'.$campus_id)}}" class="btn btn-outline-dark header-title">Add New
+                    <?php  $campus_id = $resources['campus_id']; ?>
+                    <a href="{{ url('rcpadmin/create-resource/'.$campus_id)}}"
+                       class="btn btn-outline-dark header-title">Add New
                         Resource</a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -48,7 +48,8 @@
                                         <td> {{ $x }}</td>
                                         <td> {{$r['title']}} </td>
                                         <td><img style="float: right;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/resources/'.$r['image']}}"></td>
+                                                 src="{{ env('APP_URL').'storage/uploads/resources/'.$r['image']}}">
+                                        </td>
                                         <td> {{$r['link']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
@@ -56,7 +57,8 @@
                                                     <a href="{{ url('rcpadmin/resources/'.$r['id'])}}"
                                                        class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
-                                                <form method="POST" action="{{url('rcpadmin/delete-resource/'.$r['id'])}}">
+                                                <form method="POST"
+                                                      action="{{url('rcpadmin/delete-resource/'.$r['id'])}}">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     <div class="form-group">
@@ -72,6 +74,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(count($resources['res']) > 0)
+                            {{$resources['res']->links()}}
+                            Showing {{$resources['res']->firstItem()}} to {{$resources['res']->lastItem()}} of {{$resources['res']->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>

@@ -22,15 +22,13 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
                     <a href="{{ url('rcpadmin/campus-insight/create')}}" class="btn btn-outline-dark header-title"> Add
                         Campus Insight </a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -49,8 +47,11 @@
                                         <td> {{ $x }}</td>
                                         <td> {{$c['title']}} </td>
                                         <td> {{$c['link']}} </td>
-                                        <td><a target="_blank" href={{ url('storage/uploads/campusinsight/'.$c['pdf_file'])}}><img style="float: right;" height="60" width="60"
-                                                                                                                                   src="{{ env('APP_URL').'storage/uploads/pdf-logo.png'}}"></a></td>
+                                        <td><a target="_blank"
+                                               href={{ url('storage/uploads/campusinsight/'.$c['pdf_file'])}}><img
+                                                        style="float: right;" height="60" width="60"
+                                                        src="{{ env('APP_URL').'storage/uploads/pdf-logo.png'}}"></a>
+                                        </td>
                                         <td> {{$c['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
@@ -74,6 +75,10 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(count($campus) > 0)
+                            {{$campus->links()}}
+                            Showing {{$campus->firstItem()}} to {{$campus->lastItem()}} of {{$campus->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
