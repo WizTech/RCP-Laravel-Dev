@@ -15,7 +15,11 @@ class AppUserController extends Controller
      */
     public function index()
     {
-        $appUsers = AppUser::all()->toArray();
+        $appUsers = AppUser::paginate(10);
+        if (!empty($_GET['device_type'])){
+            $ldeviceType  = $_GET['device_type'];
+            $appUsers = AppUser::filter_device($ldeviceType);
+        }
         return view('rcpadmin/app-users', compact('appUsers'));
     }
 

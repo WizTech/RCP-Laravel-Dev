@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Leads</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Leads</span></li>
+            <li><span>Application Stats / </span></li>
+            <li><a href="{{'app-leads'}}"> Leads</a></li>
         </ul>
     </div>
 @stop
@@ -48,7 +49,7 @@
             <div align="right" style="padding-right: 15%;">
                 <form action="{{url('rcpadmin/app-leads')}}" method="get">
                     <select class="select-box" name="lead_type" id="leadType">
-                        <option value="All">All Leads</option>
+                        <option value="All"><a href="{{'app-leads'}}">All Leads</a></option>
                         <option value="call">Call</option>
                         <option value="email">Email</option>
                         <option value="fav">Favorites</option>

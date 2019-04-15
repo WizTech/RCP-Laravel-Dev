@@ -2,7 +2,7 @@
 
 return [
     "STATE_DB" => "mysql2",
-    "DataBase2" => "rentcp_stats_laravel",
+    "DataBase2" => "rentcoll_stats",
     'DB' => [
         'tbl_campus' => 'campus',
         'tbl_abbreviations' => 'campus_abbreviations',

@@ -16,11 +16,11 @@ class BounceRateController extends Controller
      */
     public function index()
     {
-        $bounceRate = DB::table('rentcp_stats_laravel.app_views')
+        $bounceRate = DB::table('rentcoll_stats.app_views')
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')
-            ->get();
+            ->paginate(10);
         return view('rcpadmin/bounce-rate', compact('bounceRate'));
     }
 

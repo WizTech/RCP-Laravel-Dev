@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Screen Visits</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Screen Visits</span></li>
+            <li><span>Application Stats / </span></li>
+            <li><a href="{{'screen-visits'}}"> Screen Visits</a></li>
         </ul>
     </div>
 @stop
@@ -43,29 +44,27 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>Screen</th>
                                 <th>Visits</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if(!empty($screenVisits))
-                                <?php $x = 1; ?>
                                 @foreach($screenVisits as $visit)
                                     <tr>
-                                        <td>{{ $x }}</td>
                                         <td>{{$visit->page_type}} </td>
                                         <td>{{$visit->count}}  </td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        {{$screenVisits->links()}}
+                        Showing {{$screenVisits->firstItem()}} to {{$screenVisits->lastItem()}} of {{$screenVisits->total()}} Entities
                     </div>
                 </div>
             </div>

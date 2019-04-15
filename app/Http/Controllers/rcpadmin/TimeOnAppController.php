@@ -15,10 +15,10 @@ class TimeOnAppController extends Controller
      */
     public function index()
     {
-        $data = TimeOnApp::all();
+        $data = TimeOnApp::all()->toArray();
         if (!empty($data)){
-            $time = TimeOnApp::appTime();
-            return view('rcpadmin/time-on-app', compact('time'));
+            $times = TimeOnApp::appTime();
+            return view('rcpadmin/time-on-app', compact('times'));
         }else{
             return view('rcpadmin/time-on-app');
         }

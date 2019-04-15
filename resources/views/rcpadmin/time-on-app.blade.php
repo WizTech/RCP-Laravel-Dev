@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Time On Application</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Time On App</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'time-on-app'}}"> Time On App</a></li>
         </ul>
     </div>
 @stop
@@ -37,20 +38,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($time))
-                                <?php $x = 1; ?>
-                                @foreach($time as $t)
+                            @if(!empty($times))
+                                @foreach($times as $t)
                                     <tr>
-                                        <td>{{ $x }}</td>
                                         <td>{{$t->username}} </td>
                                         <td>{{$t->date}}  </td>
                                         <td>{{$t->date_created}}</td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        {{$times->links()}}
+                        Showing {{$times->firstItem()}} to {{$times->lastItem()}} of {{$times->total()}} Entities
                     </div>
                 </div>
             </div>

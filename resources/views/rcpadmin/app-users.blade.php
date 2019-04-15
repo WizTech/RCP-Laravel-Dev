@@ -16,21 +16,29 @@
         <h4 class="page-title pull-left">App Users</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>App Users</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'app-users'}}">App Users</a></li>
         </ul>
     </div>
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
+                <div align="right">
+                    <form action="{{url('rcpadmin/app-users')}}" method="get">
+                        <select class="select-box" name="device_type" id="deviceType">
+                            <option id="allDevices" value="all">All</option>
+                            <option value="ios">IOS</option>
+                            <option value="android">Android</option>
+                        </select>
+                    </form>
+                </div>
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -39,20 +47,19 @@
                             </thead>
                             <tbody>
                             @if(!empty($appUsers))
-                                <?php $x = 1; ?>
                                 @foreach($appUsers as $appUser)
                                     <tr>
-                                        <td> {{ $x }}</td>
-                                        <td> {{$appUser['username']}} </td>
-                                        <td> {{$appUser['email']}} </td>
-                                        <td> {{$appUser['phone']}} </td>
-                                        <td> {{$appUser['device_type']}} </td>
+                                        <td><?= $appUser->username  ?></td>
+                                        <td><?= $appUser->email  ?></td>
+                                        <td><?= $appUser->phone  ?></td>
+                                        <td><?= $appUser->device_type  ?></td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        {{ $appUsers->links() }}
+                        Showing {{$appUsers->firstItem()}} to {{$appUsers->lastItem()}} of {{$appUsers->total()}} Entities
                     </div>
                 </div>
             </div>
@@ -107,8 +114,10 @@
 
     </script>
     <script>
-        $('.delete').click(function () {
-            return confirm("Are you sure you want to delete?");
-        })
+        $(document).ready(function () {
+           $('#deviceType').on('change', function () {
+            this.form.submit();
+           });
+        });
     </script>
 @stop

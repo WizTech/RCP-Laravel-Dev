@@ -11,13 +11,11 @@ class TimeOnApp extends Model
     protected $table = "app_views";
 
     static function appTime(){
-        $timeOnApp = DB::table('rentcp_stats_laravel.app_views')
+        $timeOnApp = DB::table('rentcoll_stats.app_views')
             ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
             ->select('users.name as username', 'app_views.date', 'app_views.date_created')
-            ->get();
+            ->paginate(10);
         return $timeOnApp;
-
-
 
     }
 

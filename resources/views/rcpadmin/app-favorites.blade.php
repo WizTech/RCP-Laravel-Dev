@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Favorites</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Favorites</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'app-favorites'}}"> Favorites</a></li>
         </ul>
     </div>
 @stop
