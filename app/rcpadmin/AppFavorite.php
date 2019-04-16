@@ -18,7 +18,7 @@ class AppFavorite extends Model
             ->leftJoin('property', 'app_favorites.property_id', '=', 'property.id')
             ->leftJoin('campus', 'property.campus_id', '=', 'campus.id')
             ->select('campus.title as campus_title', 'property.title as property_title', 'users.name as username', 'users.email', 'user_details.phone_no')
-            ->get();
+            ->paginate(10);
         return $appFavorites;
     }
 

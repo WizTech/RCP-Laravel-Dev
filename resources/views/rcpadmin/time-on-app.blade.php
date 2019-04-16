@@ -49,7 +49,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(isset($times) && $times > 0)
+                        @if(isset($times) && count($times) > 0)
                         {{$times->links()}}
                         Showing {{$times->firstItem()}} to {{$times->lastItem()}} of {{$times->total()}} Entities
                         @endif

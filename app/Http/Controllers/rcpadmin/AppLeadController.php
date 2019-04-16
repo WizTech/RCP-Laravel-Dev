@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\rcpadmin;
 
 use App\rcpadmin\AppLead;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\GeneralHelper;
-use Illuminate\Pagination\Paginator;
 use Excel;
 
 class AppLeadController extends Controller
@@ -21,14 +19,14 @@ class AppLeadController extends Controller
     {
         $leads = AppLead::all()->toArray();
         $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        if (!empty($_GET)){
-            if (!empty($_GET['lead_type']) && $_GET['campus_id'] == 'All'){
-                $leadType  = $_GET['lead_type'];
+        if (!empty($_POST)){
+            if (!empty($_POST['lead_type']) && $_POST['campus_id'] == 'All'){
+                $leadType  = $_POST['lead_type'];
                 $appLeads['leads'] = AppLead::filter_leads($leadType, '');
                 return view('rcpadmin/app-leads', compact('appLeads'));
             }
-            if (!empty($_GET['campus_id']) && $_GET['lead_type'] == 'All'){
-                $campusId  = $_GET['campus_id'];
+            if (!empty($_POST['campus_id']) && $_POST['lead_type'] == 'All'){
+                $campusId  = $_POST['campus_id'];
                 $appLeads['leads'] = AppLead::filter_leads('',$campusId);
                 return view('rcpadmin/app-leads', compact('appLeads'));
             }
@@ -74,70 +72,4 @@ class AppLeadController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

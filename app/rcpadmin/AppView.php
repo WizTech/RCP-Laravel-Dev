@@ -17,7 +17,7 @@ class AppView extends Model
             ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
             ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
             ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
-            ->get();
+            ->paginate(10);
         return $appLeads;
     }
 
@@ -29,7 +29,7 @@ class AppView extends Model
                 ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
                 ->where('page_type', $page_type)
                 ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
-                ->get();
+                ->paginate(10);
             return $appLeads;
         }elseif(!empty($campus_id) && $campus_id != 'All'){
             $appLeads = DB::table('rentcoll_stats.app_views')
@@ -38,7 +38,7 @@ class AppView extends Model
                 ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
                 ->where('campus_id', $campus_id)
                 ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
-                ->get();
+                ->paginate(10);
             return $appLeads;
         }
     }

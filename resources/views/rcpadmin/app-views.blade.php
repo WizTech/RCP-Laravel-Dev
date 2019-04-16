@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Visits</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Visits</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'visits'}}"> Visits</a></li>
         </ul>
     </div>
 @stop
@@ -57,7 +58,7 @@
                 </form>
             </div>
             <div align="right" style="padding-right: 15%;">
-                <form action="{{url('rcpadmin/visits')}}" method="get">
+                <form action="{{url('rcpadmin/visits')}}" method="post">
                 <select class="select-box" name="page_type" id="pageId">
                     <option value="All">All Pages</option>
                             <option value="home">Home</option>
@@ -83,15 +84,15 @@
                         @endforeach
                     @endif
                 </select>
+                    {{csrf_field()}}}
                 </form>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -102,10 +103,8 @@
                             </thead>
                             <tbody>
                             @if(!empty($appViews['visits']))
-                                <?php $x = 1; ?>
                                 @foreach($appViews['visits'] as $view)
                                     <tr>
-                                        <td>{{ $x }}</td>
                                         <td>{{$view->username}} </td>
                                         <td>{{$view->email}}  </td>
                                         <td>{{$view->phone_no}}</td>
@@ -113,11 +112,15 @@
                                         <td>{{$view->page_type}} </td>
                                         <td>{{date("Y-m-d",strtotime($view->date))}}</td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if( isset($appViews['visits']) && count($appViews['visits'])>0)
+                            {{$appViews['visits']->links() }}
+                            Showing {{$appViews['visits']->firstItem()}} to {{$appViews['visits']->lastItem()}} of {{$appViews['visits']->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

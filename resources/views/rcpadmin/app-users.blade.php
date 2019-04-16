@@ -26,12 +26,13 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div align="right">
-                    <form action="{{url('rcpadmin/app-users')}}" method="get">
+                    <form action="{{url('rcpadmin/app-users')}}" method="post">
                         <select class="select-box" name="device_type" id="deviceType">
                             <option id="allDevices" value="all">All</option>
                             <option value="ios">IOS</option>
                             <option value="android">Android</option>
                         </select>
+                        {{ csrf_field() }}
                     </form>
                 </div>
                 <div class="card-body">
@@ -58,8 +59,11 @@
                             @endif
                             </tbody>
                         </table>
-                        {{ $appUsers->links() }}
-                        Showing {{$appUsers->firstItem()}} to {{$appUsers->lastItem()}} of {{$appUsers->total()}} Entities
+                        @if(count($appUsers) > 0)
+                            {{ $appUsers->links() }}
+                            Showing {{$appUsers->firstItem()}} to {{$appUsers->lastItem()}} of {{$appUsers->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>
@@ -115,9 +119,9 @@
     </script>
     <script>
         $(document).ready(function () {
-           $('#deviceType').on('change', function () {
-            this.form.submit();
-           });
+            $('#deviceType').on('change', function () {
+                this.form.submit();
+            });
         });
     </script>
 @stop

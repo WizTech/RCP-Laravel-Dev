@@ -47,7 +47,7 @@
                 </form>
             </div>
             <div align="right" style="padding-right: 15%;">
-                <form action="{{url('rcpadmin/app-leads')}}" method="get">
+                <form action="{{url('rcpadmin/app-leads')}}" method="post">
                     <select class="select-box" name="lead_type" id="leadType">
                         <option value="All"><a href="{{'app-leads'}}">All Leads</a></option>
                         <option value="call">Call</option>
@@ -62,15 +62,15 @@
                         @endforeach
                     @endif
                 </select>
+                    {{ csrf_field() }}
                 </form>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -80,12 +80,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty( $appLeads['leads']))
-                                <?php $x = 1; ?>
+                            @if(!empty($appLeads['leads']))
                                 @foreach( $appLeads['leads'] as $lead)
-                                    @if(!empty($lead->username && $lead->campus_title))
                                         <tr>
-                                            <td>{{ $x }}</td>
                                             <td>{{$lead->username}} </td>
                                             <td>{{$lead->email}} </td>
                                             <td>{{$lead->phone_no}} </td>
@@ -93,12 +90,15 @@
                                             <td>{{$lead->lead_type}}</td>
                                             <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
                                         </tr>
-                                        <?php $x++; ?>
-                                    @endif
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if(count($appLeads['leads']) > 0)
+                            {{$appLeads['leads']->links()}}
+                            Showing {{$appLeads['leads']->firstItem()}} to {{$appLeads['leads']->lastItem()}} of {{$appLeads['leads']->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

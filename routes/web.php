@@ -84,14 +84,17 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::get('show-resource/{id}', 'rcpadmin\ResourceController@showResource');
 
     Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
-    
-    Route::resource('app-users', 'rcpadmin\AppUserController');
-    Route::resource('app-leads', 'rcpadmin\AppLeadController');
-    Route::resource('app-favorites', 'rcpadmin\AppFavoriteController');
-    Route::resource('visits', 'rcpadmin\AppViewController');
-    Route::resource('screen-visits', 'rcpadmin\ScreenVisitController');
-    Route::resource('time-on-app', 'rcpadmin\TimeOnAppController');
-    Route::resource('bounce-rate', 'rcpadmin\BounceRateController');
+
+    Route::get('app-users', 'rcpadmin\AppUserController@index');
+    Route::post('app-users', 'rcpadmin\AppUserController@index');
+    Route::get('app-leads', 'rcpadmin\AppLeadController@index');
+    Route::post('app-leads', 'rcpadmin\AppLeadController@index');
+    Route::get('app-favorites', 'rcpadmin\AppFavoriteController@index');
+    Route::get('visits', 'rcpadmin\AppViewController@index');
+    Route::post('visits', 'rcpadmin\AppViewController@index');
+    Route::get('screen-visits', 'rcpadmin\ScreenVisitController@index');
+    Route::get('time-on-app', 'rcpadmin\TimeOnAppController@index');
+    Route::get('bounce-rate', 'rcpadmin\BounceRateController@index');
     Route::get('csv-export', 'rcpadmin\AppViewController@csvExport');
     Route::get('screen-export', 'rcpadmin\ScreenVisitController@screenExport');
     Route::get('favorite-export', 'rcpadmin\AppFavoriteController@favroiteExport');
