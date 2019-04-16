@@ -62,7 +62,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($emails)>0)
+                        @if( isset($emails) && count($emails)>0)
                             {{$emails->links()}}
                             Showing {{$emails->firstItem()}} to {{$emails->lastItem()}} of {{$emails->total()}} Entities
                         @endif

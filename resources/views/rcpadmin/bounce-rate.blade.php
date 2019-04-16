@@ -41,8 +41,8 @@
                                 @foreach($bounceRate as $br)
                                     <tr>
                                         <td>{{$br->page_type}} </td>
-                                        <?php $percent  = $br->count*100/$total;
-                                        $percentage= number_format((float)$percent, 2, '.', '');
+                                        <?php $percent = $br->count * 100 / $total;
+                                        $percentage = number_format((float)$percent, 2, '.', '');
                                         ?>
                                         <td>{{$percentage}}%</td>
                                     </tr>
@@ -50,8 +50,11 @@
                             @endif
                             </tbody>
                         </table>
-                        {{$bounceRate->links()}}
-                       Showing {{$bounceRate->firstItem()}} to {{$bounceRate->lastItem()}} of {{$bounceRate->total()}} Entities
+                        @if(isset($bounceRate) && count($bounceRate) > 0)
+                            {{$bounceRate->links()}}
+                            Showing {{$bounceRate->firstItem()}} to {{$bounceRate->lastItem()}}
+                            of {{$bounceRate->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>

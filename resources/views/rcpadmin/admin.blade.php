@@ -66,7 +66,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($webUsers) > 0)
+                        @if(isset($webUsers) && count($webUsers) > 0)
                             {{$webUsers->links()}}
                             Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
                             Entities

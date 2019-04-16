@@ -26,20 +26,22 @@
         <div class="col-12 mt-5">
             <div align="center">
                 <form action="{{url('rcpadmin/screen-export')}}" method="get">
-                Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>" class="filter-box datePicker" id="dateFrom">
-                To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker" id="dateTo">
-                <select class="filter-box" id="pageType" name="page_type">
-                    <option value="All">All Pages</option>
-                    @if(!empty($screenVisits))
-                        @foreach($screenVisits as $sv)
-                            <?php $page = str_replace('-', ' ', $sv->page_type);
-                                    $page_type  = str_replace('_', ' ', $page);
-                            ?>
+                    Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
+                                     class="filter-box datePicker" id="dateFrom">
+                    To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker"
+                              id="dateTo">
+                    <select class="filter-box" id="pageType" name="page_type">
+                        <option value="All">All Pages</option>
+                        @if(!empty($screenVisits))
+                            @foreach($screenVisits as $sv)
+                                <?php $page = str_replace('-', ' ', $sv->page_type);
+                                $page_type = str_replace('_', ' ', $page);
+                                ?>
                                 <option value="{{ $sv->page_type}}">{{$page_type}}</option>
-                        @endforeach
-                    @endif
-                </select>
-                <button type="submit" class="btn btn-success">Export List</button>
+                            @endforeach
+                        @endif
+                    </select>
+                    <button type="submit" class="btn btn-success">Export List</button>
                 </form>
             </div>
             <div class="card">
@@ -63,8 +65,11 @@
                             @endif
                             </tbody>
                         </table>
-                        {{$screenVisits->links()}}
-                        Showing {{$screenVisits->firstItem()}} to {{$screenVisits->lastItem()}} of {{$screenVisits->total()}} Entities
+                        @if(isset($screenVisits) && count($screenVisits)>0)
+                            {{$screenVisits->links()}}
+                            Showing {{$screenVisits->firstItem()}} to {{$screenVisits->lastItem()}}
+                            of {{$screenVisits->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>
@@ -111,10 +116,8 @@
         })
     </script>
     <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $('#export_screen_visit').on('click',function(e)
-            {
+        $(document).ready(function () {
+            $('#export_screen_visit').on('click', function (e) {
                 e.preventDefault();
                 var dateFrom = $('#dateFrom').val();
                 var dateTo = $('#dateTo').val();

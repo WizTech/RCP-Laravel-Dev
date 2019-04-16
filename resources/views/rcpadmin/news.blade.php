@@ -71,7 +71,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($news) > 0)
+                        @if(isset($news) && count($news) > 0)
                             {{$news->links()}}
                             Showing {{$news->firstItem()}} to {{$news->lastItem()}} of {{$news->total()}} Entities
                         @endif

@@ -55,7 +55,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($campus) > 0)
+                        @if(isset($campus) && count($campus) > 0)
                             {{$campus->links()}}
                             Showing {{$campus->firstItem()}} to {{$campus->lastItem()}} of {{$campus->total()}}
                             Entities

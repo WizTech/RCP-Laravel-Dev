@@ -65,7 +65,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($price) > 0)
+                        @if(isset($price) && count($price) > 0)
                             {{$price->links()}}
                             Showing {{$price->firstItem()}} to {{$price->lastItem()}} of {{$price->total()}} Entities
                         @endif

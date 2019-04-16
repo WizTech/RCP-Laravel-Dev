@@ -65,7 +65,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($career_types) > 0)
+                        @if(isset($career_types) && count($career_types) > 0)
                             {{$career_types->links()}}
                             Showing {{$career_types->firstItem()}} to {{$career_types->lastItem()}} of {{$career_types->total()}} Entities
                         @endif

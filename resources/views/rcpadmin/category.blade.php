@@ -67,7 +67,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($categories) > 0)
+                        @if(isset($categories) && count($categories) > 0)
                             {{$categories->links()}}
                             Showing {{$categories->firstItem()}} to {{$categories->lastItem()}}
                             of {{$categories->total()}} Entities

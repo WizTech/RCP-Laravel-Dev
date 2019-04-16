@@ -82,7 +82,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($properties))
+                        @if(isset($properties) && count($properties) > 0)
                             {{$properties->links()}}
                             Showing {{$properties->firstItem()}} to {{$properties->lastItem()}}
                             of {{$properties->total()}} Entities

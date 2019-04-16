@@ -73,7 +73,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($testimonials) > 0)
+                        @if(isset($testimonials) && count($testimonials) > 0)
                             {{$testimonials->links()}}
                             Showing {{$testimonials->firstItem()}} to {{$testimonials->lastItem()}} of {{$testimonials->total()}} Entities
                         @endif

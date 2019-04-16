@@ -61,7 +61,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($features) > 0)
+                        @if(isset($features) && count($features) > 0)
                             {{$features->links()}}
                             Showing {{$features->firstItem()}} to {{$features->lastItem()}} of {{$features->total()}}
                             Entities

@@ -64,7 +64,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($templates) > 0)
+                        @if(isset($templates) && count($templates) > 0)
                             {{$templates->links()}}
                             Showing {{$templates->firstItem()}} to {{$templates->lastItem()}} of {{$templates->total()}}
                             Entities

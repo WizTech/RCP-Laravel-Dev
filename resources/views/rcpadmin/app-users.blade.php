@@ -73,7 +73,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($appUsers) > 0)
+                        @if(isset($appUsers) && count($appUsers) > 0)
                             {{ $appUsers->links() }}
                             Showing {{$appUsers->firstItem()}} to {{$appUsers->lastItem()}} of {{$appUsers->total()}}
                             Entities

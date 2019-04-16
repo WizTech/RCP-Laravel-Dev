@@ -58,7 +58,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($ips))
+                        @if(isset($ips) && count($ips))
                             {{$ips->links()}}
                             Showing {{$ips->firstItem()}} to {{$ips->lastItem()}} of {{$ips->total()}} Entities
                         @endif
