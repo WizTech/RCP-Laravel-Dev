@@ -35,7 +35,6 @@ class AppFavoriteController extends Controller
             $favorites = AppFavorite::all()->toArray();
             if (!empty($favorites)) {
                 $appFavorites = AppFavorite::fav_export($date_from, $date_to, $campus_id);
-            }
             foreach ($appFavorites as $screenVisit) {
                 $fav[] = array(
                     'Campus Title' => $screenVisit->campus_title ?  $screenVisit->campus_title : '',
@@ -44,6 +43,7 @@ class AppFavoriteController extends Controller
                     'Email' => $screenVisit->email ? $screenVisit->email : '',
                     'Phone No' => $screenVisit->phone_no ? $screenVisit->phone_no : '',
                 );
+            }
             }
             $sheetName  = date('d-m-y his');
             return Excel::create($sheetName, function ($excel) use ($fav) {

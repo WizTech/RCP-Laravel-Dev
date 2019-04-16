@@ -66,7 +66,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($appFavorites['favs']) > 0)
+                        @if(isset($appFavorites['favs']) && count($appFavorites['favs']) > 0)
                             {{ $appFavorites['favs']->links() }}
                             Showing {{$appFavorites['favs']->firstItem()}} to {{$appFavorites['favs']->lastItem()}} of {{$appFavorites['favs']->total()}}
                             Entities

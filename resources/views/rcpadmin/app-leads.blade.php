@@ -94,7 +94,7 @@
                             @endif
                             </tbody>
                         </table>
-                        @if(count($appLeads['leads']) > 0)
+                        @if(isset($appLeads['leads']) && count($appLeads['leads']) > 0)
                             {{$appLeads['leads']->links()}}
                             Showing {{$appLeads['leads']->firstItem()}} to {{$appLeads['leads']->lastItem()}} of {{$appLeads['leads']->total()}}
                             Entities

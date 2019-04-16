@@ -51,7 +51,6 @@ class AppLeadController extends Controller
             $lead[] = ['User Name', 'Email', 'Phone', 'Campus', 'Lead Type', 'Date'];
             if (!empty($leads)) {
                 $appLeads = AppLead::lead_export($date_from, $date_to, $campus_id, $lead_type);
-            }
             foreach ($appLeads as $appLead) {
                 $lead[] = array(
                     'User Name' => $appLead->username ?  $appLead->username : '',
@@ -61,6 +60,7 @@ class AppLeadController extends Controller
                     'Lead Type' => $appLead->lead_type ? $appLead->lead_type : '',
                     'Date' => $appLead->date ? $appLead->date : '',
                 );
+            }
             }
             $sheetName  = date('d-m-y his');
             return Excel::create($sheetName, function ($excel) use ($lead) {
