@@ -26,11 +26,25 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div align="right">
-                    <form action="{{url('rcpadmin/app-users')}}" method="post">
-                        <select class="select-box" name="device_type" id="deviceType">
-                            <option id="allDevices" value="all">All</option>
-                            <option value="ios">IOS</option>
-                            <option value="android">Android</option>
+                    <form action="{{url('rcpadmin/app-users')}}" method="get">
+                        <select class="select-box device_type" name="device_type" id="deviceType">
+                            <?php if (isset($_GET['device_type']) && $_GET['device_type'] == 'All'): ?>
+                            <option value="<?= $_GET['device_type'] ?>" selected><?= $_GET['device_type'] ?></option>
+                            <?php else: ?>
+                            <option value="All">All</option>
+                            <?php endif; ?>
+
+                            <?php if (isset($_GET['device_type']) && $_GET['device_type'] == 'IOS'): ?>
+                            <option value="<?= $_GET['device_type'] ?>" selected><?= $_GET['device_type'] ?></option>
+                            <?php else: ?>
+                            <option value="IOS">IOS</option>
+                            <?php endif; ?>
+
+                            <?php if (isset($_GET['device_type']) && $_GET['device_type'] == 'Android'): ?>
+                            <option value="<?= $_GET['device_type'] ?>" selected><?= $_GET['device_type'] ?></option>
+                            <?php else: ?>
+                            <option value="Android">Android</option>
+                            <?php endif; ?>
                         </select>
                         {{ csrf_field() }}
                     </form>

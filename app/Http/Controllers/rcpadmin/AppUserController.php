@@ -15,8 +15,8 @@ class AppUserController extends Controller
     public function index()
     {
         $appUsers = AppUser::paginate(10);
-        if (isset($_POST['device_type'])){
-            $ldeviceType  = $_POST['device_type'];
+        if (isset($_GET['device_type'])){
+            $ldeviceType  = $_GET['device_type'];
             $appUsers = AppUser::filter_device($ldeviceType);
         }
         return view('rcpadmin/app-users', compact('appUsers'));
