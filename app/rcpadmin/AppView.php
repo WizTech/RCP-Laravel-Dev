@@ -29,7 +29,17 @@ class AppView extends Model
                 ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
                 ->where('page_type', $page_type)
                 ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
-                ->paginate(10);
+                ->paginate(10)
+                ->appends('page_type', $page_type);
+            return $appLeads;
+        }elseif(!empty($page_type) && $page_type == 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->paginate(10)
+                ->appends('page_type', $page_type);
             return $appLeads;
         }elseif(!empty($campus_id) && $campus_id != 'All'){
             $appLeads = DB::table('rentcoll_stats.app_views')
@@ -38,7 +48,17 @@ class AppView extends Model
                 ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
                 ->where('campus_id', $campus_id)
                 ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
-                ->paginate(10);
+                ->paginate(10)
+                ->appends('campus_id', $campus_id);
+            return $appLeads;
+        }elseif(!empty($campus_id) && $campus_id == 'All'){
+            $appLeads = DB::table('rentcoll_stats.app_views')
+                ->leftJoin('users', 'app_views.user_id', '=', 'users.id')
+                ->leftJoin('user_details', 'app_views.user_id', '=', 'user_details.user_id')
+                ->leftJoin('campus', 'app_views.campus_id', '=', 'campus.id')
+                ->select('users.name as username', 'users.email', 'user_details.phone_no', 'campus.title as campus_title', 'app_views.page_type', 'app_views.date')
+                ->paginate(10)
+                ->appends('campus_id', $campus_id);
             return $appLeads;
         }
     }

@@ -19,18 +19,18 @@ class AppLeadController extends Controller
     {
         $leads = AppLead::all()->toArray();
         $appLeads['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        if (!empty($_POST)){
-            if (!empty($_POST['lead_type']) && $_POST['campus_id'] == 'All'){
-                $leadType  = $_POST['lead_type'];
+        if (!empty($_GET)){
+            if (isset($_GET['lead_type'])){
+                $leadType  = $_GET['lead_type'];
                 $appLeads['leads'] = AppLead::filter_leads($leadType, '');
                 return view('rcpadmin/app-leads', compact('appLeads'));
             }
-            if (!empty($_POST['campus_id']) && $_POST['lead_type'] == 'All'){
-                $campusId  = $_POST['campus_id'];
+            if (isset($_GET['campus_id'])){
+                $campusId  = $_GET['campus_id'];
                 $appLeads['leads'] = AppLead::filter_leads('',$campusId);
                 return view('rcpadmin/app-leads', compact('appLeads'));
             }
-        }elseif (!empty($leads)){
+        }elseif (isset($leads)){
                 $appLeads['leads'] = AppLead::app_leads();
         }
 

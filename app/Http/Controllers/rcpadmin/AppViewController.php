@@ -20,14 +20,15 @@ class AppViewController extends Controller
     {
         $views = AppView::all()->toArray();
         $appViews['campuses'] = GeneralHelper::getColumn('campus', 'title');
-        if (!empty($_POST)) {
-            if (!empty($_POST['page_type']) && $_POST['campus_id'] == 'All') {
-                $page_type = $_POST['page_type'];
+        if (!empty($_GET)) {
+            if (!empty($_GET['page_type'])) {
+                $page_type = $_GET['page_type'];
                 if (!empty($page_type)) {
                     $appViews['visits'] = AppView::filter_visits($page_type, '');
                 }
-            } elseif (!empty($_POST['campus_id']) && $_POST['page_type'] == 'All') {
-                $campus_id = $_POST['campus_id'];
+            }
+            if (!empty($_GET['campus_id'])) {
+                $campus_id = $_GET['campus_id'];
                 if (!empty($campus_id)) {
                     $appViews['visits'] = AppView::filter_visits('', $campus_id);
                 }
