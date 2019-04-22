@@ -45,16 +45,8 @@
                                         <td> {{$listing->company}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/approve-rentlisting/'.$listing->id)}}"
+                                                <li class="mr-3"><a href="#"
                                                                     class="btn btn-success btn-sm">Approve</a></li>
-                                                <form method="POST" action="rent-listing/{{$listing->id}}">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <div class="form-group">
-                                                        <input type="submit" class="btn btn-danger btn-sm delete"
-                                                               value="Deny">
-                                                    </div>
-                                                </form>
                                             </ul>
                                         </td>
                                     </tr>
