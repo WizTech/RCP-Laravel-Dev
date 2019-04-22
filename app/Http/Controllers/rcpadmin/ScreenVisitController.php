@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcpadmin;
 use App\Http\Controllers\Controller;
 use DB;
 use Excel;
+use Config;
 
 class ScreenVisitController extends Controller
 {
@@ -15,7 +16,7 @@ class ScreenVisitController extends Controller
      */
     public function index()
     {
-        $screenVisits = DB::table('rentcoll_stats.app_views')
+        $screenVisits = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_VIEWS"))
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')
@@ -26,31 +27,31 @@ class ScreenVisitController extends Controller
 
     function screenExport()
     {
-        $visit[] = ['Screen','Visits'];
+        $visit[] = ['Screen', 'Visits'];
         if (!empty($_GET)) {
-            if ($_GET['page_type'] === 'All'){
-                $screenVisits = DB::table('rentcoll_stats.app_views')
+            if ($_GET['page_type'] === 'All') {
+                $screenVisits = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_VIEWS"))
                     ->select('page_type', DB::raw('COUNT(*) as `count`'))
                     ->whereBetween('date', [$_GET['date_from'], $_GET['date_to']])
                     ->groupBy('page_type')
                     ->havingRaw('COUNT(*) > 0')
                     ->get();
-            }else{
-                    $screenVisits = DB::table('rentcoll_stats.app_views')
-                        ->select('page_type', DB::raw('COUNT(*) as `count`'))
-                        ->whereBetween('date', [$_GET['date_from'], $_GET['date_to']])
-                        ->where('page_type', $_GET['page_type'])
-                        ->groupBy('page_type')
-                        ->havingRaw('COUNT(*) > 0')
-                        ->get();
+            } else {
+                $screenVisits = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_VIEWS"))
+                    ->select('page_type', DB::raw('COUNT(*) as `count`'))
+                    ->whereBetween('date', [$_GET['date_from'], $_GET['date_to']])
+                    ->where('page_type', $_GET['page_type'])
+                    ->groupBy('page_type')
+                    ->havingRaw('COUNT(*) > 0')
+                    ->get();
             }
             foreach ($screenVisits as $screenVisit) {
                 $visit[] = array(
-                    'Screen' => $screenVisit->page_type ?  $screenVisit->page_type : '',
+                    'Screen' => $screenVisit->page_type ? $screenVisit->page_type : '',
                     'Visits' => $screenVisit->count ? $screenVisit->count : '',
                 );
             }
-            $sheetName  = date('d-m-y his');
+            $sheetName = date('d-m-y his');
             return Excel::create($sheetName, function ($excel) use ($visit) {
                 $excel->setTitle('visits');
                 $excel->sheet('visits', function ($sheet) use ($visit) {

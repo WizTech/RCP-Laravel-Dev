@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcpadmin;
 
 use App\rcpadmin\BounceRate;
 use App\Http\Controllers\Controller;
+use Config;
 use DB;
 
 class BounceRateController extends Controller
@@ -15,7 +16,7 @@ class BounceRateController extends Controller
      */
     public function index()
     {
-        $bounceRate = DB::table('rentcoll_stats.app_views')
+        $bounceRate = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_VIEWS"))
             ->select('page_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('page_type')
             ->havingRaw('COUNT(*) > 0')
