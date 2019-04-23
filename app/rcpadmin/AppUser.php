@@ -15,11 +15,11 @@ class AppUser extends Model
     static function filter_device($deviceType)
     {
         if ($deviceType == 'All'){
-            $data = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_USERS"))
+            $data = DB::table(env('DB_DATABASE2').'.app_users AS appUsers')
                 ->paginate(10)
                 ->appends('device_type', $deviceType);
         }else{
-            $data = DB::connection(config::get("constants.STATE_DB"))->table(config::get("constants.DB2.APP_USERS"))
+            $data = $data = DB::table(env('DB_DATABASE2').'.app_users AS appUsers')
                 ->where('device_type', $deviceType)
                 ->paginate(10)
                 ->appends('device_type', $deviceType);

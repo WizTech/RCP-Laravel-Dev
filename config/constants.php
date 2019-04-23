@@ -2,6 +2,8 @@
 
 return [
     "STATE_DB" => "mysql2",
+
+    "RCP_DB" => "mysql",
     'DB' => [
         'CAMPUS' => 'campus',
         'CAMPUS_ABBREVIATIONS' => 'campus_abbreviations',
