@@ -21,7 +21,7 @@ class CampusController extends Controller
   public function index()
   {
 
-    $campuses = CampusModel::all()->toArray();
+    $campuses = CampusModel::paginate(10);
 
     return view('rcpadmin.campus', compact('campuses'));
   }

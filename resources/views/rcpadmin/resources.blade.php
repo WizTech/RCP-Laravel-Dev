@@ -22,12 +22,11 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -56,6 +55,11 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($campus) && count($campus) > 0)
+                            {{$campus->links()}}
+                            Showing {{$campus->firstItem()}} to {{$campus->lastItem()}} of {{$campus->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

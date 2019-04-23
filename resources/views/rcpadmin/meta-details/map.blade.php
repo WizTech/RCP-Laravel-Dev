@@ -15,14 +15,14 @@
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
-          <form action="{{ route('meta-details.update', $campus['id']) }}" method="POST" class="col s12">
+          <form action="{{ route('meta-details.update', $campusId) }}" method="POST" class="col s12">
 
-          {!! Form::hidden('id') !!}
+            {!! Form::hidden('id') !!}
             {{ csrf_field() }}
             {{ method_field('PUT')}}
-          {!! Form::hidden('campus_id',$campus['id']) !!}
-          @include('rcpadmin.meta-details.partials.map-form',['buttonText'=>'Update'])
-         {{-- {!! Form::close() !!}--}}
+            {!! Form::hidden('campus_id',$campusId) !!}
+            @include('rcpadmin.meta-details.partials.map-form',['buttonText'=>'Update'])
+            {{-- {!! Form::close() !!}--}}
           </form>
         </div>
       </div>

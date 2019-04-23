@@ -16,13 +16,13 @@
         <h4 class="page-title pull-left">Application Favorites</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Favorites</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'app-favorites'}}"> Favorites</a></li>
         </ul>
     </div>
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div align="center">
                 <form action="{{url('rcpadmin/favorite-export')}}" method="get">
@@ -41,11 +41,10 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table  class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>Campus</th>
                                 <th>Property</th>
                                 <th>User Name</th>
@@ -55,23 +54,23 @@
                             </thead>
                             <tbody>
                             @if(!empty($appFavorites['favs']))
-                                <?php $x = 1; ?>
                                 @foreach($appFavorites['favs'] as $favorite)
-                                    @if(!empty($favorite->username && $favorite->property_title))
                                         <tr>
-                                            <td>{{ $x }}</td>
                                             <td>{{$favorite->campus_title}} </td>
                                             <td>{{$favorite->property_title}} </td>
                                             <td>{{$favorite->username}} </td>
                                             <td>{{$favorite->email}}  </td>
                                             <td>{{$favorite->phone_no}}</td>
                                         </tr>
-                                    @endif
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($appFavorites['favs']) && count($appFavorites['favs']) > 0)
+                            {{ $appFavorites['favs']->links() }}
+                            Showing {{$appFavorites['favs']->firstItem()}} to {{$appFavorites['favs']->lastItem()}} of {{$appFavorites['favs']->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

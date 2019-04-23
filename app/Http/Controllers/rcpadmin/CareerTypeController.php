@@ -16,7 +16,7 @@ class CareerTypeController extends Controller
      */
     public function index()
     {
-        $career_types = CareerType::all()->toArray();
+        $career_types = CareerType::paginate(10);
         return view('rcpadmin.careertype', compact('career_types'));
     }
 

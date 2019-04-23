@@ -15,11 +15,11 @@ class CreateCareerSliderTable extends Migration
     {
         Schema::create('career_slider', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slider_image');
-            $table->string('slider_type');
-            $table->string('slider_heading_one');
-            $table->string('slider_heading_two');
-            $table->string('slider_minute');
+            $table->string('slider_image')->nullable();
+            $table->string('slider_type')->nullable();
+            $table->string('slider_heading_one')->nullable();
+            $table->string('slider_heading_two')->nullable();
+            $table->string('slider_minute')->nullable();
             $table->enum('status',['Active','Inactive'])->default('Active');
             $table->timestamps();
         });

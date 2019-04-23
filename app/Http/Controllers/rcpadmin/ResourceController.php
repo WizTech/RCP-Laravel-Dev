@@ -16,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $campus = CampusModel::all()->toArray();
+        $campus = CampusModel::paginate(10);
         return view('rcpadmin.resources', compact('campus'));
     }
 
@@ -61,7 +61,7 @@ class ResourceController extends Controller
         $campus = CampusModel::find($id);
         $campus_id = $campus['id'];
         $resources['campus_id'] = $campus_id;
-        $resources['res'] = Resource::where('campus_id', $campus_id)->get();
+        $resources['res'] = Resource::where('campus_id', $campus_id)->paginate(10);
         return view('rcpadmin.resources.resource-list', compact('resources'));
     }
 

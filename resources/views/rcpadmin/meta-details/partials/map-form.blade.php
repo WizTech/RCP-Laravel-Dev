@@ -25,7 +25,8 @@
 
 
             <li class="nav-item">
-              <a class="nav-link" id="roommate-tab" data-toggle="tab" href="#roommate" role="tab" aria-controls="roommate"
+              <a class="nav-link" id="roommate-tab" data-toggle="tab" href="#roommate" role="tab"
+                 aria-controls="roommate"
                  aria-selected="false">Roommates Page</a>
             </li>
             <li class="nav-item">
@@ -38,25 +39,51 @@
 
               <div class="form-group">
 
-                <div class="form-row">
+                @if(count($details) > 0)
+                  @foreach($details as $data)
 
-                  {!! Form::hidden('page_type','map') !!}
+                    @if($data['page_type'] == 'map')
+                      {!! Form::hidden('page_type[]','map') !!}
+                      <div class="form-row">
+                        <div class="col-md-6 mb-6">
+                          {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                          {!! Form::text('meta_title[]',$data['meta_title'],['class' => 'form-control']) !!}
 
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_title',null,['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-md-6 mb-6">
+                          {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                          {!! Form::text('meta_keywords[]',$data['meta_keywords'],['class' => 'form-control']) !!}
+
+                        </div>
+                        <div class="col-md-12 mb-12">
+                          {!! Form::label('Meta Descriptioin',null,['class' => 'col-form-label']) !!}
+                          {!! Form::textarea('meta_description[]',$data['meta_description'],['class' => 'form-control']) !!}
+
+                        </div>
+                      </div>
+                    @endif
+
+
+
+                  @endforeach
+                @else
+                  <div class="form-row">
+                    {!! Form::hidden('page_type[]','map') !!}
+                    <div class="col-md-6 mb-6">
+                      {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                      {!! Form::text('meta_title[]',null,['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-md-6 mb-6">
+                      {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                      {!! Form::text('meta_keywords[]',null,['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-md-12 mb-12">
+                      {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
+                      {!! Form::textarea('meta_description[]',null,['class' => 'form-control']) !!}
+                    </div>
                   </div>
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_keywords',null,['class' => 'form-control']) !!}
-                  </div>
-                  <div class="col-md-12 mb-12">
-                    {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
-                    {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}
-                  </div>
+                @endif
 
-
-                </div>
               </div>
               <div class="form-group">
                 <div class="col-md-12 mb-12">
@@ -67,27 +94,54 @@
             </div>
 
             <div class="tab-pane fade" id="roommate" role="tabpanel" aria-labelledby="roommate-tab">
+
               <div class="form-group">
 
-                <div class="form-row">
+                @if(count($details) > 0)
+                  @foreach($details as $data)
 
-                  {!! Form::hidden('page_type','roommates') !!}
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_title',null,['class' => 'form-control']) !!}
+                    @if($data['page_type'] == 'roommates')
+                      {!! Form::hidden('page_type[]','roommates') !!}
+                      <div class="form-row">
+                        <div class="col-md-6 mb-6">
+                          {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                          {!! Form::text('meta_title[]',$data['meta_title'],['class' => 'form-control']) !!}
+
+                        </div>
+                        <div class="col-md-6 mb-6">
+                          {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                          {!! Form::text('meta_keywords[]',$data['meta_keywords'],['class' => 'form-control']) !!}
+
+                        </div>
+                        <div class="col-md-12 mb-12">
+                          {!! Form::label('Meta Descriptioin',null,['class' => 'col-form-label']) !!}
+                          {!! Form::textarea('meta_description[]',$data['meta_description'],['class' => 'form-control']) !!}
+
+                        </div>
+                      </div>
+                    @endif
+
+
+
+                  @endforeach
+                @else
+                  <div class="form-row">
+                    {!! Form::hidden('page_type[]','roommates') !!}
+                    <div class="col-md-6 mb-6">
+                      {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                      {!! Form::text('meta_title[]',null,['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-md-6 mb-6">
+                      {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                      {!! Form::text('meta_keywords[]',null,['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-md-12 mb-12">
+                      {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
+                      {!! Form::textarea('meta_description[]',null,['class' => 'form-control']) !!}
+                    </div>
                   </div>
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_keywords',null,['class' => 'form-control']) !!}
-                  </div>
-                  <div class="col-md-12 mb-12">
-                    {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
-                    {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}
+                @endif
 
-                  </div>
-
-
-                </div>
               </div>
               <div class="form-group">
                 <div class="col-md-12 mb-12">
@@ -98,22 +152,52 @@
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
               <div class="form-group">
 
-                <div class="form-row">
+                <div class="form-group">
 
-                  {!! Form::hidden('page_type','subleases') !!}
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_title',null,['class' => 'form-control']) !!}
-                  </div>
-                  <div class="col-md-6 mb-6">
-                    {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
-                    {!! Form::text('meta_keywords',null,['class' => 'form-control']) !!}
-                  </div>
-                  <div class="col-md-12 mb-12">
-                    {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
-                    {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}
-                  </div>
+                  @if(count($details) > 0)
+                    @foreach($details as $data)
 
+                      @if($data['page_type'] == 'subleases')
+                        {!! Form::hidden('page_type[]','subleases') !!}
+                        <div class="form-row">
+                          <div class="col-md-6 mb-6">
+                            {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                            {!! Form::text('meta_title[]',$data['meta_title'],['class' => 'form-control']) !!}
+
+                          </div>
+                          <div class="col-md-6 mb-6">
+                            {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                            {!! Form::text('meta_keywords[]',$data['meta_keywords'],['class' => 'form-control']) !!}
+
+                          </div>
+                          <div class="col-md-12 mb-12">
+                            {!! Form::label('Meta Descriptioin',null,['class' => 'col-form-label']) !!}
+                            {!! Form::textarea('meta_description[]',$data['meta_description'],['class' => 'form-control']) !!}
+
+                          </div>
+                        </div>
+                      @endif
+
+
+
+                    @endforeach
+                  @else
+                    <div class="form-row">
+                      {!! Form::hidden('page_type[]','subleases') !!}
+                      <div class="col-md-6 mb-6">
+                        {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
+                        {!! Form::text('meta_title[]',null,['class' => 'form-control']) !!}
+                      </div>
+                      <div class="col-md-6 mb-6">
+                        {!! Form::label('Meta Keywords',null,['class' => 'col-form-label']) !!}
+                        {!! Form::text('meta_keywords[]',null,['class' => 'form-control']) !!}
+                      </div>
+                      <div class="col-md-12 mb-12">
+                        {!! Form::label('Meta Description',null,['class' => 'col-form-label']) !!}
+                        {!! Form::textarea('meta_description[]',null,['class' => 'form-control']) !!}
+                      </div>
+                    </div>
+                  @endif
 
                 </div>
               </div>

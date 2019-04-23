@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Time On Application</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Time On App</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'time-on-app'}}"> Time On App</a></li>
         </ul>
     </div>
 @stop
@@ -26,8 +27,8 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table  class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -37,20 +38,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($time))
-                                <?php $x = 1; ?>
-                                @foreach($time as $t)
+                            @if(!empty($times))
+                                @foreach($times as $t)
                                     <tr>
-                                        <td>{{ $x }}</td>
                                         <td>{{$t->username}} </td>
                                         <td>{{$t->date}}  </td>
                                         <td>{{$t->date_created}}</td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($times) && count($times) > 0)
+                        {{$times->links()}}
+                        Showing {{$times->firstItem()}} to {{$times->lastItem()}} of {{$times->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>

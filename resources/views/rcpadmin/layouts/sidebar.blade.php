@@ -8,27 +8,74 @@
               class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
       @endforeach
 
-          <li>
-              <a href="javascript:void(0)" aria-expanded="true"><i
-                          class="ti-view-list"></i><span>Content Manager</span></a>
-              <ul class="collapse">
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/testimonials'}}">Testimonials</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/careertype'}}">Careers Type</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/career'}}">Careers</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
-                  </li>
-                  <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a>
-                  </li>
-                <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword Text</a> </li>
-              </ul>
+      <li>
+        <a href="javascript:void(0)" aria-expanded="true"><i
+            class="ti-view-list"></i><span>Content Manager</span></a>
+        <ul class="collapse">
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
           </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/testimonials'}}">Testimonials</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/careertype'}}">Careers Type</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/career'}}">Careers</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword Text</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:void(0)" aria-expanded="true"><i
+            class="ti-view-list"></i><span>Stats</span></a>
+        <ul class="collapse">
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/email-leads'}}">Email Leads</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/phone-leads'}}">Phone Leads</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/top-spots'}}">Top Spots</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/landlord-site-leads'}}">Landlord Site Leads</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/landlord-total-leads'}}">Landlord Total Leads</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/expired-properties'}}">Expiring Properties</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/active-properties'}}">Active Properties</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/users-count'}}">Users Count</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/properties-count'}}">Properties Count</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/real-estate-feeds'}}">Real Estate Feeds</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/current-active-properties'}}">Current Active
+              Properties</a></li>
+
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/active-campuses'}}">Active Campuses</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-report'}}">Campus Report</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/leads-per-company'}}">Leads Per Company</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/sublease-track'}}">Sublease Track</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/immitation-leads'}}">Immitation Leads</a></li>
+
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0)" aria-expanded="true"><i
+            class="ti-view-list"></i><span>Application Stats</span></a>
+        <ul class="collapse">
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/visits'}}">Visits</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/app-leads'}}">App Leads</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/app-favorites'}}">App Favorites</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/screen-visits'}}">Screen Visits</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/time-on-app'}}">Time On App</a>
+          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/bounce-rate'}}">Bounce Rate</a>
+          </li>
+        </ul>
+      </li>
 
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-list"></i><span>Settings</span></a>

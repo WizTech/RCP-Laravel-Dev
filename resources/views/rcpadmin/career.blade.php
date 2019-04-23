@@ -22,15 +22,13 @@
 @stop
 @section('content')
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
                     <a href="{{ url('rcpadmin/career/create')}}" class="btn btn-outline-dark header-title">Add New
                         Career</a>
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
                                 <th>ID</th>
@@ -75,6 +73,11 @@
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($careers) &&  count($careers) > 0)
+                            {{$careers->links()}}
+                            Showing {{$careers->firstItem()}} to {{$careers->lastItem()}} of {{$careers->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

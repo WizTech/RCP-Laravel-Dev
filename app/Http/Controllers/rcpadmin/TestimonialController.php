@@ -16,7 +16,7 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimonials = Testimonial::all()->toArray();
+        $testimonials = Testimonial::paginate(10);
         return view('rcpadmin.testimonial', compact('testimonials'));
     }
 

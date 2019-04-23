@@ -15,7 +15,7 @@ class CareerSliderController extends Controller
      */
     public function index()
     {
-        $career_sliders = CareerSlider::all()->toArray();
+        $career_sliders = CareerSlider::paginate(10);
         return view('rcpadmin.careerslider', compact('career_sliders'));
     }
 

@@ -25,15 +25,6 @@
   <div class="row">
 
     <div class="col-12 mt-5">
-      <div align="center">
-        <form action="{{url('rcpadmin/screen-export')}}" method="get">
-          Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
-                           class="filter-box datePicker" id="dateFrom">
-          To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker" id="dateTo">
-
-          <button type="submit" class="btn btn-success">Export List</button>
-        </form>
-      </div>
       <div class="card">
         <div class="card-body">
 

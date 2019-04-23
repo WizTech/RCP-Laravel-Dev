@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Bounce Rate</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Bounce Rate</span></li>
+            <li><span>Application Stats /</span></li>
+            <li><a href="{{'bounce-rate'}}">Bounce Rate</a></li>
         </ul>
     </div>
 @stop
@@ -26,11 +27,10 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>Screen</th>
                                 <th>Bounce Type</th>
                             </tr>
@@ -38,21 +38,23 @@
                             <tbody>
                             @if(!empty($bounceRate))
                                 <?php  $total = count($bounceRate); ?>
-                                <?php $x = 1; ?>
                                 @foreach($bounceRate as $br)
                                     <tr>
-                                        <td>{{ $x }}</td>
                                         <td>{{$br->page_type}} </td>
-                                        <?php $percent  = $br->count*100/$total;
-                                        $percentage= number_format((float)$percent, 2, '.', '');
+                                        <?php $percent = $br->count * 100 / $total;
+                                        $percentage = number_format((float)$percent, 2, '.', '');
                                         ?>
                                         <td>{{$percentage}}%</td>
                                     </tr>
-                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($bounceRate) && count($bounceRate) > 0)
+                            {{$bounceRate->links()}}
+                            Showing {{$bounceRate->firstItem()}} to {{$bounceRate->lastItem()}}
+                            of {{$bounceRate->total()}} Entities
+                        @endif
                     </div>
                 </div>
             </div>

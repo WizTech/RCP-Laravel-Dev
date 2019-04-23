@@ -61,8 +61,10 @@ class MetaDetailsController extends Controller
    */
   public function edit($id)
   {
-    $campus = CampusModel::getCampusDetail($id);
-    return view('rcpadmin.meta-details.map', compact('campus'));
+    $details = CampusModel::getCampusMetaDetails($id);
+    $campusId = $id;
+
+    return view('rcpadmin.meta-details.map', compact('details','campusId'));
   }
 
   /**
@@ -77,28 +79,19 @@ class MetaDetailsController extends Controller
 
 
     $input = $request->all();
-
-    $page_type = $input['submitbutton'];
-    if($page_type == 'Subleases'):
-      $type = 'subleases';
-    elseif($page_type == 'Roommates'):
-      $type = 'roommates';
-    else:
-      $type = 'map';
-    endif;
-
-
-
-    $input['page_type'] = $type;
-
-
-
+    $campus = CampusModel::find($id);
     $meta_details = MetaDetails::where('campus_id', '=', $id)->first();
 
     if ($meta_details) {
-      $meta_details->update($input);
-    } else {
-      MetaDetails::create($input);
+      $campus->metaDetails()->detach();
+    }
+    $i = 0;
+    foreach ($input['page_type'] as $page_type) {
+      $meta_title = $input['meta_title'][$i];
+      $meta_keywords = $input['meta_keywords'][$i];
+      $meta_description = $input['meta_description'][$i];
+      MetaDetails::create(['campus_id' => $id, 'page_type' => $page_type, 'meta_title' => $meta_title, 'meta_keywords' => $meta_keywords, 'meta_description' => $meta_description]);
+      $i++;
     }
 
 

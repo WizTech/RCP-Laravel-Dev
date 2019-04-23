@@ -10,16 +10,15 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title> {{ env('ADMIN_TITLE') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="shortcut icon" type="image/png" href="{{ env('THEME_ASSETS_NEW') }}assets/images/favicon.ico">
-  <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/bootstrap.min.css?v=7">
+  <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/themify-icons.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/metisMenu.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/owl.carousel.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/slicknav.min.css">
-
-
-
+  <link rel="stylesheet" href="{{ env('APP_URL') }}/css/custom.css">
   <!-- modernizr css -->
 
   @yield('styles')
@@ -28,6 +27,8 @@
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/default-css.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/styles.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/responsive.css">
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+        rel = "stylesheet">
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -83,10 +84,7 @@
             <li id="full-view"><i class="ti-fullscreen"></i></li>
             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                         
-                             
-                     <li class="settings-btn">
-              <i class="ti-settings"></i>
-            </li>
+               
           </ul>
         </div>
       </div>
@@ -322,6 +320,24 @@
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/metisMenu.min.js"></script>
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slimscroll.min.js"></script>
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/jquery.slicknav.min.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script>
+  $(document).ready(function () {
+    var initialized = false;
+    $(function () {
+      $(".datePicker").focus();
+      $(".datePicker").blur(function(){
+        if(!initialized){
+          $(".datePicker").datepicker({
+            autoOpen: false
+          });
+          initialized = true;
+        }
+      });
+    });
+  });
+</script>
 
 @yield('scripts')
 <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/plugins.js"></script>

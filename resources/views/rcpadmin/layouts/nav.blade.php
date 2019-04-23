@@ -75,6 +75,28 @@
           </div>
         </li>
 
+		<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i
+                                class="mdi-editor-insert-comment"></i> Application Stats </a>
+                    <div class="collapsible-body">
+                        <ul>
+                           <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/visits'}}">Visits</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/app-leads'}}">App Leads</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/app-favorites'}}">App Favorites</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/screen-visits'}}">Screen Visits</a>
+                            </li>
+         		    <li class="child-element"><a href="{{ url('rcpadmin/').'/time-on-app'}}">Time On App</a>
+                            </li>
+                            <li class="child-element"><a href="{{ url('rcpadmin/').'/bounce-rate'}}">Bounce Rate</a>
+                            </li>                        
+			</ul>
+                    </div>
+                </li>
+
       <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i
             class="mdi-editor-insert-comment"></i> Settings</a>
         <div class="collapsible-body">

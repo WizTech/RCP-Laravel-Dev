@@ -16,7 +16,8 @@
         <h4 class="page-title pull-left">Application Leads</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Application Stats / Leads</span></li>
+            <li><span>Application Stats / </span></li>
+            <li><a href="{{'app-leads'}}"> Leads</a></li>
         </ul>
     </div>
 @stop
@@ -46,30 +47,49 @@
                 </form>
             </div>
             <div align="right" style="padding-right: 15%;">
-                <form action="{{url('rcpadmin/app-leads')}}" method="get">
-                    <select class="select-box" name="lead_type" id="leadType">
-                        <option value="All">All Leads</option>
-                        <option value="call">Call</option>
-                        <option value="email">Email</option>
-                        <option value="fav">Favorites</option>
-                    </select>
-                <select class="select-box" name="campus">
-                    <option value="">All Campuses</option>
-                    @if(!empty($appLeads['campuses']))
-                        @foreach($appLeads['campuses'] as $campus)
-                            <option value="{{$campus->id}}">{{$campus->title}}</option>
-                        @endforeach
-                    @endif
-                </select>
-                </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="{{url('rcpadmin/app-leads')}}" method="get">
+                            <select class="select-box-in" name="lead_type" id="leadType">
+                                <option value="All" <?= isset($_GET['lead_type']) && $_GET['lead_type'] == 'All' ? 'selected' : '' ?> >
+                                    All Leads
+                                </option>
+                                <option value="call" <?= isset($_GET['lead_type']) && $_GET['lead_type'] == 'call' ? 'selected' : '' ?> >
+                                    Call
+                                </option>
+                                <option value="email" <?= isset($_GET['lead_type']) && $_GET['lead_type'] == 'email' ? 'selected' : '' ?> >
+                                    Email
+                                </option>
+                                <option value="fav" <?= isset($_GET['lead_type']) && $_GET['lead_type'] == 'fav' ? 'selected' : '' ?> >
+                                    Favorites
+                                </option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="{{url('rcpadmin/app-leads')}}" method="get">
+                            <select class="select-box-in" name="campus_id" id="campusId">
+                                <option value="All">All Campuses</option>
+                                @if(!empty($appLeads['campuses']))
+                                    @foreach($appLeads['campuses'] as $campus)
+                                        <?php if (isset($_GET['campus_id']) && $_GET['campus_id'] == $campus->id): ?>
+                                        <option value="{{$campus->id}}" selected>{{$campus->title}}</option>
+                                        <?php else: ?>
+                                        <option value="{{$campus->id}}">{{$campus->title}}</option>
+                                        <?php endif; ?>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="data-tables datatable-dark">
-                        <table id="dataTable3" class="text-center">
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -79,25 +99,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty( $appLeads['leads']))
-                                <?php $x = 1; ?>
+                            @if(!empty($appLeads['leads']))
                                 @foreach( $appLeads['leads'] as $lead)
-                                    @if(!empty($lead->username && $lead->campus_title))
-                                        <tr>
-                                            <td>{{ $x }}</td>
-                                            <td>{{$lead->username}} </td>
-                                            <td>{{$lead->email}} </td>
-                                            <td>{{$lead->phone_no}} </td>
-                                            <td>{{$lead->campus_title}} </td>
-                                            <td>{{$lead->lead_type}}</td>
-                                            <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
-                                        </tr>
-                                        <?php $x++; ?>
-                                    @endif
+                                    <tr>
+                                        <td>{{$lead->username}} </td>
+                                        <td>{{$lead->email}} </td>
+                                        <td>{{$lead->phone_no}} </td>
+                                        <td>{{$lead->campus_title}} </td>
+                                        <td>{{$lead->lead_type}}</td>
+                                        <td>{{date("Y-m-d",strtotime($lead->date))}}</td>
+                                    </tr>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
+                        @if(isset($appLeads['leads']) && count($appLeads['leads']) > 0)
+                            {{$appLeads['leads']->links()}}
+                            Showing {{$appLeads['leads']->firstItem()}} to {{$appLeads['leads']->lastItem()}}
+                            of {{$appLeads['leads']->total()}}
+                            Entities
+                        @endif
                     </div>
                 </div>
             </div>

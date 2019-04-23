@@ -36,7 +36,6 @@
                 <th>Title</th>
                 <th>Address</th>
                 <th>Domain</th>
-                <th>Action</th>
               </tr>
               </thead>
               <tbody>
@@ -47,14 +46,6 @@
                     <td> {{$data['address']}}</td>
 
                     <td> {{$data['domain_name']}} </td>
-                    <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/premium-listings/'.$data['id'])}}"
-                                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-
-                      </ul>
-                    </td>
                   </tr>
                 @endforeach
               @endif

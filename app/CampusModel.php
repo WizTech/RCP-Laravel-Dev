@@ -11,6 +11,7 @@ use App\CampusNeighborhood;
 use App\CampusDestination;
 use App\Property;
 use App\CampusApartment;
+use App\rcpadmin\MetaDetails;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,6 +61,10 @@ class CampusModel extends Model
   {
     return $this->belongsToMany('App\CampusDestination', 'campus_destination', 'campus_id');
   }
+  public function metaDetails()
+  {
+    return $this->belongsToMany('App\rcpadmin\MetaDetails', 'meta_details', 'campus_id');
+  }
 
   public static function getCampusDetail($id)
   {
@@ -76,6 +81,15 @@ class CampusModel extends Model
 
 
     return array_merge($campus, $guide_details);
+  }
+  public static function getCampusMetaDetails($id)
+  {
+
+
+    $meta_details = MetaDetails::where('campus_id', '=', $id)->get()->toArray();
+
+
+    return $meta_details;
   }
 
   public static function getCampusApartmentDetail($id)

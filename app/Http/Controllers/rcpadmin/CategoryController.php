@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
   public function index()
   {
-    $categories = CategoryModel::all()->toArray();
+    $categories = CategoryModel::paginate(10);
     return view('rcpadmin.category', compact('categories'));
   }
 
