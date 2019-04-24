@@ -45,8 +45,14 @@
                                         <td> {{$listing->company}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="#"
+                                                <li class="mr-3"><a href="{{'rentlinx-listing-edit/'.$listing->id}}"
                                                                     class="btn btn-success btn-sm">Approve</a></li>
+                                                <form>
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-danger btn-sm"
+                                                               value="Deny">
+                                                    </div>
+                                                </form>
                                             </ul>
                                         </td>
                                     </tr>

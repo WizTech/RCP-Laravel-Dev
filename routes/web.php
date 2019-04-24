@@ -105,9 +105,13 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('unapproved', 'rcpadmin\UnapprovedController');
     Route::resource('land-loard', 'rcpadmin\LandloardController');
-    Route::get('rentlinx-listing', 'rcpadmin\RentListingController@index');
+
+    Route::get('rentlinx-listing', 'rcpadmin\RentlinxListingController@index');
+    Route::get('rentlinx-listing-edit/{id}', 'rcpadmin\RentlinxListingController@edit');
+
+
     Route::get('approve-rentlisting/{id}', 'rcpadmin\RentListingController@approveRentListing');
-    Route::put('rent-listing', 'rcpadmin\RentListingController@updateRentListing');
+    Route::put('rentlinx-listing', 'rcpadmin\RentlinxListingController@updateRentListing');
 
 });
 

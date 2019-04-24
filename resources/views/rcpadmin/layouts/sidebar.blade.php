@@ -64,7 +64,8 @@
                 </ul>
             </li>
             <li>
-                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-list"></i><span>App Folio Manager</span></a>
+                <a href="javascript:void(0)" aria-expanded="true"><i
+                            class="ti-view-list"></i><span>App Folio Manager</span></a>
                 <ul class="collapse">
                     <li class="child-element"><a href="{{ url('rcpadmin/').'/rentlinx-listing'}}">Listing</a>
                 </ul>

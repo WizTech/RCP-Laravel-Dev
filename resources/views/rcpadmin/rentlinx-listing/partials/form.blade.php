@@ -20,41 +20,56 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="form-group">
                                 <div class="form-row">
-                                    <div class="col-md-6 mb-6">
-                                        <h6>{!! Form::label('Heading',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('heading',null,['class' => 'form-control'], 'required') !!}
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Owner/Landlord',null,['class' => 'col-form-label']) !!}</h6>
+                                        <select class="custom-select" name="career_type" id="">
+                                            <option value=""> Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Campus Name',null,['class' => 'col-form-label']) !!}</h6>
+                                        <select class="custom-select" name="career_type" id="">
+                                            <option value=""> Select</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-6 mb-6">
-                                        <h6>{!! Form::label('Link',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('link',null,['class' => 'form-control', 'required']) !!}
+                                        <h6>{!! Form::label('Listing Title/Apartment Name',null,['class' => 'col-form-label']) !!}</h6>
+                                        {!! Form::text('listing_title',null,['class' => 'form-control'], 'required') !!}
                                     </div>
-                                    @if (!empty($news['image']))
-                                        <div class="col-md-6 mb-6">
-                                            <h6>{!! Form::label(' News Image ',null,['class' => 'col-form-label']) !!}
-                                                <span>
-                                            <img style="float: inside;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/news/'.$news['image']}}">
-                                        </span></h6>
-                                        </div>
-                                        <div class="col-md-6 mb-6">
-                                            <h6>{!! Form::label('Update Image',null,['class' => 'col-form-label']) !!}</h6>
-                                            {!! Form::file('image',null,['class' => 'custom-file-label']) !!}
-                                        </div>
-                                    @else
-                                        <div class="col-md-6 mb-6">
-                                            <h6>{!! Form::label('Upload Image',null,['class' => 'col-form-label']) !!}</h6>
-                                            {!! Form::file('image',null,['class' => 'custom-file-label']) !!}
-                                        </div>
-                                    @endif
-                                    <div class="col-md-12 mb-6">
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Property Type',null,['class' => 'col-form-label']) !!}</h6>
+                                        <select class="custom-select" name="career_type" id="">
+                                            <option value=""> Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Address',null,['class' => 'input-group-text']) !!}</h6>
+                                        {!! Form::textarea('address',null,['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Description',null,['class' => 'input-group-text']) !!}</h6>
                                         {!! Form::textarea('description',null,['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Contact Email(For This Property)',null,['class' => 'col-form-label']) !!}</h6>
+                                        {!! Form::text('contact_email',null,['class' => 'form-control'], 'required') !!}
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Contact Phone(For This Property)',null,['class' => 'col-form-label']) !!}</h6>
+                                        {!! Form::text('contact_phone',null,['class' => 'form-control'], 'required') !!}
+                                    </div>
+                                    <div class="col-md-12 mb-6 clear">
+                                        <h4>Listing Details</h4>
+                                    </div>
+                                    <div class="col-md-6 mb-6 clear">
+                                        <h6>{!! Form::label('Property Expiry',null,['class' => 'col-form-label']) !!}</h6>
+                                        {!! Form::text('property_expiry',null,['class' => 'form-control'], 'required') !!}
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12 mb-12">
-                                    {!! Form::submit($buttonText,['class'=>'btn btn-flat btn-success btn-lg btn-block']) !!}
+                                    <button class="btn btn-flat btn-success btn-lg btn-block">Save and Continue</button>
                                 </div>
                             </div>
                         </div>
