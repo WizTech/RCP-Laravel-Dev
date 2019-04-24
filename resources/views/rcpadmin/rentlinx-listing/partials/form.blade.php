@@ -22,24 +22,39 @@
                                 <div class="form-row">
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Owner/Landlord',null,['class' => 'col-form-label']) !!}</h6>
-                                        <select class="custom-select" name="career_type" id="">
+                                        <select class="custom-select" name="landlord_id">
                                             <option value=""> Select</option>
+                                            <?php if (isset($listing['landlord'])):  ?>
+                                            <?php foreach ($listing['landlord'] as $landlord): ?>
+                                            <option value="<?= $landlord->id ?>"><?= $landlord->name; ?></option>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Campus Name',null,['class' => 'col-form-label']) !!}</h6>
-                                        <select class="custom-select" name="career_type" id="">
+                                        <select class="custom-select" name="campus_id" id="">
                                             <option value=""> Select</option>
+                                            <?php if (isset($listing['campus'])):  ?>
+                                            <?php foreach ($listing['campus'] as $campus): ?>
+                                            <option value="<?= $campus->id ?>"><?= $campus->title; ?></option>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-6">
                                         <h6>{!! Form::label('Listing Title/Apartment Name',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('listing_title',null,['class' => 'form-control'], 'required') !!}
+                                        <input type="text" name="listing_title" class="form-control" placeholder="Apartment Name" required>
                                     </div>
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Property Type',null,['class' => 'col-form-label']) !!}</h6>
-                                        <select class="custom-select" name="career_type" id="">
+                                        <select class="custom-select" name="category_id" id="">
                                             <option value=""> Select</option>
+                                            <?php if (isset($listing['category'])):  ?>
+                                            <?php foreach ($listing['category'] as $category): ?>
+                                            <option value="<?= $category->id ?>"><?= $category->name; ?></option>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-6 clear">
@@ -52,24 +67,39 @@
                                     </div>
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Contact Email(For This Property)',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('contact_email',null,['class' => 'form-control'], 'required') !!}
+                                        <input type="text" name="contact_email"  class="form-control" placeholder="Put Comma ( , ) to add multiple emails" required>
                                     </div>
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Contact Phone(For This Property)',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('contact_phone',null,['class' => 'form-control'], 'required') !!}
+                                        <input type="text" name="contact_phone" class="form-control" placeholder="Only 1 Contact Number" required>
                                     </div>
                                     <div class="col-md-12 mb-6 clear">
                                         <h4>Listing Details</h4>
                                     </div>
+                                    <div class="col-md-6 mb-6 clear" style="padding-top: 30px;">
+                                        <label class="switch"><input name="payment" type="checkbox" id="togBtn">
+                                            <div class="slider round">
+                                                <!--ADDED HTML -->
+                                                <span class="paid">Paid</span>
+                                                <span class="free">Free Trial</span>
+                                                <!--END-->
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="col-md-6 mb-6 clear">
                                         <h6>{!! Form::label('Property Expiry',null,['class' => 'col-form-label']) !!}</h6>
-                                        {!! Form::text('property_expiry',null,['class' => 'form-control'], 'required') !!}
+                                        <input type="text" name="property_expiry" value="<?= date("Y-m-d") ?>"
+                                               class="datePicker form-control"
+                                               id="dateTo">
+                                        <input type="hidden" name="rentlinx_id" value="{{$listing['rentlinx']['rentlinx_id']}}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12 mb-12">
-                                    <button class="btn btn-flat btn-success btn-lg btn-block">Save and Continue</button>
+                            <div class="form-row">
+                                <div class="col-md-10 offset-md-1 mb-6">
+                                    <button type="submit" class="btn btn-flat btn-success btn-sm">Save and Continue</button>
+                                    <button class="btn btn-flat btn-sm"><a href="{{'../../rcpadmin/rentlinx-listing'}}">Cancle</a></button>
                                 </div>
                             </div>
                         </div>

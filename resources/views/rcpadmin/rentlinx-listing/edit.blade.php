@@ -14,12 +14,13 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-
-
+                    {!! Form::model($listing['rentlinx'],['method'=>'PATCH'],['action' => ['rcpadmin/RentlinxListingController@update',$listing['rentlinx']['rentlinx_id'],] ,'class' => 'col s12']) !!}
+                    {!! Form::hidden('id') !!}
                     @include('rcpadmin.rentlinx-listing.partials.form',['buttonText'=>'Update'])
-
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
     </div>
 @stop
+

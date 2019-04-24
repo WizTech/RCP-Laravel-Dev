@@ -71,8 +71,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
     Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
     Route::resource('team-member', 'rcpadmin\TeamController');
-    Route::resource('unapproved', 'rcpadmin\UnapprovedController');
-    Route::resource('unapproved', 'rcpadmin\UnapprovedController');
+
     Route::resource('premium-landlord', 'rcpadmin\PreimumLandlordController');
     Route::resource('premium-listings', 'rcpadmin\PreimumListingsController');
 
@@ -103,15 +102,9 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::get('lead-export', 'rcpadmin\AppLeadController@leadExport');
     Route::get('visit-export', 'rcpadmin\AppViewController@visitExport');
 
-    Route::resource('unapproved', 'rcpadmin\UnapprovedController');
-    Route::resource('land-loard', 'rcpadmin\LandloardController');
-
-    Route::get('rentlinx-listing', 'rcpadmin\RentlinxListingController@index');
-    Route::get('rentlinx-listing-edit/{id}', 'rcpadmin\RentlinxListingController@edit');
-
-
-    Route::get('approve-rentlisting/{id}', 'rcpadmin\RentListingController@approveRentListing');
-    Route::put('rentlinx-listing', 'rcpadmin\RentlinxListingController@updateRentListing');
+    Route::resource('rentlinx-listing', 'rcpadmin\RentlinxListingController');
+    /*Route::get('rentlinx-listing-edit/{id}', 'rcpadmin\RentlinxListingController@edit');
+    Route::post('rentlinx-listing-update/{id}', 'rcpadmin\RentlinxListingController@update');*/
 
 });
 

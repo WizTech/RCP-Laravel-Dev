@@ -30,6 +30,7 @@
                         <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
+                                <th>Appfolio ID</th>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Company</th>
@@ -40,16 +41,20 @@
                             @if(isset($listings) && count($listings) > 0)
                                 @foreach($listings as $listing)
                                     <tr>
+                                        <td> {{$listing->rentlinx_id}}</td>
                                         <td> {{$listing->name}} </td>
                                         <td> {{$listing->address}} </td>
                                         <td> {{$listing->company}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{'rentlinx-listing-edit/'.$listing->id}}"
-                                                                    class="btn btn-success btn-sm">Approve</a></li>
-                                                <form>
+                                                <li class="mr-3"><a href="{{ url('rcpadmin/rentlinx-listing/'.$listing->rentlinx_id)}}"
+                                                                    class="btn btn-success btn-sm approve">Approve</a></li>
+
+                                                <form method="POST" action="rentlinx-listing/{{$listing->rentlinx_id}}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
                                                     <div class="form-group">
-                                                        <input type="submit" class="btn btn-danger btn-sm"
+                                                        <input type="submit" class="btn btn-danger btn-sm deny"
                                                                value="Deny">
                                                     </div>
                                                 </form>
@@ -62,7 +67,8 @@
                         </table>
                         @if(isset($listings) && count($listings) > 0)
                             {{$listings->links()}}
-                            Showing {{$listings->firstItem()}} to {{$listings->lastItem()}} of {{$listings->total()}} Entities
+                            Showing {{$listings->firstItem()}} to {{$listings->lastItem()}} of {{$listings->total()}}
+                            Entities
                         @endif
                     </div>
                 </div>
@@ -118,8 +124,13 @@
 
     </script>
     <script>
-        $('.delete').click(function () {
-            return confirm("Are you sure you want to delete?");
-        })
+        $(document).ready(function () {
+            $('.deny').click(function () {
+                return confirm("Are you sure you want to Deny?");
+            });
+            $('.approve').click(function () {
+                return confirm("Are you sure to approve?");
+            });
+        });
     </script>
 @stop

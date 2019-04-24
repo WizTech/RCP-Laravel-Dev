@@ -23,11 +23,11 @@
     padding: 90px 0;
     vertical-align: baseline;
 }
- .filter-box{
-     border: solid;
-     height: 30px;
-     width: 18%;
- }
+.filter-box{
+    border: solid;
+    height: 30px;
+    width: 18%;
+}
 .select-box{
     border: solid;
     height: 30px;
@@ -44,3 +44,90 @@
 .clear{
     padding-bottom: 20px;
 }
+
+/*
+Toggle Switch Button Start
+*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 35px;
+}
+
+.switch input {display:none;}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0px;
+    left: 2px;
+    right: 0;
+    bottom: 0;
+    background-color: #999b9e;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s left;
+    transition: .4s left;
+}
+
+input:checked + .slider {
+    background-color: #217bca;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    left: calc(100% - 30px);
+}
+
+/*------ ADDED CSS ---------*/
+.paid
+{
+    display: none;
+}
+
+.paid, .free
+{
+    color: #ffffff;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    font-size: 11px;
+    font-family: Verdana, sans-serif;
+}
+
+input:checked+ .slider .paid
+{display: block;}
+
+input:checked + .slider .free
+{display: none;}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 83%;
+}
+
+/*
+Toggle Switch Button End
+*/
