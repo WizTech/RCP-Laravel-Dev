@@ -102,9 +102,13 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::get('lead-export', 'rcpadmin\AppLeadController@leadExport');
     Route::get('visit-export', 'rcpadmin\AppViewController@visitExport');
 
+    Route::get('rentlinx-listing/edit-property/{id}', 'rcpadmin\RentlinxListingController@editProperty');
+    Route::put('rentlinx-listing/update-property/{id}', 'rcpadmin\RentlinxListingController@updateProperty');
+    Route::get('rentlinx-listing/edit-campus/{id}', 'rcpadmin\RentlinxListingController@editCampus');
+    Route::put('rentlinx-listing/update-campus/{id}', 'rcpadmin\RentlinxListingController@updateCampus');
     Route::resource('rentlinx-listing', 'rcpadmin\RentlinxListingController');
-    /*Route::get('rentlinx-listing-edit/{id}', 'rcpadmin\RentlinxListingController@edit');
-    Route::post('rentlinx-listing-update/{id}', 'rcpadmin\RentlinxListingController@update');*/
+    Route::resource('unapproved', 'rcpadmin\UnapprovedController');
+
 
 });
 
