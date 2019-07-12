@@ -14,7 +14,7 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::model($careers['career'],['method'=>'PATCH'],['action' => ['rcpadmin/CareerController@update',$careers['career']['id']] , 'class' => 'col s12']) !!}
+                    {!! Form::model($careers,['method'=>'PATCH'],['action' => ['rcpadmin/CareerController@update',$careers['id']] , 'class' => 'col s12']) !!}
                     {!! Form::hidden('id') !!}
                     @include('rcpadmin.career.partials.form',['buttonText'=>'Update'])
                     {!! Form::close() !!}

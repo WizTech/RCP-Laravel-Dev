@@ -48,18 +48,10 @@ class CategoryController extends Controller
     return redirect('rcpadmin/category');
   }
 
-  public function destroy()
-  {
-    $input = Request::all();
-
-    $id = $input['id'];
-
-    $category = CategoryModel::find($id);
-
-    if ($category) {
-      CategoryModel::destroy($id);
+  public function destroy($id)
+    {
+      $category = CategoryModel::find($id);
+      $category->delete();
+      return redirect('rcpadmin/category');
     }
-    return 'true';
-    // return redirect('rcpadmin/admin_users');
-  }
 }

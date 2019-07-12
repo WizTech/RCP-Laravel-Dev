@@ -9,7 +9,8 @@ use App\CampusDestination;
 use App\CampusModel;
 use App\CampusApartment;
 use App\User;
-use App\LinkedCampusModel;
+/*use App\LinkedCampusModel;*/
+use App\CampusLinkedModel;
 use Illuminate\Http\File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,26 @@ class CampusController extends Controller
 
     return view('rcpadmin.campus', compact('campuses'));
   }
+  public function search()
+  {
+    $q = $_REQUEST['q'];
+    if ($q != "") {
+
+      $campuses = CampusModel::where('name', 'LIKE', '%' . $q . '%')->orWhere('title', 'LIKE', '%' . $q . '%')->orWhere('address', 'LIKE', '%' . $q . '%')->paginate(10)->setPath('');
+      //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+      $pagination = $campuses->appends(array(
+        'q' => $q
+      ));
+      if (count($campuses) > 0) {
+
+        return view('rcpadmin.campus', compact('campuses'))->withQuery($q);
+      }
+      //return view('rcpadmin.users', compact('webUsers'));
+    }
+    //$campuses = CampusModel::paginate(10);
+
+   // return view('rcpadmin.campus', compact('campuses'));
+  }
 
   public function create()
   {
@@ -36,10 +57,10 @@ class CampusController extends Controller
     foreach ($campuses as $campus) {
       $campusSelect[$campus['id']] = $campus['title'];
     }
-    $users = User::landlords('id', 'name')->toArray();
+    $users = User::all_landlords('id', 'name');
     $usersSelect[''] = 'Featured Landlord';
     foreach ($users as $user) {
-      $usersSelect[$user['id']] = $user['name'];
+      $usersSelect[$user->id] = $user->name;
     }
     return view('rcpadmin.campus.add', compact('campusSelect', 'usersSelect'));
   }
@@ -62,7 +83,7 @@ class CampusController extends Controller
         $campusIds = $input['campus_linked'];
         foreach ($campusIds as $campId) {
           if ($campId):
-            LinkedCampusModel::create(['campus_id' => $campus->id, 'linked_campus_id' => $campId]);
+            CampusLinkedModel::create(['campus_id' => $campus->id, 'campus_linked' => $campId]);
           endif;
         }
 
@@ -80,7 +101,8 @@ class CampusController extends Controller
     $campus = CampusModel::find($id);
 
     $campuses = CampusModel::all('id', 'title')->toArray();
-    $linked_campuses = LinkedCampusModel::where('campus_id', '=', $id)->get()->pluck('linked_campus_id')->toArray();
+
+    $linked_campuses_data = CampusLinkedModel::where('campus_id', '=', $id)->get()->pluck('campus_linked')->toArray();
 
     $campusSelect = [];
     $usersSelect = [];
@@ -89,13 +111,17 @@ class CampusController extends Controller
     foreach ($campuses as $campus2) {
       $campusSelect[$campus2['id']] = $campus2['title'];
     }
-    $users = User::landlords('id', 'name')->toArray();
+
+    $linked_campuses = [];
+    foreach ($linked_campuses_data as $linked_campus) {
+      $linked_campuses[$linked_campus] = $linked_campus;
+    }
+    $users = User::all_landlords('id', 'name');
     $usersSelect[''] = 'Featured Landlord';
     foreach ($users as $user) {
-      $usersSelect[$user['id']] = $user['name'];
+      $usersSelect[$user->id] = $user->name;
     }
-
-
+    
     return view('rcpadmin.campus.edit', compact('campus', 'campusSelect', 'usersSelect', 'linked_campuses'));
   }
 
@@ -122,7 +148,7 @@ class CampusController extends Controller
 
     if (!empty($input['campus_linked'])) {
 
-      LinkedCampusModel::where('campus_id', '=', $id)->delete();
+      CampusLinkedModel::where('campus_id', '=', $id)->delete();
 
       /*
             if (!empty($linked_campuses)) {
@@ -131,7 +157,7 @@ class CampusController extends Controller
 
       $campusIds = $input['campus_linked'];
       foreach ($campusIds as $campId) {
-        LinkedCampusModel::create(['campus_id' => $id, 'linked_campus_id' => $campId]);
+        CampusLinkedModel::create(['campus_id' => $id, 'campus_linked' => $campId]);
       }
     }
     return redirect('rcpadmin/campus');

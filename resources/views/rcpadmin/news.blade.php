@@ -33,8 +33,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Heading</th>
-                                <th>Link</th>
-                                <th>Image</th>
+                               {{-- <th>Link</th>--}}
+                               {{-- <th>Image</th>--}}
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -45,10 +45,10 @@
                                 @foreach($news as $n)
                                     <tr>
                                         <td> {{ $x }}</td>
-                                        <td> {{$n['heading']}} </td>
-                                        <td> {{$n['link']}} </td>
-                                        <td><img style="float: right;" height="60" width="60"
-                                                 src="{{ env('APP_URL').'storage/uploads/news/'.$n['image']}}"></td>
+                                        <td> {{base64_decode($n['heading'])}} </td>
+                                       {{-- <td> {{$n['link']}} </td>--}}
+                                       {{-- <td><img style="float: right;" height="60" width="60"
+                                                 src="{{ env('APP_URL').'storage/uploads/news/'.$n['image']}}"></td>--}}
                                         <td>{{$n['status']}}</td>
                                         <td>
                                             <ul class="d-flex justify-content-center">

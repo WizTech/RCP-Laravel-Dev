@@ -28,7 +28,7 @@
         <div class="card-body">
 
           <div class="data-tables datatable-dark">
-            <table id="dataTable3" class="text-center">
+            <table class="text-center table">
               <thead class="text-capitalize">
               <tr>
                 <th>ID</th>
@@ -49,7 +49,8 @@
                     <td>
 
                       <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/meta-details/'.$campus['id'].'/edit')}}" class="text-secondary"><i
+                        <li class="mr-3"><a href="{{ url('rcpadmin/meta-details/'.$campus['id'].'/edit')}}"
+                                            class="text-secondary"><i
                               class="fa fa-edit" title="Detail"></i></a></li>
 
 
@@ -60,6 +61,11 @@
               @endif
               </tbody>
             </table>
+            @if(isset($campuses) && count($campuses) > 0)
+              {{$campuses->links()}}
+              Showing {{$campuses->firstItem()}} to {{$campuses->lastItem()}} of {{$campuses->total()}}
+              Entities
+            @endif
           </div>
         </div>
       </div>

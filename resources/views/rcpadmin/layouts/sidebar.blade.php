@@ -3,14 +3,14 @@
     @if($modules)
       @foreach($modules as $module)
         <li class="{{ ( $current_controller == $module['controller']) ? 'active': 'dd'}}"><a
-            href="{{ url('rcpadmin/').'/'.$module['slug'] }}"
-            class="waves-effect waves-cyan"><i
-              class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
+                  href="{{ url('rcpadmin/').'/'.$module['slug'] }}"
+                  class="waves-effect waves-cyan"><i
+                    class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
       @endforeach
 
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-            class="ti-view-list"></i><span>Content Manager</span></a>
+                  class="ti-view-list"></i><span>Content Manager</span></a>
         <ul class="collapse">
           <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
           </li>
@@ -26,39 +26,39 @@
           </li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a>
           </li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword Text</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/simple-keyword-text'}}">Simpe Keyword
+              Text</a></li>
         </ul>
       </li>
-
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-            class="ti-view-list"></i><span>Stats</span></a>
+                  class="ti-view-list"></i><span>Stats</span></a>
         <ul class="collapse">
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/email-leads'}}">Email Leads</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/email-leads'}}">Email Leads</a>
+
           <li class="child-element"><a href="{{ url('rcpadmin/').'/phone-leads'}}">Phone Leads</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/top-spots'}}">Top Spots</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/landlord-site-leads'}}">Landlord Site Leads</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/landlord-total-leads'}}">Landlord Total Leads</a>
           </li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/expired-properties'}}">Expiring Properties</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/active-properties'}}">Active Properties</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/student-views'}}">Student Views</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/property-feeds'}}">Property Feeds</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/users-count'}}">Users Count</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/properties-count'}}">Properties Count</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/real-estate-feeds'}}">Real Estate Feeds</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/current-active-properties'}}">Current Active
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/active-properties'}}">Active Properties</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/export-landlord-active-properties'}}">Landlord Active
               Properties</a></li>
-
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/active-campuses'}}">Active Campuses</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-report'}}">Campus Report</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/leads-per-company'}}">Leads Per Company</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/sublease-track'}}">Sublease Track</a></li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/immitation-leads'}}">Immitation Leads</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/top-spots'}}">Top Spots</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/imitation-email'}}">Imitation Email</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/expiring-property'}}">Property Expiring</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/leads-per-company'}}">Leads Per Company</a></li>
 
         </ul>
+
       </li>
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-            class="ti-view-list"></i><span>Application Stats</span></a>
+                  class="ti-view-list"></i><span>Application Stats</span></a>
         <ul class="collapse">
           <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
           </li>
@@ -88,8 +88,16 @@
           </li>
         </ul>
       </li>
-    @endif
+      <li>
+        <a href="javascript:void(0)" aria-expanded="true"><i
+                  class="ti-view-list"></i><span>App Folio Manager</span></a>
+        <ul class="collapse">
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/rentlinx-listing'}}">Listing</a>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/unapproved'}}">Unapproved</a></li>
+        </ul>
+      </li>
 
+    @endif
 
   </ul>
 </nav>

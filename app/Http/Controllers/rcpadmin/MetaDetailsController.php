@@ -17,7 +17,7 @@ class MetaDetailsController extends Controller
    */
   public function index()
   {
-    $campuses = CampusModel::all();
+    $campuses = CampusModel::paginate(10);
     return view('rcpadmin.meta-details', compact('campuses'));
   }
 

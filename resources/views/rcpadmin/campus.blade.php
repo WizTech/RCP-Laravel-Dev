@@ -29,6 +29,18 @@
 
                     <a href="{{ url('rcpadmin/campus/create')}}" class="btn btn-outline-dark header-title">Add
                         Campus</a>
+
+                    <form action="{{ url('rcpadmin/campus-search')}}" method="POST" role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q"
+                                   placeholder="Search campus"> <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default">
+                                                    Submit
+                                                </button>
+                                            </span>
+                        </div>
+                    </form>
                     <div class="table-responsive datatable-dark">
                         <table class="text-center table">
                             <thead class="text-capitalize">
@@ -52,27 +64,27 @@
 
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'])}}"
-                                                                    class="text-secondary"><i
+                                                                    class="text-secondary" target="_blank"><i
                                                                 class="fa fa-edit" title="Detail"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/map')}}"
-                                                            class="text-secondary" title="Map"><i
+                                                            class="text-secondary" title="Map" target="_blank"><i
                                                                 class="fa fa-map"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/apartment')}}"
-                                                            class="text-secondary" title="Apartment"><i
+                                                            class="text-secondary" title="Apartment" target="_blank"><i
                                                                 class="fa fa-building"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/renting')}}"
-                                                            class="text-secondary" title="Renting Question"><i
+                                                            class="text-secondary" title="Renting Question" target="_blank"><i
                                                                 class="fa fa-question-circle"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/neighborhood')}}"
-                                                            class="text-secondary" title="Neighborhoods"><i
+                                                            class="text-secondary" title="Neighborhoods" target="_blank"><i
                                                                 class="fa fa-home"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/destination')}}"
-                                                            class="text-secondary" title="Destinaion"><i
+                                                            class="text-secondary" title="Destinaion" target="_blank"><i
                                                                 class="fa fa-map-marker"></i></a></li>
                                                 <li><a data-admin-id="{{$campus['id']}}" href="javascript:void(0)"
                                                        data-method="delete" class="text-danger jquery-postback"><i

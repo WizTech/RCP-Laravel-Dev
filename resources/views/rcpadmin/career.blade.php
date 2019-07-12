@@ -47,7 +47,7 @@
                                     <tr>
                                         <td> {{ $x }}</td>
                                         <td> {{$career['title']}} </td>
-                                        <td> {{$career['career_type']}} </td>
+                                        <td> {{$career['type']['careers_type']}} </td>
                                         <td> {{$career['location']}} </td>
                                         <td> {{$career['hours']}} </td>
                                         <td> {{$career['status']}} </td>

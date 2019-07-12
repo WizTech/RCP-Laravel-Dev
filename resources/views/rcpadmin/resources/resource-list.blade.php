@@ -46,7 +46,7 @@
                                 @foreach($resources['res'] as $r)
                                     <tr>
                                         <td> {{ $x }}</td>
-                                        <td> {{$r['title']}} </td>
+                                        <td> {{base64_decode($r['title'])}} </td>
                                         <td><img style="float: right;" height="60" width="60"
                                                  src="{{ env('APP_URL').'storage/uploads/resources/'.$r['image']}}"></td>
                                         <td> {{$r['link']}} </td>

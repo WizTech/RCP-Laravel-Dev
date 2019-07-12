@@ -39,7 +39,26 @@ class PropertyController extends Controller
         $properties = Property::with('category')->paginate(10);
         return view('rcpadmin.property', compact('properties'));
     }
+    public function search()
+      {
+        $q = $_REQUEST['q'];
+        if ($q != "") {
 
+            $properties = Property::where('title', 'LIKE', '%' . $q . '%')->orWhere('address', 'LIKE', '%' . $q . '%')->with('category')->paginate(10)->setPath('');
+          //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+          $pagination = $properties->appends(array(
+            'q' => $q
+          ));
+          if (count($properties) > 0) {
+
+            return view('rcpadmin.property', compact('properties'))->withQuery($q);
+          }
+          //return view('rcpadmin.users', compact('webUsers'));
+        }
+        //$campuses = CampusModel::paginate(10);
+
+       // return view('rcpadmin.campus', compact('campuses'));
+      }
     public function create()
     {
         $campuses = CampusModel::all('id', 'title')->toArray();
@@ -56,11 +75,11 @@ class PropertyController extends Controller
         foreach ($categories as $category) {
             $categorySelect[$category['id']] = $category['name'];
         }
-        $users = User::landlords('id', 'name')->toArray();
-        $usersSelect[''] = 'Landlord';
-        foreach ($users as $user) {
-            $usersSelect[$user['id']] = $user['name'];
-        }
+        $users = User::all_landlords('id', 'name');
+    $usersSelect[''] = 'Featured Landlord';
+    foreach ($users as $user) {
+      $usersSelect[$user->id] = $user->name;
+    }
         return view('rcpadmin.property.add', compact('campusSelect', 'usersSelect', 'categorySelect'));
     }
 
@@ -96,11 +115,11 @@ class PropertyController extends Controller
         foreach ($campuses as $campus2) {
             $campusSelect[$campus2['id']] = $campus2['title'];
         }
-        $users = User::landlords('id', 'name')->toArray();
-        $usersSelect[''] = 'Featured Landlord';
-        foreach ($users as $user) {
-            $usersSelect[$user['id']] = $user['name'];
-        }
+        $users = User::all_landlords('id', 'name');
+           $usersSelect[''] = 'Featured Landlord';
+           foreach ($users as $user) {
+             $usersSelect[$user->id] = $user->name;
+           }
         $categorySelect[''] = 'Category';
         foreach ($categories as $category) {
             $categorySelect[$category['id']] = $category['name'];

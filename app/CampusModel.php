@@ -5,6 +5,7 @@ namespace App;
 use App\AdminUser;
 use App\User;
 use App\LinkedCampusModel;
+use App\CampusLinkedModel;
 use App\CampusGuideModel;
 use App\CampusRentingQuestion;
 use App\CampusNeighborhood;
@@ -22,6 +23,8 @@ class CampusModel extends Model
     'name', 'title', 'address', 'meta_title', 'meta_description', 'seo_block', 'h1', 'h2', 'lat', 'lng', 'live', 'status', 'rating', 'premium_banner', 'featured_landlord'
   ];
 
+
+
   public function users()
   {
     return $this->belongsToMany('App\User', 'user_campuses');
@@ -29,7 +32,7 @@ class CampusModel extends Model
 
   public function linked_campuses()
   {
-    return $this->hasMany('App\LinkedCampusModel', 'campus_linked');
+    return $this->hasMany('App\CampusLinkedModel', 'campus_linked');
   }
 
   public function admin_users()

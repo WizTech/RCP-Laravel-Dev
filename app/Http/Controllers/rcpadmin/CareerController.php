@@ -16,7 +16,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-        $careers= Career::paginate(10);
+        $careers= Career::with('type')->paginate(10);
         return view('rcpadmin.career', compact('careers'));
     }
 
@@ -51,9 +51,10 @@ class CareerController extends Controller
      */
     public function show($id)
     {
-        $careers['career'] = Career::find($id);
-        $careers['career_type']= CareerType::all()->toArray();
-        return view('rcpadmin.career.edit', compact('careers'));
+        $careers = Career::find($id);
+
+        $career_type = CareerType::all()->toArray();
+        return view('rcpadmin.career.edit', compact('careers','career_type'));
     }
 
     /**

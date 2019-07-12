@@ -22,6 +22,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
   Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
   Route::resource('admin_users', 'rcpadmin\AdminUsers');
+  Route::post('user-search', 'rcpadmin\UsersController@search');
   Route::resource('users', 'rcpadmin\UsersController');
   Route::post('campus/{id}/map', 'rcpadmin\CampusController@map_update');
   Route::get('campus/{id}/map', 'rcpadmin\CampusController@map');
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('campus/addNeighborhood', 'rcpadmin\CampusController@addNeighborhood');
   Route::get('campus/addDestination', 'rcpadmin\CampusController@addDestination');
 
+  Route::post('campus-search', 'rcpadmin\CampusController@search');
   Route::resource('campus', 'rcpadmin\CampusController');
 
   Route::post('property/images-delete', 'rcpadmin\PropertyController@destroy_images');
@@ -52,6 +54,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
   Route::get('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan');
   Route::get('property/addFloorplan', 'rcpadmin\PropertyController@addFloorplan');
+
+  Route::post('property-search', 'rcpadmin\PropertyController@search');
   Route::resource('property', 'rcpadmin\PropertyController');
   Route::resource('entrata', 'rcpadmin\EntrataController');
   Route::resource('yardi', 'rcpadmin\YardiController');
@@ -68,7 +72,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::resource('careertype', 'rcpadmin\CareerTypeController');
   Route::resource('careerslider', 'rcpadmin\CareerSliderController');
   Route::resource('campus-insight', 'rcpadmin\CampusInsightController');
-
+  Route::get('expired-listing-report', 'rcpadmin\ExpiredPropertyController@leadExport');
   Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
   Route::resource('team-member', 'rcpadmin\TeamController');
   Route::resource('premium-landlord', 'rcpadmin\PreimumLandlordController');
@@ -78,7 +82,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::resource('simple-keyword-text', 'rcpadmin\SimpleTextKeywordController');
 
   Route::resource('resources', 'rcpadmin\ResourceController');
-
+  Route::get('list-contact-export', 'rcpadmin\ListContactFormController@leadExport');
   Route::resource('list-contact-form', 'rcpadmin\ListContactFormController');
   Route::resource('meta-details', 'rcpadmin\MetaDetailsController');
 
@@ -90,9 +94,43 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
   Route::delete('delete-resource/{id}', 'rcpadmin\ResourceController@deleteResource');
 
-  Route::resource('sublease-track', 'rcpadmin\SubleaseTrackController');
-  Route::resource('imitation-leads', 'rcpadmin\ImmitationEmailController');
+  // Route::resource('sublease-track', 'rcpadmin\SubleaseTrackController');
 
+
+  /*Stats*/
+  Route::post('all-leads-export', 'rcpadmin\EmailTrackController@export_leads');
+  Route::post('email-leads-export', 'rcpadmin\EmailTrackController@export_list');
+  Route::post('email-leads-modal', 'rcpadmin\EmailTrackController@exportList');
+  Route::get('email-leads', 'rcpadmin\EmailTrackController@index');
+
+  Route::get('phone-leads', 'rcpadmin\PhoneLeadsController@index');
+  Route::post('landlord-site-leads', 'rcpadmin\LandlordSiteLeadsController@index');
+  Route::get('landlord-site-leads', 'rcpadmin\LandlordSiteLeadsController@index');
+  Route::get('landlord-total-leads', 'rcpadmin\LandlordTotalLeadsController@index');
+  Route::get('active-properties', 'rcpadmin\ActivePropertiesController@index');
+  Route::post('active-properites-export', 'rcpadmin\ActivePropertiesController@exportList');
+  Route::get('export-landlord-active-properties', 'rcpadmin\LandlordActivePropertiesController@index');
+
+  Route::post('properties-count', 'rcpadmin\PropertiesCountController@export');
+  Route::get('properties-count', 'rcpadmin\PropertiesCountController@index');
+
+  Route::post('users-count', 'rcpadmin\UsersCountController@export');
+  Route::get('users-count', 'rcpadmin\UsersCountController@index');
+  Route::get('student-views', 'rcpadmin\StudentViewController@index');
+  Route::get('sublease-track', 'rcpadmin\SubleaseTrackController@index');
+  Route::get('top-spots/{id}', 'rcpadmin\TopsSpotsController@campus');
+  Route::get('top-spots', 'rcpadmin\TopsSpotsController@index');
+  Route::post('imitation-email', 'rcpadmin\ImitationEmailController@export_list');
+  Route::get('imitation-email', 'rcpadmin\ImitationEmailController@index');
+  Route::get('expiring-property', 'rcpadmin\ExpiringPropertyController@index');
+
+  Route::get('leads-per-company/{id}/edit', 'rcpadmin\LeadsPerCompanyController@edit');
+  Route::post('company-leads-export', 'rcpadmin\LeadsPerCompanyController@export_list');
+  Route::get('leads-per-company', 'rcpadmin\LeadsPerCompanyController@index');
+  Route::post('property-feeds-export', 'rcpadmin\PropertyFeedsController@export_list');
+  Route::get('property-feeds', 'rcpadmin\PropertyFeedsController@index');
+
+  /*Stats*/
 
   Route::get('app-users', 'rcpadmin\AppUserController@index');
   Route::post('app-users', 'rcpadmin\AppUserController@index');
@@ -109,6 +147,13 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('favorite-export', 'rcpadmin\AppFavoriteController@favroiteExport');
   Route::get('lead-export', 'rcpadmin\AppLeadController@leadExport');
   Route::get('visit-export', 'rcpadmin\AppViewController@visitExport');
+
+  Route::get('rentlinx-listing/edit-property/{id}', 'rcpadmin\RentlinxListingController@editProperty');
+  Route::put('rentlinx-listing/update-property/{id}', 'rcpadmin\RentlinxListingController@updateProperty');
+  Route::get('rentlinx-listing/edit-campus/{id}', 'rcpadmin\RentlinxListingController@editCampus');
+  Route::put('rentlinx-listing/update-campus/{id}', 'rcpadmin\RentlinxListingController@updateCampus');
+  Route::resource('rentlinx-listing', 'rcpadmin\RentlinxListingController');
+  Route::resource('unapproved', 'rcpadmin\UnapprovedController');
 
 });
 

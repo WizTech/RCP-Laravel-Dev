@@ -25,11 +25,21 @@
   <div class="row">
 
     <div class="col-12 mt-5">
+      <div align="center">
+             <form action="{{url('rcpadmin/list-contact-export')}}" method="get">
+               Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
+                                class="filter-box datePicker">
+               To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker">
+
+               
+               <button type="submit" class="btn btn-success btn-lg"> EXPORT LIST</button>
+             </form>
+           </div>
       <div class="card">
         <div class="card-body">
 
           <div class="data-tables datatable-dark">
-            <table id="dataTable3" class="text-center">
+            <table class="text-center table">
               <thead class="text-capitalize">
               <tr>
 
@@ -56,6 +66,11 @@
               @endif
               </tbody>
             </table>
+            @if(isset($data) && count($data) > 0)
+              {{$data->links()}}
+              Showing {{$data->firstItem()}} to {{$data->lastItem()}} of {{$data->total()}}
+              Entities
+            @endif
           </div>
         </div>
       </div>

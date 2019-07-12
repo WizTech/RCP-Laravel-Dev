@@ -50,18 +50,10 @@ class PriceController extends Controller
     return redirect('rcpadmin/price');
   }
 
-  public function destroy()
+  public function destroy($id)
   {
-    $input = Request::all();
-
-    $id = $input['id'];
-
     $price = PriceModel::find($id);
-
-    if ($price) {
-      PriceModel::destroy($id);
-    }
-    return 'true';
-    // return redirect('rcpadmin/admin_users');
+    $price->delete();
+    return redirect('rcpadmin/price');
   }
 }

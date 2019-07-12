@@ -48,18 +48,14 @@ class BlockEmailController extends Controller
     return redirect('rcpadmin/block_email');
   }
 
-  public function destroy()
+  public function destroy($id)
   {
-    $input = Request::all();
-
-    $id = $input['id'];
 
     $email = BlockEmailModel::find($id);
 
     if ($email) {
       BlockEmailModel::destroy($id);
     }
-    return 'true';
-    // return redirect('rcpadmin/admin_users');
+    return redirect('rcpadmin/block_email');
   }
 }
