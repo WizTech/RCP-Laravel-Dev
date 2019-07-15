@@ -21,6 +21,7 @@
     </div>
 @stop
 @section('content')
+<<<<<<< HEAD
     <!-- START CONTENT -->
     <div class="row">
 
@@ -77,6 +78,79 @@
                     </div>
                 </div>
             </div>
+=======
+  <!-- START CONTENT -->
+  <div class="row">
+
+    <div class="col-12 mt-5">
+      <div class="card">
+        <div class="card-body">
+          {{--
+                    <h4 class="header-title">Data Table Dark</h4>
+          --}}
+          <a href="{{ url('rcpadmin/users/create')}}" class="btn btn-outline-dark header-title">Add User</a>
+          <form action="{{ url('rcpadmin/user-search')}}" method="POST" role="search">
+            {{ csrf_field() }}
+            <div class="input-group">
+              <input type="text" class="form-control" name="q"
+                     placeholder="Search users"> <span class="input-group-btn">
+                             <button type="submit" class="btn btn-default">
+                                 Submit
+                             </button>
+                         </span>
+            </div>
+          </form>
+          <div class="table-responsive datatable-dark">
+            <table class="text-center table">
+              <thead class="text-capitalize">
+              <tr>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              @if(count($webUsers) > 0)
+                @foreach($webUsers as $user)
+                  <tr>
+                    <td> {{$user['id']}}</td>
+                    <td> {{$user['role'] == '3'?'Landlord':'Student'}} </td>
+                    <td> {{$user['name']}} </td>
+                    <td> {{$user['email']}} </td>
+                    <td> {{$user['status']}} </td>
+                    <td>
+                      <ul class="d-flex justify-content-center">
+                        <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/users/'.$user['id'])}}"
+                                            class="text-secondary"><i
+                              class="fa fa-edit"></i></a></li>
+                        <li>
+                          <form method="POST" action="users/{{$user['id']}}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <div class="form-group">
+                              <input type="submit" class="btn btn-danger btn-xs delete"
+                                     value="Delete">
+                            </div>
+                          </form>
+                          </a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
+              </tbody>
+            </table>
+            @if(isset($webUsers) && count($webUsers) > 0)
+              {{$webUsers->links() }}
+              Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
+              Entities
+            @endif
+          </div>
+>>>>>>> master
         </div>
 
 
@@ -119,7 +193,11 @@
 
                 url: $this.data('href'),
 
+<<<<<<< HEAD
                 data: {"id": id, "_method": "DELETE", "_token": "{{ csrf_token() }}"},
+=======
+        data: {"id": id, "_method": "DELETE", "_token": "{{ csrf_token() }}"},
+>>>>>>> master
 
                 success: function (result) {
 

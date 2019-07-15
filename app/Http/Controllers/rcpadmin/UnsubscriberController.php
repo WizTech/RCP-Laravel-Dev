@@ -9,11 +9,19 @@ use Request;
 
 class UnsubscriberController extends Controller
 {
+<<<<<<< HEAD
     public function index()
     {
         $emails = UnsubscriberModel::paginate(10);
         return view('rcpadmin.unsubscribers', compact('emails'));
     }
+=======
+  public function index()
+  {
+    $emails = UnsubscriberModel::paginate(10);
+    return view('rcpadmin.unsubscribers', compact('emails'));
+  }
+>>>>>>> master
 
     public function create()
     {
@@ -48,11 +56,16 @@ class UnsubscriberController extends Controller
         return redirect('rcpadmin/unsubcribers');
     }
 
+<<<<<<< HEAD
     public function destroy()
     {
         $input = Request::all();
 
         $id = $input['id'];
+=======
+  public function destroy($id)
+  {
+>>>>>>> master
 
         $email = UnsubscriberModel::find($id);
 
@@ -62,4 +75,9 @@ class UnsubscriberController extends Controller
         return 'true';
         // return redirect('rcpadmin/admin_users');
     }
+<<<<<<< HEAD
+=======
+    return redirect('rcpadmin/unsubcribers');
+  }
+>>>>>>> master
 }

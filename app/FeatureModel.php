@@ -14,4 +14,10 @@ class FeatureModel extends Model
   {
     return $this->hasOne('App\FeatureType','id','type');
   }
+ 
+public function featureType()
+  {
+    return $this->belongsTo('App\FeatureType','type','id');
+
+  }
 }

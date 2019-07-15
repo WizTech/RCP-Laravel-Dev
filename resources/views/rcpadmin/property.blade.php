@@ -28,6 +28,20 @@
                 <div class="card-body">
                     <a href="{{ url('rcpadmin/property/create')}}" class="btn btn-outline-dark header-title">Add
                         Property</a>
+<<<<<<< HEAD
+=======
+                    <form action="{{ url('rcpadmin/property-search')}}" method="POST" role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q"
+                                   placeholder="Search property"> <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-default">
+                                                                        Submit
+                                                                    </button>
+                                                                </span>
+                        </div>
+                    </form>
+>>>>>>> master
                     <div class="table-responsive datatable-dark">
                         <table class="text-center table">
                             <thead class="text-capitalize">
@@ -55,21 +69,37 @@
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/property/'.$property['id'])}}"
+<<<<<<< HEAD
                                                             class="text-secondary"><i
+=======
+                                                            class="text-secondary" target="_blank"><i
+>>>>>>> master
                                                                 class="fa fa-edit" title="Detail"></i></a></li>
 
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/property/'.$property['id'].'/floorplan')}}"
+<<<<<<< HEAD
                                                             class="text-secondary"><i
+=======
+                                                            class="text-secondary" target="_blank"><i
+>>>>>>> master
                                                                 class="fa fa-university" title="Floorplans"></i></a>
                                                 </li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/property/'.$property['id'].'/feature')}}"
+<<<<<<< HEAD
                                                             class="text-secondary"><i
                                                                 class="fa fa-folder-open" title="Features"></i></a></li>
                                                 <li class="mr-3"><a
                                                             href="{{ url('rcpadmin/property/'.$property['id'].'/images')}}"
                                                             class="text-secondary"><i
+=======
+                                                            class="text-secondary" target="_blank"><i
+                                                                class="fa fa-folder-open" title="Features"></i></a></li>
+                                                <li class="mr-3"><a
+                                                            href="{{ url('rcpadmin/property/'.$property['id'].'/images')}}"
+                                                            class="text-secondary" target="_blank"><i
+>>>>>>> master
                                                                 class="fa fa-image" title="Photos"></i></a></li>
                                                 <li><a data-admin-id="{{$property['id']}}" href="javascript:void(0)"
                                                        data-method="delete" class="text-danger jquery-postback"><i

@@ -42,6 +42,7 @@
               <tbody>
               @if(count($landlords) > 0)
                 @foreach($landlords as $data)
+                  @if($data['user']['name'])
                   <tr>
                     <td> {{$data['user']['name']}}</td>
                     <td> {{$data['user']['email']}}</td>
@@ -49,13 +50,14 @@
                     <td> {{$data['domain_name']}} </td>
                     <td>
                       <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/premium-landlord/'.$data['user_id'])}}"
+                        <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/premium-landlord/'.$data['id'])}}"
                                             class="text-secondary"><i
                               class="fa fa-edit"></i></a></li>
 
                       </ul>
                     </td>
                   </tr>
+                  @endif
                 @endforeach
               @endif
               </tbody>

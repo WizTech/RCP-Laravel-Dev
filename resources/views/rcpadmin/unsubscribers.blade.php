@@ -21,6 +21,7 @@
     </div>
 @stop
 @section('content')
+<<<<<<< HEAD
     <div class="row">
         <div class="col-12 mt-5">
             <div class="card">
@@ -67,6 +68,58 @@
                     </div>
                 </div>
             </div>
+=======
+  <div class="row">
+    <div class="col-12 mt-5">
+      <div class="card">
+        <div class="card-body">
+          <a href="{{ url('rcpadmin/unsubcribers/create')}}" class="btn btn-outline-dark header-title">Add
+            Email</a>
+          <div class="table-responsive datatable-dark">
+            <table class="text-center table">
+              <thead class="text-capitalize">
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              @if(count($emails) > 0)
+                @foreach($emails as $email)
+                  <tr>
+                    <td> {{$email['id']}}</td>
+                    <td> {{$email['email']}} </td>
+                    <td>
+                      <ul class="d-flex justify-content-center">
+                        <li class="mr-3"><a
+                            href="{{ url('rcpadmin/unsubcribers/'.$email['id'])}}"
+                            class="text-secondary"><i
+                              class="fa fa-edit"></i></a></li>
+                        <li>
+                          <form method="POST" action="unsubcribers/{{$email['id']}}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <div class="form-group">
+                              <input type="submit" class="btn btn-danger btn-xs delete"
+                                     value="Delete">
+                            </div>
+                          </form>
+                          </a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
+              </tbody>
+            </table>
+            @if(isset($emails) && count($emails)>0)
+              {{$emails->links()}}
+              Showing {{$emails->firstItem()}} to {{$emails->lastItem()}} of {{$emails->total()}} Entities
+            @endif
+          </div>
+>>>>>>> master
         </div>
     </div>
 

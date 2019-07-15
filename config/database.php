@@ -69,6 +69,11 @@ return [
             'engine' => null,
         ],
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> master
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

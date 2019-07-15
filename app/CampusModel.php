@@ -5,12 +5,14 @@ namespace App;
 use App\AdminUser;
 use App\User;
 use App\LinkedCampusModel;
+use App\CampusLinkedModel;
 use App\CampusGuideModel;
 use App\CampusRentingQuestion;
 use App\CampusNeighborhood;
 use App\CampusDestination;
 use App\Property;
 use App\CampusApartment;
+use App\rcpadmin\MetaDetails;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +23,8 @@ class CampusModel extends Model
     'name', 'title', 'address', 'meta_title', 'meta_description', 'seo_block', 'h1', 'h2', 'lat', 'lng', 'live', 'status', 'rating', 'premium_banner', 'featured_landlord'
   ];
 
+
+
   public function users()
   {
     return $this->belongsToMany('App\User', 'user_campuses');
@@ -28,7 +32,7 @@ class CampusModel extends Model
 
   public function linked_campuses()
   {
-    return $this->hasMany('App\LinkedCampusModel', 'campus_linked');
+    return $this->hasMany('App\CampusLinkedModel', 'campus_linked');
   }
 
   public function admin_users()
@@ -60,6 +64,10 @@ class CampusModel extends Model
   {
     return $this->belongsToMany('App\CampusDestination', 'campus_destination', 'campus_id');
   }
+  public function metaDetails()
+  {
+    return $this->belongsToMany('App\rcpadmin\MetaDetails', 'meta_details', 'campus_id');
+  }
 
   public static function getCampusDetail($id)
   {
@@ -76,6 +84,15 @@ class CampusModel extends Model
 
 
     return array_merge($campus, $guide_details);
+  }
+  public static function getCampusMetaDetails($id)
+  {
+
+
+    $meta_details = MetaDetails::where('campus_id', '=', $id)->get()->toArray();
+
+
+    return $meta_details;
   }
 
   public static function getCampusApartmentDetail($id)

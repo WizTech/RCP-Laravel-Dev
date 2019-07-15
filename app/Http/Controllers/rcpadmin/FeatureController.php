@@ -12,7 +12,11 @@ class FeatureController extends Controller
 {
   public function index()
   {
+<<<<<<< HEAD
     $features = FeatureModel::with('type')->paginate(10);
+=======
+    $features = FeatureModel::with('featureType')->paginate(10);
+>>>>>>> master
     return view('rcpadmin.feature', compact('features'));
   }
 
@@ -51,7 +55,7 @@ class FeatureController extends Controller
       $featureTypes[$type['id']] = $type['name'];
     }
 
-    return view('rcpadmin.feature.edit', compact('feature','featureTypes'));
+    return view('rcpadmin.feature.edit', compact('feature', 'featureTypes'));
   }
 
   public function update($id, Requests\FeatureRequest $request)
@@ -62,18 +66,14 @@ class FeatureController extends Controller
     return redirect('rcpadmin/feature');
   }
 
-  public function destroy()
+  public function destroy($id)
   {
-    $input = Request::all();
-
-    $id = $input['id'];
 
     $feature = FeatureModel::find($id);
 
     if ($feature) {
       FeatureModel::destroy($id);
     }
-    return 'true';
-    // return redirect('rcpadmin/admin_users');
+    return redirect('rcpadmin/feature');
   }
 }

@@ -19,7 +19,11 @@ class UnapprovedController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $listings = RentlinxListing::where('status', 'deny')->paginate(10);
+=======
+        $listings = RentlinxListing::where('status', 'delete')->paginate(10);
+>>>>>>> master
         return view('rcpadmin/unapproved', compact('listings'));
     }
 

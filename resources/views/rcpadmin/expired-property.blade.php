@@ -25,11 +25,28 @@
   <div class="row">
 
     <div class="col-12 mt-5">
+      <div align="center">
+        <form action="{{url('rcpadmin/expired-listing-report')}}" method="get">
+          Date From <input type="text" name="date_from" value="<?= date("Y-m-d", strtotime("-1 month")) ?>"
+                           class="filter-box datePicker">
+          To <input type="text" name="date_to" value="<?= date("Y-m-d") ?>" class="filter-box datePicker">
+
+          <select class="filter-box" name="campus_id">
+            <option value="All">All Campuses</option>
+            @if(!empty($campuses))
+              @foreach($campuses as $campus)
+                <option value="{{$campus->id}}">{{$campus->title}}</option>
+              @endforeach
+            @endif
+          </select>
+          <button type="submit" class="btn btn-success btn-lg"> EXPORT LIST</button>
+        </form>
+      </div>
       <div class="card">
         <div class="card-body">
 
           <div class="data-tables datatable-dark">
-            <table id="dataTable3" class="text-center">
+            <table class="text-center table">
               <thead class="text-capitalize">
               <tr>
                 <th>ID</th>
@@ -58,6 +75,11 @@
               @endif
               </tbody>
             </table>
+            @if(isset($properties) && count($properties) > 0)
+              {{$properties->links()}}
+              Showing {{$properties->firstItem()}} to {{$properties->lastItem()}} of {{$properties->total()}}
+              Entities
+            @endif
           </div>
         </div>
       </div>
@@ -103,7 +125,7 @@
 
         url: $this.data('href'),
 
-        data: {"id": id,"_method":"DELETE","_token": "{{ csrf_token() }}"},
+        data: {"id": id, "_method": "DELETE", "_token": "{{ csrf_token() }}"},
 
         success: function (result) {
 

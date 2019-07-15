@@ -49,18 +49,14 @@ class BlockIPController extends Controller
     return redirect('rcpadmin/block_ip');
   }
 
-  public function destroy()
+  public function destroy($id)
   {
-    $input = Request::all();
-
-    $id = $input['id'];
 
     $ip = BlockIPModel::find($id);
 
     if ($ip) {
       BlockIPModel::destroy($id);
     }
-    return 'true';
-    // return redirect('rcpadmin/admin_users');
+    return redirect('rcpadmin/block_ip');
   }
 }

@@ -28,7 +28,7 @@ class Property extends FormRequest
         return [
 
           'status' => 'required',
-          'title' => 'required|unique:property|min:3',
+          'title' => 'required|unique:property|min:3',///**/
           'address' => 'required|unique:property',
           'category_id' => 'required',
           'campus_id' => 'required',
@@ -43,7 +43,7 @@ class Property extends FormRequest
       case 'PATCH': {
         return [
           'status' => 'required',
-          'title' => 'required|min:3|unique:property,name,' . $this->id,
+         /* 'title' => 'min:3|unique:property,name,' . $this->id,*/
           'address' => 'required|unique:property,address,' . $this->id,
           'campus_id' => 'required',
           'category_id' => 'required',
