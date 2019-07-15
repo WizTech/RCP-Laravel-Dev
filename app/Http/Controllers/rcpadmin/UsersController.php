@@ -16,17 +16,9 @@ use Request;
 
 class UsersController extends Controller
 {
-<<<<<<< HEAD
     public function index()
     {
         $webUsers = User::with('role')->paginate(10);
-=======
-  public function index()
-  {
-    $webUsers = User::with('role')->paginate(10);
->>>>>>> master
-
-
         return view('rcpadmin.users', compact('webUsers'));
     }
 
@@ -143,50 +135,31 @@ class UsersController extends Controller
         return redirect('rcpadmin/users');
     }
 
-<<<<<<< HEAD
-    public function destroy()
+    public function search()
     {
+        //   echo '<pre>';print_r($_REQUEST );echo '</pre>';
+        $q = $_REQUEST['q'];
+        if ($q != "") {
 
-        $input = Request::all();
+            $webUsers = User::where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(10)->setPath('');
+            //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+            $pagination = $webUsers->appends(array(
+                'q' => $q
+            ));
+            if (count($webUsers) > 0) {
 
-        $id = $input['id'];
-
-        $user = User::find($id);
-
-        if ($user) {
-            User::destroy($id);
+                return view('rcpadmin.users', compact('webUsers'))->withQuery($q);
+            }
+            //return view('rcpadmin.users', compact('webUsers'));
         }
-        return 'true';
-        // return redirect('rcpadmin/admin_users');
     }
-=======
-    return redirect('rcpadmin/users');
-  }
-  
-  public function search(){
- //   echo '<pre>';print_r($_REQUEST );echo '</pre>';
-    $q = $_REQUEST['q'];
-       if($q != ""){
-
-         $webUsers = User::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'email', 'LIKE', '%' . $q . '%' )->with('role')->paginate (10)->setPath ( '' );
-    //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
-       $pagination = $webUsers->appends ( array (
-          'q' => $q
-        ) );
-       if (count ( $webUsers ) > 0){
-
-         return view('rcpadmin.users', compact('webUsers'))->withQuery ( $q );
-       }
-         //return view('rcpadmin.users', compact('webUsers'));
-      }
-  }
 
 
-  public function destroy($id)
-  {
-    $admin_users = User::find($id);
-    $admin_users->delete();
-    return redirect('rcpadmin/users');
-  }
->>>>>>> master
+    public function destroy($id)
+    {
+        $admin_users = User::find($id);
+        $admin_users->delete();
+        return redirect('rcpadmin/users');
+    }
+
 }

@@ -16,11 +16,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $careers= Career::paginate(10);
-=======
         $careers= Career::with('type')->paginate(10);
->>>>>>> master
         return view('rcpadmin.career', compact('careers'));
     }
 

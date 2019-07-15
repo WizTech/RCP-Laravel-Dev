@@ -21,63 +21,7 @@
     </div>
 @stop
 @section('content')
-<<<<<<< HEAD
-    <div class="row">
-
-        <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <a href="{{ url('rcpadmin/admin_users/create')}}" class="btn btn-outline-dark header-title">Add
-                        Admin</a>
-                    <div class="table-responsive datatable-dark">
-                        <table class="text-center table">
-                            <thead class="text-capitalize">
-                            <tr>
-                                <th>ID</th>
-                                <th>Role</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if(count($webUsers) > 0)
-                                @foreach($webUsers as $user)
-                                    <tr>
-                                        <td> {{$user['id']}}</td>
-                                        <td> {{$user['role']['name']}} </td>
-                                        <td> {{$user['name']}} </td>
-                                        <td> {{$user['email']}} </td>
-                                        <td> {{$user['status']}} </td>
-                                        <td>
-                                            <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/admin_users/'.$user['id'])}}"
-                                                                    class="text-secondary"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li><a data-admin-id="{{$user['id']}}"
-                                                       href="{{url('rcpadmin/admin_users/'.$user['id'])}}"
-                                                       data-method="delete" class="text-danger jquery-postback"><i
-                                                                class="ti-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                            </tbody>
-                        </table>
-                        @if(isset($webUsers) && count($webUsers) > 0)
-                            {{$webUsers->links()}}
-                            Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
-                            Entities
-                        @endif
-                    </div>
-                </div>
-            </div>
-=======
   <div class="row">
-
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
@@ -133,9 +77,10 @@
               Entities
             @endif
           </div>
->>>>>>> master
         </div>
     </div>
+    </div>
+  </div>
 @stop
 
 @section('scripts')

@@ -20,30 +20,11 @@ use Auth;
 
 class AdminUsers extends Controller
 {
-<<<<<<< HEAD
     //
     public function index()
     {
         $webUsers = AdminUser::with('role')->where('id', '!=', Auth::user()->id)->paginate(10);
         return view('rcpadmin.admin', compact('webUsers', 'admin_id'));
-=======
-  //
-  public function index()
-  {
-    $webUsers = AdminUser::with('role')->where('id', '!=', Auth::user()->id)->paginate(10);
-    return view('rcpadmin.admin', compact('webUsers', 'admin_id'));
-  }
-
-  public function create()
-  {
-    $campuses = CampusModel::all('id', 'title')->toArray();
-
-    $campusSelect = [];
-
-    $campusSelect[''] = 'Campus (es)';
-    foreach ($campuses as $campus) {
-      $campusSelect[$campus['id']] = $campus['title'];
->>>>>>> master
     }
 
     public function create()
@@ -173,30 +154,10 @@ class AdminUsers extends Controller
         return redirect('rcpadmin/admin_users');
     }
 
-<<<<<<< HEAD
-    public function destroy()
+    public function destroy($id)
     {
-        $input = Request::all();
-
-        $id = $input['id'];
-
-        $admin_user = AdminUser::find($id);
-
-        if ($admin_user) {
-            AdminUser::destroy($id);
-        }
-        return 'true';
+        $admin_users = AdminUser::find($id);
+        $admin_users->delete();
+        return redirect('rcpadmin/admin_users');
     }
-=======
-    return redirect('rcpadmin/admin_users');
-  }
-
-
-  public function destroy($id)
-  {
-    $admin_users = AdminUser::find($id);
-    $admin_users->delete();
-    return redirect('rcpadmin/admin_users');
-  }
->>>>>>> master
 }

@@ -12,11 +12,7 @@ class FeatureController extends Controller
 {
   public function index()
   {
-<<<<<<< HEAD
-    $features = FeatureModel::with('type')->paginate(10);
-=======
     $features = FeatureModel::with('featureType')->paginate(10);
->>>>>>> master
     return view('rcpadmin.feature', compact('features'));
   }
 

@@ -22,9 +22,7 @@
 @stop
 @section('content')
 
-<<<<<<< HEAD
     <div class="row">
-
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
@@ -56,10 +54,16 @@
                                                             href="{{ url('rcpadmin/category/'.$category['id'])}}"
                                                             class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
-                                                <li><a data-admin-id="{{$category['id']}}"
-                                                       href="{{url('rcpadmin/category/'.$category['id'])}}"
-                                                       data-method="delete" class="text-danger jquery-postback"><i
-                                                                class="ti-trash"></i></a>
+                                                <li>
+                                                    <form method="POST" action="category/{{$category['id']}}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-danger btn-xs delete"
+                                                                   value="Delete">
+                                                        </div>
+                                                    </form>
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -74,67 +78,9 @@
                             of {{$categories->total()}} Entities
                         @endif
                     </div>
+
                 </div>
             </div>
-=======
-  <div class="row">
-
-    <div class="col-12 mt-5">
-      <div class="card">
-        <div class="card-body">
-
-          <a href="{{ url('rcpadmin/category/create')}}" class="btn btn-outline-dark header-title">Add
-            Category</a>
-          <div class="table-responsive datatable-dark">
-            <table class="text-center table">
-              <thead class="text-capitalize">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              @if(count($categories) > 0)
-                @foreach($categories as $category)
-                  <tr>
-                    <td> {{$category['id']}}</td>
-                    <td> {{$category['name']}} </td>
-
-                    <td> {{$category['status']}} </td>
-                    <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/category/'.$category['id'])}}"
-                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-                        <li>
-                          <form method="POST" action="category/{{$category['id']}}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <div class="form-group">
-                              <input type="submit" class="btn btn-danger btn-xs delete"
-                                     value="Delete">
-                            </div>
-                          </form>
-                          </a>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                @endforeach
-              @endif
-              </tbody>
-            </table>
-            @if(isset($categories) && count($categories) > 0)
-              {{$categories->links()}}
-              Showing {{$categories->firstItem()}} to {{$categories->lastItem()}}
-              of {{$categories->total()}} Entities
-            @endif
-          </div>
->>>>>>> master
         </div>
     </div>
 

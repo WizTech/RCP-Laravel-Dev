@@ -1,31 +1,9 @@
 <?php
 namespace App\Helpers;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 use DB;
 
 class GeneralHelper
 {
-
-<<<<<<< HEAD
-    static function getColumnById($table, $column, $id){
-        $columnName  = DB::table($table)
-            ->select($column)
-            ->where('id',$id)
-            ->get();
-        return $columnName;
-    }
-
-    static function getColumn($table, $columnName){
-        $column  = DB::table($table)
-            ->select('id',$columnName)->orderBy($columnName, 'ASC')
-            ->get()
-            ->toArray();
-        return $column;
-    }
-=======
   static function getColumnById($table, $column, $id)
   {
     $columnName = DB::table($table)
@@ -67,8 +45,6 @@ class GeneralHelper
     $leads = DB::select($sql);
     return $leads;
   }
->>>>>>> master
-
 
 }
 

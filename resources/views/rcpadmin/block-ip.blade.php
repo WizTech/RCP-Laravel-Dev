@@ -21,7 +21,6 @@
     </div>
 @stop
 @section('content')
-<<<<<<< HEAD
     <div class="row">
         <div class="col-12 mt-5">
             <div class="card">
@@ -47,10 +46,16 @@
                                                 <li class="mr-3"><a href="{{ url('rcpadmin/block_ip/'.$ip['id'])}}"
                                                                     class="text-secondary"><i
                                                                 class="fa fa-edit"></i></a></li>
-                                                <li><a data-admin-id="{{$ip['id']}}"
-                                                       href="{{url('rcpadmin/block_ip/'.$ip['id'])}}"
-                                                       data-method="delete" class="text-danger jquery-postback"><i
-                                                                class="ti-trash"></i></a>
+                                                <li>
+                                                    <form method="POST" action="block_ip/{{$ip['id']}}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-danger btn-xs delete"
+                                                                   value="Delete">
+                                                        </div>
+                                                    </form>
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -66,59 +71,8 @@
                     </div>
                 </div>
             </div>
-=======
-  <div class="row">
-    <div class="col-12 mt-5">
-      <div class="card">
-        <div class="card-body">
-          <a href="{{ url('rcpadmin/block_ip/create')}}" class="btn btn-outline-dark header-title">Add IP</a>
-          <div class="table-responsive datatable-dark">
-            <table class="text-center table">
-              <thead class="text-capitalize">
-              <tr>
-                <th>ID</th>
-                <th>IP</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              @if(count($ips) > 0)
-                @foreach($ips as $ip)
-                  <tr>
-                    <td> {{$ip['id']}}</td>
-                    <td> {{$ip['ip']}} </td>
-                    <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/block_ip/'.$ip['id'])}}"
-                                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-                        <li>
-                          <form method="POST" action="block_ip/{{$ip['id']}}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <div class="form-group">
-                              <input type="submit" class="btn btn-danger btn-xs delete"
-                                     value="Delete">
-                            </div>
-                          </form>
-                          </a>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                @endforeach
-              @endif
-              </tbody>
-            </table>
-            @if(isset($ips) && count($ips))
-              {{$ips->links()}}
-              Showing {{$ips->firstItem()}} to {{$ips->lastItem()}} of {{$ips->total()}} Entities
-            @endif
-          </div>
->>>>>>> master
         </div>
     </div>
-
 @stop
 
 @section('scripts')

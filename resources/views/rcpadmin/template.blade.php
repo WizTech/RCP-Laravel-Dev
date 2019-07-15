@@ -21,59 +21,6 @@
     </div>
 @stop
 @section('content')
-
-<<<<<<< HEAD
-    <div class="row">
-        <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <a href="{{ url('rcpadmin/template/create')}}" class="btn btn-outline-dark header-title">Add
-                        Template</a>
-                    <div class="table-responsive datatable-dark">
-                        <table class="text-center table">
-                            <thead class="text-capitalize">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Subject</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if(count($templates) > 0)
-                                @foreach($templates as $template)
-                                    <tr>
-                                        <td> {{$template['id']}}</td>
-                                        <td> {{$template['name']}} </td>
-                                        <td> {{$template['subject']}} </td>
-                                        <td>
-                                            <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a
-                                                            href="{{ url('rcpadmin/template/'.$template['id'])}}"
-                                                            class="text-secondary"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li><a data-admin-id="{{$template['id']}}"
-                                                       href="{{url('rcpadmin/template/'.$template['id'])}}"
-                                                       data-method="delete" class="text-danger jquery-postback"><i
-                                                                class="ti-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                            </tbody>
-                        </table>
-                        @if(isset($templates) && count($templates) > 0)
-                            {{$templates->links()}}
-                            Showing {{$templates->firstItem()}} to {{$templates->lastItem()}} of {{$templates->total()}}
-                            Entities
-                        @endif
-                    </div>
-                </div>
-            </div>
-=======
   <div class="row">
     <div class="col-12 mt-5">
       <div class="card">
@@ -128,13 +75,10 @@
               Entities
             @endif
           </div>
->>>>>>> master
         </div>
     </div>
-<<<<<<< HEAD
-=======
   </div>
->>>>>>> master
+  </div>
 @stop
 
 @section('scripts')
