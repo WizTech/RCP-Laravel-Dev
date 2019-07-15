@@ -13,7 +13,7 @@ class CreateModulePermissions extends Migration
      */
     public function up()
     {
-        Schema::create('module-permissions', function (Blueprint $table) {
+        Schema::create('module_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admin_id')->unsigned();
             $table->integer('module_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateModulePermissions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module-permissions');
+        Schema::dropIfExists('module_permissions');
     }
 }

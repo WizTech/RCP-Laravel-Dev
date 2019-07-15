@@ -57,7 +57,7 @@ class AdminUser extends Authenticatable
 
   public function modules()
   {
-    return $this->belongsToMany('App\Models\AdminModules', 'module-permissions', 'admin_id', 'module_id')->using('App\ModulePermissions');
+    return $this->belongsToMany('App\Models\AdminModules', 'module_permissions', 'admin_id', 'module_id')->using('App\ModulePermissions');
   }
 
 

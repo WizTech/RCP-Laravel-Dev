@@ -94,29 +94,30 @@ class AdminUsers extends Controller
 
     public function modules_update($id)
     {
-
         $admin_user = AdminUser::find($id);
 
         $input = Request::all();
 
-
         $admin_modules = ModulePermissions::where('admin_id', '=', $id)->first();
+
         if (!empty($admin_modules)) {
             $admin_user->modules()->detach();
         }
 
         $optionsArray = explode(',', implode('-', $input['options']));
 
+        echo "<pre>"; print_r($optionsArray); die();
+
         for ($i = 0; $i < count($optionsArray); $i++) {
             $option = $optionsArray[$i];
             $selected_opt_data = explode('-', $option);
             if (isset($selected_opt_data[0]) && isset($selected_opt_data[1])) {
-                ModulePermissions::create(['admin_id' => $admin_user->id, 'module_id' => $selected_opt_data[1], 'module_option_id' => $selected_opt_data[0]]);
-
+                ModulePermissions::create([
+                    'admin_id' => $admin_user->id,
+                    'module_id' => $selected_opt_data[1],
+                    'module_option_id' => $selected_opt_data[0]]);
             }
-
         }
-
         return redirect('rcpadmin/admin_users');
     }
 

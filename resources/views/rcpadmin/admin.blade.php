@@ -51,15 +51,19 @@
                     <td>
                       <ul class="d-flex justify-content-center">
                         <li class="mr-3"><a href="{{ url('rcpadmin/admin_users/'.$user['id'])}}"
-                                            class="text-secondary"><i
+                                            class="text-secondary" title="Edit"><i
                               class="fa fa-edit"></i></a></li>
                         <li>
+                          <li class="mr-3"><a href="{{ url('rcpadmin/admin_users/'.$user['id'].'/modules')}}"
+                                              class="text-secondary" title="Permissions"><i
+                                          class="fa fa-lock"></i></a></li>
+                          <li>
                           <form method="POST" action="admin_users/{{$user['id']}}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group">
                               <input type="submit" class="btn btn-danger btn-xs delete"
-                                     value="Delete">
+                                     value="Delete" title="Delete">
                             </div>
                           </form>
                           </a>

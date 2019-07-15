@@ -8,7 +8,7 @@ use App\Models\AdminModules;
 
 class ModulePermissions extends Model
 {
-  protected $table = 'module-permissions';
+  protected $table = 'module_permissions';
   protected $fillable = ['admin_id','module_id','module_option_id'];
 
  /* public function admin(){
