@@ -21,6 +21,7 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
     Route::get('/', 'rcpadmin\DashboardController@index');
     Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
     Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
+    Route::get('export-activities', 'rcpadmin\AdminUsers@activityExport');
     Route::resource('admin_users', 'rcpadmin\AdminUsers');
     Route::post('users/{id}/delete', 'rcpadmin\UsersController@delete');
     Route::post('users/{id}/restoreUser', 'rcpadmin\UsersController@restoreUser');

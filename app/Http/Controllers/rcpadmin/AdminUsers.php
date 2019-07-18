@@ -17,6 +17,8 @@ use App\ModuleOptions;
 use App\ModulePermissions;
 use Request;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class AdminUsers extends Controller
 {
@@ -99,26 +101,58 @@ class AdminUsers extends Controller
         $input = Request::all();
 
         $admin_modules = ModulePermissions::where('admin_id', '=', $id)->first();
-
         if (!empty($admin_modules)) {
             $admin_user->modules()->detach();
         }
 
-        $optionsArray = explode(',', implode('-', $input['options']));
-
-        echo "<pre>"; print_r($optionsArray); die();
+        $optionsArray = $input['options'];
 
         for ($i = 0; $i < count($optionsArray); $i++) {
             $option = $optionsArray[$i];
-            $selected_opt_data = explode('-', $option);
-            if (isset($selected_opt_data[0]) && isset($selected_opt_data[1])) {
+            $selected_options = explode(',', $option);
+            if (isset($selected_options[0]) && isset($selected_options[1])) {
                 ModulePermissions::create([
                     'admin_id' => $admin_user->id,
-                    'module_id' => $selected_opt_data[1],
-                    'module_option_id' => $selected_opt_data[0]]);
+                    'module_id' => $selected_options[0],
+                    'module_option_id' => $selected_options[1]
+                ]);
             }
+
         }
+
         return redirect('rcpadmin/admin_users');
+    }
+
+    function activityExport()
+    {
+        $input = Request::all();
+
+       $date_from = date('Y-m-d', strtotime($input['date_from']));
+       $date_to = date('Y-m-d', strtotime($input['date_to']));
+       $user_id = $input['user_id'];
+
+        $userActivities = AdminUser::activity_export($user_id, $date_from, $date_to);
+
+        $activity_array[] = ['Username', 'Module', 'Activity', 'Date Time'];
+
+        if (!empty($userActivities)) {
+            foreach ($userActivities as $activity) {
+                $activity_array[] = array(
+                    'Username' => $activity->user_name,
+                    'Module' => $activity->module_title,
+                    'Activity' => $activity->text,
+                    'Date Time' => $activity->created_at
+                );
+            }
+            $sheetName = "User Activities ".date('d-m-y his');
+            return Excel::create($sheetName, function ($excel) use ($activity_array) {
+                $excel->setTitle('activities');
+                $excel->sheet('activities', function ($sheet) use ($activity_array) {
+                    $sheet->fromArray($activity_array, null, 'A1', false, false);
+                });
+            })->download('csv');
+
+        }
     }
 
     public function update($id, Requests\AdminUserRequest $request)
@@ -161,4 +195,5 @@ class AdminUsers extends Controller
         $admin_users->delete();
         return redirect('rcpadmin/admin_users');
     }
+
 }
