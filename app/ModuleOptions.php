@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModuleOptions extends Model
 {
-  protected $table = 'module-options';
+  protected $table = 'module_options';
 }

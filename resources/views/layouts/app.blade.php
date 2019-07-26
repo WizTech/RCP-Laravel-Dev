@@ -26,7 +26,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{--{{ config('app.name', 'Laravel') }}--}}
-                    <img src="{{ env('THEME_ASSETS') }}images/rcp-logo.png" style="
+                    <img src="{{ env('THEME_ASSETS_NEW') }}assets/images/rcp-logo-big.png" style="
                         width: 172px;
                     ">
                 </a>

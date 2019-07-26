@@ -12,12 +12,6 @@ session_start();
           href="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
-    <style>
-        .modal-header{
-            background: #28a745;
-            color: #fff;
-        }
-    </style>
     <!-- style css -->
 @stop
 @section('breadcrumbs')
@@ -35,7 +29,7 @@ session_start();
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-green modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Export User Activities</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -51,7 +45,7 @@ session_start();
                         </div>
                         <div class="col-md-6">
                             <h6> Date To </h6>
-                            <input type="text" name="date_to" value="<?= date("Y-m-d") ?>"
+                            <input type="text" name="date_to" value="<?= date("Y-m-d", strtotime("1 day")) ?>"
                                    class="datePicker">
                         </div>
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
@@ -193,6 +187,7 @@ session_start();
     </script>
 
     <script>
+        $('#exampleModal').modal('hide');
         $(document).ready(function () {
             $('#exampleModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')

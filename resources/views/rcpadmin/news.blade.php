@@ -45,7 +45,7 @@
                                 @foreach($news as $n)
                                     <tr>
                                         <td> {{ $x }}</td>
-                                        <td> {{base64_decode($n['heading'])}} </td>
+                                        <td> {{$n['heading']}} </td>
                                        {{-- <td> {{$n['link']}} </td>--}}
                                        {{-- <td><img style="float: right;" height="60" width="60"
                                                  src="{{ env('APP_URL').'storage/uploads/news/'.$n['image']}}"></td>--}}

@@ -128,6 +128,11 @@ input:checked + .slider .free
     border-radius: 83%;
 }
 
+.modal-green{
+    background: #28a745!important;
+    color: #fff!important;
+}
+
 /*
 Toggle Switch Button End
 */

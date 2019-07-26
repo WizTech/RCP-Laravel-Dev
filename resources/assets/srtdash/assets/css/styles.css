@@ -8,10 +8,10 @@
     Version: 1.0
 
 ----------------------------------------------
-    
+
     CSS INDEX
     ===================
-  
+
     1. Core Css
     2. Dashboard One
         2.1 Sidebar Menu
@@ -2824,6 +2824,11 @@ table.dataTable thead td {
 .s-sw-title h5 {
     font-size: 16px;
     color: #555;
+}
+
+.modal-green{
+    background: #28a745!important;
+    color: #fff!important;
 }
 
 /*-------------------- END Offset Sidebar ------------------- */

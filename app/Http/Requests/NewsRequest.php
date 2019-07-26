@@ -27,7 +27,7 @@ class NewsRequest extends FormRequest
         return [
             'heading'=>'required',
             'link'=>'required',
-            'image'=>'required|mimes:jpeg,jpg,png,gif|max:10000',
+            /*'image'=>'required|mimes:jpeg,jpg,png,gif|max:10000',*/
             'description'=>'required'
         ];
     }
@@ -44,11 +44,12 @@ class NewsRequest extends FormRequest
         $news = news::create([
             'heading' => $this->heading,
             'link' => $this->link,
-            'image' => $input['image'],
-            'description' => $this->description
+            'image' => isset($input['image']) ? $input['image'] : '',
+            'description' => strip_tags($this->description)
         ]);
-
         $news->save();
+        $insertId = $news->id;
+        return $insertId;
     }
 
     public function updateRequest($id){
@@ -66,8 +67,9 @@ class NewsRequest extends FormRequest
         $news = News::find($id);
         $news->heading = $this->heading;
         $news->link = $this->link;
-        $news->image = $imageName;
-        $news->description = $this->description;
-        $news->save();
+        $news->image = isset($imageName) ? $imageName : '';
+        $news->description = strip_tags($this->description);
+        $news =  $news->save();
+        return $news;
     }
 }

@@ -6,13 +6,22 @@ namespace App\Http\Controllers\rcpadmin;
 
 use App\TemplateModel;
 use App\Http\Requests;
+use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use Request;
 use Validator;
 
 
+
 class TemplateController extends Controller
 {
+
+    protected $module;
+    public function __construct()
+    {
+        $this->module = GeneralHelper::module_data('TemplateController');
+    }
+
     public function index()
     {
         $templates = TemplateModel::paginate(10);
@@ -26,14 +35,17 @@ class TemplateController extends Controller
 
     public function store(Requests\TemplateRequest $request)
     {
-
         $input = Request::all();
+        $insert = TemplateModel::create($input);
 
-
-        TemplateModel::create($input);
+        /* Activity Log Begin */
+        $module = $this->module;
+        $insertedData = TemplateModel::find($insert->id);
+        $logs = "New Template '". $insertedData->name . "' Created in ".$module->title;
+        GeneralHelper::EditLogFile($module->id, $logs);
+        /* Activity Log End */
 
         return redirect('rcpadmin/template');
-
     }
 
     public function show($id)
@@ -46,22 +58,32 @@ class TemplateController extends Controller
     public function update($id, Requests\TemplateRequest $request)
     {
         $input = Request::all();
-        $price = TemplateModel::find($id);
+        $template = TemplateModel::find($id);
+        $template->update($input);
 
-        $price->update($input);
+        /* Activity Log Begin */
+        $module = $this->module;
+        $updated_columns = $template->getChanges();
+        $afterUpdate = json_encode($updated_columns);
+        $newTemplate = GeneralHelper::getNameById('template', 'name', $id);
+        $logs = $newTemplate . ' Updated in '.$module->title;
+        GeneralHelper::EditLogFile($module->id, $logs, '', $afterUpdate);
+        /* Activity Log End */
+
         return redirect('rcpadmin/template');
     }
 
     public function destroy($id)
     {
-
         $price = TemplateModel::find($id);
-
         if ($price) {
-            TemplateModel::destroy($id);
+            $module = $this->module;
+            $template_name = GeneralHelper::getNameById('template', 'name', $id);
+            $logs = $template_name . ' Deleted from '.$module->title;
+            $template = TemplateModel::destroy($id);
+            GeneralHelper::EditLogFile($module->id, $logs);
         }
         return redirect('rcpadmin/template');
-        // return redirect('rcpadmin/admin_users');
     }
 
 }

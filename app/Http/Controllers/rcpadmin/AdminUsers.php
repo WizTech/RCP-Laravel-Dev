@@ -133,7 +133,7 @@ class AdminUsers extends Controller
 
         $userActivities = AdminUser::activity_export($user_id, $date_from, $date_to);
 
-        $activity_array[] = ['Username', 'Module', 'Activity', 'Date Time'];
+        $activity_array[] = ['Username', 'Module', 'Activity', 'Before Change', 'After Change', 'Date Time'];
 
         if (!empty($userActivities)) {
             foreach ($userActivities as $activity) {
@@ -141,6 +141,8 @@ class AdminUsers extends Controller
                     'Username' => $activity->user_name,
                     'Module' => $activity->module_title,
                     'Activity' => $activity->text,
+                    'Befor Change' => !empty($activity->before_change) ? $activity->before_change : '',
+                    'After Change' => !empty($activity->after_change) ? $activity->after_change : '',
                     'Date Time' => $activity->created_at
                 );
             }
