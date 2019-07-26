@@ -17,15 +17,20 @@
   <div class="form-row">
     <div class="col-md-4 mb-3">
       {!! Form::hidden('id') !!}
-      {!! Form::select('role_id',[''=>'User Type','4'=>'Student','3'=>'Landlord'],null,['class' => 'custom-select roleId']) !!}
+      {!! Form::hidden('role') !!}
+      {!! Form::label('User Type',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('role',['2'=>'Student','3'=>'Landlord'],null,['class' => 'custom-select roleId']) !!}
     </div>
 
     <div class="col-md-4 mb-3">
-      {!! Form::select('status',[''=>'Status','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+      {!! Form::label('status',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('status',['Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
     </div>
     <div class="col-md-4 mb-3">
-      {!! Form::select('campus_id[]',$campusSelect,$user_campuses,
-                    ['class' => 'custom-select materialSelect', 'multiple']) !!}
+      {!! Form::label('Campus',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('campus_id',[$campusSelect],null,['class' => 'custom-select']) !!}
+      {{--{!! Form::select('campus_id[]',$campusSelect,$user_campuses,
+                    ['class' => 'custom-select materialSelect', 'multiple']) !!}--}}
     </div>
   </div>
   <div class="form-row">
@@ -75,24 +80,30 @@
   <div class="form-row">
     <div class="col-md-3 mb-3">
       {!! Form::hidden('id') !!}
-      {!! Form::select('type',[''=>'Landlord Type','Personal'=>'Personal','Company'=>'Company'],null,['class' => 'custom-select']) !!}
+      {!! Form::label('Which type of Landlord are you ?',null,['class' => 'col-form-label']) !!}
+
+      {!! Form::select('type',['Personal'=>'Personal','Company'=>'Company'],null,['class' => 'custom-select']) !!}
 
     </div>
 
     <div class="col-md-3 mb-3">
-      {!! Form::select('free_trial',[''=>'Free Trial','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
-
-    </div>
-    {{--<div class="col-md-3 mb-3">
-      {!! Form::select('preimum',[''=>'Premium Landlord','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
-
-    </div>--}}
-    <div class="col-md-3 mb-3">
-      {!! Form::select('email_leads',[''=>'Email Leads','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+      {!! Form::label('Free (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('free_trial',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
 
     </div>
     <div class="col-md-3 mb-3">
-      {!! Form::select('landlord_dashboard_status',[''=>'Landlord Dashboard','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+      {!! Form::label('Premium Landlord',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('preimum',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+
+    </div>
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Property Email Leads',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('email_leads',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+
+    </div>
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Landlord\'s Dashboard Link',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('landlord_dashboard_status',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
 
     </div>
 
@@ -120,19 +131,23 @@
 
 
     <div class="col-md-3 mb-3">
-      {!! Form::select('activate_twilio',[''=>'Activate Twilio','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
+      {!! Form::label('Activate Twilio',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('activate_twilio',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
       {!! Form::text('twilio_number',null,['class' => 'form-control hide twilio_number','placeholder' => 'Twilio Number']) !!}
     </div>
     <div class="col-md-3 mb-3">
-      {!! Form::select('is_entrata',[''=>'Entrata Landlord?','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
+      {!! Form::label('Entrata Landlord?',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('is_entrata',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
       {!! Form::text('entrata_client_id',null,['class' => 'form-control hide entrata_client_id','placeholder' => 'Client ID']) !!}
     </div>
     <div class="col-md-3 mb-3">
-      {!! Form::select('is_yardi',[''=>'Yardi Landlord?','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
+      {!! Form::label('Yardi Landlord?',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('is_yardi',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
       {!! Form::text('yardi_user_id',null,['class' => 'form-control hide yardi_user_id','placeholder' => 'Yardi ID']) !!}
     </div>
     <div class="col-md-3 mb-3">
-      {!! Form::select('emma_trial_landlord',[''=>'Emma Trial Landlord?','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
+      {!! Form::label('Emma Trial Landlord?',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('emma_trial_landlord',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
     </div>
 
 
@@ -227,4 +242,101 @@
       $('select.is_yardi').trigger('change');
     })
   </script>
+
+  <script>
+      jQuery.browser = {};
+      (function () {
+        jQuery.browser.msie = false;
+        jQuery.browser.version = 0;
+        if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+          jQuery.browser.msie = true;
+          jQuery.browser.version = RegExp.$1;
+        }
+      })();
+      $('.chosen').chosen({width: "100%"});
+
+    </script>
+
+    <script src="{{ env('ASSETS_PATH') }}tinymce/tinymce.min.js"></script>
+    <script>
+
+      $(document).ready(function () {
+
+
+        tinymce.remove();
+        tinyMCE.PluginManager.add('stylebuttons', function (editor, url) {
+          ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function (name) {
+            editor.addButton("style-" + name, {
+              tooltip: "Toggle " + name,
+              text: name.toUpperCase(),
+              onClick: function () {
+                editor.execCommand('mceToggleFormat', false, name);
+              },
+              onPostRender: function () {
+                var self = this, setup = function () {
+                  editor.formatter.formatChanged(name, function (state) {
+                    self.active(state);
+                  });
+                };
+                editor.formatter ? setup() : editor.on('init', setup);
+              }
+            })
+          });
+        });
+        tinymce.init({
+
+          selector: "textarea",
+
+          theme: "modern",
+
+          width: "100%",
+
+          height: "100%",
+
+          relative_urls: false,
+
+          remove_script_host: false,
+
+
+          plugins: [
+
+            "stylebuttons advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+
+            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+
+            "save table contextmenu directionality template paste textcolor"/*responsivefilemanager*/
+
+          ],
+
+
+          /*  content_css: "css/content.css",*/
+
+          toolbar: "insertfile undo redo | styleselect | style-h1 style-h2 style-h3 style-h4 style-h5 style-h6 | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | responsivefilemanager |  media fullpage | forecolor backcolor",
+
+          style_formats: [
+
+            {title: 'Bold text', inline: 'b'},
+
+            {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+
+            {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+
+            {title: 'Example 1', inline: 'span', classes: 'example1'},
+
+            {title: 'Example 2', inline: 'span', classes: 'example2'},
+
+            {title: 'Table styles'},
+
+            {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+
+          ],
+
+          filemanager_title: "File Manager"
+
+
+        });
+
+
+      })
+    </script>
 @stop
