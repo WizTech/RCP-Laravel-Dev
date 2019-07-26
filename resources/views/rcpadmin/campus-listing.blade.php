@@ -13,10 +13,10 @@
 @stop
 @section('breadcrumbs')
   <div class="breadcrumbs-area clearfix">
-    <h4 class="page-title pull-left">Campus Manager</h4>
+    <h4 class="page-title pull-left">Campus Listing</h4>
     <ul class="breadcrumbs pull-left">
       <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-      <li><span>Campus Manager</span></li>
+      <li><span>Campus Listing</span></li>
     </ul>
   </div>
 @stop
@@ -26,9 +26,6 @@
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
-
-          <a href="{{ url('rcpadmin/campus/create')}}" class="btn btn-outline-dark header-title">Add
-            Campus</a>
 
           <form action="{{ url('rcpadmin/campus-search')}}" method="POST" role="search">
             {{ csrf_field() }}
@@ -63,33 +60,10 @@
                     <td>
 
                       <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'])}}"
+                        <li class="mr-3"><a href="{{ url('rcpadmin/property/'.$campus['id'].'/listing')}}"
                                             class="text-secondary" target="_blank"><i
                               class="fa fa-edit" title="Detail"></i></a></li>
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/campus/'.$campus['id'].'/map')}}"
-                            class="text-secondary" title="Map" target="_blank"><i
-                              class="fa fa-map"></i></a></li>
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/campus/'.$campus['id'].'/apartment')}}"
-                            class="text-secondary" title="Apartment" target="_blank"><i
-                              class="fa fa-building"></i></a></li>
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/campus/'.$campus['id'].'/renting')}}"
-                            class="text-secondary" title="Renting Question" target="_blank"><i
-                              class="fa fa-question-circle"></i></a></li>
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/campus/'.$campus['id'].'/neighborhood')}}"
-                            class="text-secondary" title="Neighborhoods" target="_blank"><i
-                              class="fa fa-home"></i></a></li>
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/campus/'.$campus['id'].'/destination')}}"
-                            class="text-secondary" title="Destinaion" target="_blank"><i
-                              class="fa fa-map-marker"></i></a></li>
-                        <li><a data-admin-id="{{$campus['id']}}" href="javascript:void(0)"
-                               data-method="delete" class="text-danger jquery-postback"><i
-                              class="ti-trash"></i></a>
-                        </li>
+
                       </ul>
                     </td>
                   </tr>
@@ -137,7 +111,7 @@
 
       $.ajax({
         url: '<?php echo url('rcpadmin/campus-search-ajax')  ?>',
-        data: {q: v},
+        data: {q: v,page:'property'},
         type: 'POST',
         success: function (res) {
           $('#campusData-ajax').html(res)

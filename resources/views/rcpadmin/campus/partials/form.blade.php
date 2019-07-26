@@ -10,6 +10,32 @@
     </div>
   </div>
 @endif
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+
+
+  #addToList-plugin [data-list-ul] {
+
+    list-style-type: none;
+
+    padding: 5px;
+
+    margin: 0px;
+
+  }
+
+  #addToListZip-plugin-plugin [data-list-ul] {
+
+    list-style-type: none;
+
+    padding: 5px;
+
+    margin: 0px;
+
+  }
+
+
+</style>
 <div class="form-group">
   <div class="form-row">
 
@@ -49,42 +75,90 @@
       {!! Form::select('campus_linked[]',['1'=>'madison','2'=>'marquette'],null,['class' => 'custom-select chosen','multiple','data-placeholder'=>"Campus Linked" ]) !!}
     </div>--}}
     <div class="col-md-4 mb-4">
-        {!! Form::select('campus_linked[]',$campusSelect,$linked_campuses,
-            ['class' => 'form-control',
-            'multiple' => 'multiple']) !!}
+      {!! Form::label('Campus Linked',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('campus_linked[]',$campusSelect,$linked_campuses,
+          ['class' => 'form-control',
+          'multiple' => 'multiple']) !!}
 
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Featured Landlord',null,['class' => 'col-form-label']) !!}
       {!! Form::select('featured_landlord',$usersSelect,null,['class' => 'custom-select']) !!}
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-2 mb-2">
+      {!! Form::label('Phone',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('phone',null,['class' => 'form-control']) !!}
+
+    </div>
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Make Live?',null,['class' => 'col-form-label']) !!}
       {!! Form::select('live',[''=>'Make Live?','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Rating?',null,['class' => 'col-form-label']) !!}
       {!! Form::select('rating',[''=>'Rating?','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Show Premium Banner?',null,['class' => 'col-form-label']) !!}
       {!! Form::select('premium_banner',[''=>'Show Premium Banner?','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Allow Immitation Email?',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('immitation_email',['Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+    </div>
+    <div class="col-md-3 mb-3">
+      {!! Form::label('Status',null,['class' => 'col-form-label']) !!}
       {!! Form::select('status',[''=>'Status','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
 
     </div>
   </div>
 
   <div class="form-row">
-     <div class="col-md-6 mb-6">
-       {!! Form::label('Meta Description',null,['class' => 'input-group-text']) !!}
-       {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}
+    <div class="col-md-4 mb-4">
+      {!! Form::label('Facebook tracking pixel number',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('facebook_tracking',null,['class' => 'form-control']) !!}
 
-     </div>
-     <div class="col-md-6 mb-6">
-       {!! Form::label('Seo Block',null,['class' => 'input-group-text']) !!}
-       {!! Form::textarea('seo_block',null,['class' => 'form-control']) !!}
+    </div>
+    <div class="col-md-4 mb-4">
+      {!! Form::label('Housing Fair Link',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('housing_link',null,['class' => 'form-control']) !!}
 
-     </div>
+    </div>
 
-   </div>
+    <div class="col-md-4 mb-4">
+      {!! Form::label('Campus Short Name',null,['class' => 'col-form-label']) !!}
+      {!! Form::text('short_name',null,['class' => 'form-control']) !!}
+
+    </div>
+
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 mb-6" id="addToList-plugin">
+      {!! Form::label('Campus Abbreviations',null,['class' => 'input-group-text']) !!}
+      {!! Form::text('new-abbreviation',null,['class' => 'form-control']) !!}
+
+    </div>
+    <div class="col-md-6 mb-6" id="addToListZip-plugin">
+      {!! Form::label('Campus Zipcode(s)',null,['class' => 'input-group-text']) !!}
+      {!! Form::text('new-zipcode',null,['class' => 'form-control']) !!}
+
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-6">
+      {!! Form::label('Meta Description',null,['class' => 'input-group-text']) !!}
+      {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}
+
+    </div>
+    <div class="col-md-6 mb-6">
+      {!! Form::label('Seo Block',null,['class' => 'input-group-text']) !!}
+      {!! Form::textarea('seo_block',null,['class' => 'form-control']) !!}
+
+    </div>
+
+  </div>
 </div>
 <div class="form-group">
   <div class="col-md-12 mb-12">
@@ -97,6 +171,7 @@
 
   <!-- Start datatable js -->
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+  <script src="{{ env('ASSETS_PATH') }}js/wizPlug.addRemoveListItems.js"></script>
 
 
 
@@ -116,7 +191,84 @@
 
   <script src="{{ env('ASSETS_PATH') }}tinymce/tinymce.min.js"></script>
   <script>
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    var abbr = {!!json_encode($abbrDataArray)!!};
+    var zip = {!! json_encode($zipDataArray)!!};
+    var DOMAIN_URL = '{!! env('ADMIN_URL') !!}';
 
+
+    $('#addToList-plugin').addRemoveListItems({
+
+
+      data: abbr,
+
+
+      //fieldClass:'m-wrap span12',
+
+
+      fieldPlaceHolder: 'New Abbrevation',
+
+
+      addSuccess: function (val) {
+
+
+        $.ajax({
+
+
+          url: DOMAIN_URL + '/campus/saveAbbr',
+
+
+          data: {abbr: val, campus_id: 1},
+
+
+          type: 'Post'
+
+
+        });
+
+
+      }
+
+
+    });
+    $('#addToListZip-plugin').addRemoveListItems({
+
+
+      data: zip,
+
+
+      //fieldClass:'m-wrap span12',
+
+
+      fieldPlaceHolder: 'New Zipcode',
+
+
+      addSuccess: function (val) {
+
+
+        $.ajax({
+
+
+          url: DOMAIN_URL + '/campus/saveZipcode',
+
+
+          data: {zip: val, campus_id: 1},
+
+
+          type: 'Post'
+
+
+        });
+
+
+      }
+
+
+    });
     $(document).ready(function () {
 
 

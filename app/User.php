@@ -131,7 +131,7 @@ class User extends Authenticatable
                 ->select('landlord_details.company', 'u.id', 'u.name', 'u.email', 'u.campus_id');
 
         }
-        /*->paginate(10);*/
+            /*->paginate(10);*/
         return $landlrods;
         /*$landlrods = LandlordDetails::where('company', '>', '')->with('user')->get()->toArray();*/
 //        $landlrods = LandlordDetails::where('company', '<>', '')->with('user')->paginate(10);
