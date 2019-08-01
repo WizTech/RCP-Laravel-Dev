@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcpadmin;
 
 use App\CampusGuideModel;
+use App\CampusZipCode;
 use App\CampusNeighborhood;
 use App\CampusRentingQuestion;
 use App\CampusDestination;
@@ -26,6 +27,7 @@ class CampusController extends Controller
 
     return view('rcpadmin.campus', compact('campuses'));
   }
+
   public function search()
   {
     $q = $_REQUEST['q'];
@@ -44,7 +46,76 @@ class CampusController extends Controller
     }
     //$campuses = CampusModel::paginate(10);
 
-   // return view('rcpadmin.campus', compact('campuses'));
+    // return view('rcpadmin.campus', compact('campuses'));
+  }
+
+  public function search_ajax()
+  {
+    $q = $_REQUEST['q'];
+    if ($q != "") {
+
+
+      $campuses = CampusModel::where('name', 'LIKE', '%' . $q . '%')->orWhere('title', 'LIKE', '%' . $q . '%')->orWhere('address', 'LIKE', '%' . $q . '%')->paginate(20)->setPath('');
+      //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+      $pagination = $campuses->appends(array(
+        'q' => $q
+      ));
+      if (count($campuses) > 0):
+        foreach ($campuses as $campus): ?>
+          <tr>
+            <td> <?php echo $campus['id'] ?></td>
+            <td> <?php echo $campus['name'] ?></td>
+            <td> <?php echo $campus['title'] ?> </td>
+            <td> <?php echo $campus['status'] ?> </td>
+            <td>
+              <ul class="d-flex justify-content-center">
+                <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'property'): ?>
+                  <li class="mr-3"><a href="<?php echo url('rcpadmin/property/' . $campus['id'] . '/listing') ?>"
+                                      class="text-secondary" target="_blank"><i
+                        class="fa fa-edit" title="Detail"></i></a></li>
+
+                  <?php elseif(isset($_REQUEST['page']) && $_REQUEST['page'] == 'landing'): ?>
+                  <li class="mr-3"><a href="<?php echo url('rcpadmin/landing-page/' . $campus['id'] . '/edit') ?>"
+                                      class="text-secondary" target="_blank"><i
+                        class="fa fa-edit" title="Detail"></i></a></li>
+                <?php else: ?>
+
+                  <li class="mr-3"><a href="<?php echo url('rcpadmin/campus/' . $campus['id']) ?>"
+                                      class="text-secondary" target="_blank"><i
+                        class="fa fa-edit" title="Detail"></i></a></li>
+                  <li class="mr-3"><a
+                      href="<?php echo url('rcpadmin/campus/' . $campus['id'] . '/map') ?>"
+                      class="text-secondary" title="Map" target="_blank"><i
+                        class="fa fa-map"></i></a></li>
+                  <li class="mr-3"><a
+                      href="<?php echo url('rcpadmin/campus/' . $campus['id'] . '/apartment') ?>"
+                      class="text-secondary" title="Apartment" target="_blank"><i
+                        class="fa fa-building"></i></a></li>
+                  <li class="mr-3"><a
+                      href="<?php echo url('rcpadmin/campus/' . $campus['id'] . '/renting') ?>"
+                      class="text-secondary" title="Renting Question" target="_blank"><i
+                        class="fa fa-question-circle"></i></a></li>
+                  <li class="mr-3"><a
+                      href="<?php echo url('rcpadmin/campus/' . $campus['id'] . '/neighborhood') ?>"
+                      class="text-secondary" title="Neighborhoods" target="_blank"><i
+                        class="fa fa-home"></i></a></li>
+                  <li class="mr-3"><a
+                      href="<?php echo url('rcpadmin/campus/' . $campus['id'] . '/destination') ?>"
+                      class="text-secondary" title="Destinaion" target="_blank"><i
+                        class="fa fa-map-marker"></i></a></li>
+                  <li><a data-admin-id="<?php echo $campus['id'] ?>" href="javascript:void(0)"
+                         data-method="delete" class="text-danger jquery-postback"><i
+                        class="ti-trash"></i></a>
+                  </li>
+
+                <?php endif; ?>
+              </ul>
+            </td>
+          </tr>
+        <?php endforeach;
+      endif ?>
+      <?php
+    }
   }
 
   public function create()
@@ -100,6 +171,21 @@ class CampusController extends Controller
   {
     $campus = CampusModel::find($id);
 
+    $abbrDataArray = array();
+    $zipDataArray = array();
+
+
+    $campusAbbrData = explode(',', $campus['campus_abbrevation']);
+    foreach ($campusAbbrData as $abbr) {
+      echo '<pre>';
+      print_r($abbr);
+      echo '</pre>';
+      $abbrDataArray[] = $abbr;
+    }
+    $campusZipCodes = explode(',', $campus['zip_codes']);
+    foreach ($campusZipCodes as $zip) {
+      $zipDataArray[] = $zip;
+    }
     $campuses = CampusModel::all('id', 'title')->toArray();
 
     $linked_campuses_data = CampusLinkedModel::where('campus_id', '=', $id)->get()->pluck('campus_linked')->toArray();
@@ -121,8 +207,8 @@ class CampusController extends Controller
     foreach ($users as $user) {
       $usersSelect[$user->id] = $user->name;
     }
-    
-    return view('rcpadmin.campus.edit', compact('campus', 'campusSelect', 'usersSelect', 'linked_campuses'));
+
+    return view('rcpadmin.campus.edit', compact('campus', 'campusSelect', 'usersSelect', 'linked_campuses', 'abbrDataArray', 'zipDataArray'));
   }
 
   public function update($id, Requests\CampusRequest $request)
@@ -440,6 +526,30 @@ class CampusController extends Controller
 
     </div>
     <?php
+
+
+  }
+
+  function saveZipcode()
+
+
+  {
+    $campus_id = $_POST['campus_id'];
+    $zipCodes = implode(',', $_POST['zip']);
+    $campus = CampusModel::where('id', '=', $campus_id)->first();
+    $campus->update(['zip_codes' => $zipCodes]);
+
+
+  }
+
+  function saveAbbr()
+
+
+  {
+    $campus_id = $_POST['campus_id'];
+    $abbr = implode(',', $_POST['abbr']);
+    $campus = CampusModel::where('id', '=', $campus_id)->first();
+    $campus->update(['campus_abbrevation' => $abbr]);
 
 
   }

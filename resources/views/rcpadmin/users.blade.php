@@ -31,10 +31,11 @@
                     <h4 class="header-title">Data Table Dark</h4>
           --}}
           <a href="{{ url('rcpadmin/users/create')}}" class="btn btn-outline-dark header-title">Add User</a>
+          <a href="{{ url('rcpadmin/users/trash')}}" class="btn btn-outline-dark header-title">Trash User</a>
           <form action="{{ url('rcpadmin/user-search')}}" method="POST" role="search">
             {{ csrf_field() }}
             <div class="input-group">
-              <input type="text" class="form-control" name="q"
+              <input type="text" class="form-control" name="q" id="searchBox"
                      placeholder="Search users"> <span class="input-group-btn">
                              <button type="submit" class="btn btn-default">
                                  Submit
@@ -54,7 +55,7 @@
                 <th>Action</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody id="userData-ajax">
               @if(count($webUsers) > 0)
                 @foreach($webUsers as $user)
                   <tr>
@@ -68,8 +69,14 @@
                         <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/users/'.$user['id'])}}"
                                             class="text-secondary"><i
                               class="fa fa-edit"></i></a></li>
+                        @if($user['role'] == '3')
+                        <li class="mr-3"><a target="_blank"
+                                            href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
+                                            class="text-secondary" title="View Properties"><i
+                              class="fa fa-list"></i></a></li>
+                        @endif
                         <li>
-                          <form method="POST" action="users/{{$user['id']}}">
+                          <form method="POST" action="{{$user['id']}}/delete">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group">
@@ -86,11 +93,13 @@
               @endif
               </tbody>
             </table>
-            @if(isset($webUsers) && count($webUsers) > 0)
-              {{$webUsers->links() }}
-              Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
-              Entities
-            @endif
+            <div id="pagination-container">
+              @if(isset($webUsers) && count($webUsers) > 0)
+                {{$webUsers->links() }}
+                Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
+                Entities
+              @endif
+            </div>
           </div>
         </div>
       </div>
@@ -111,8 +120,30 @@
     src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script
     src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-
+  <script src="{{ env('ASSETS_PATH') }}js/ajax_viewer.js"></script>
   <script>
+
+    $('#searchBox').typeDone(function () {
+
+      var v = $('#searchBox').val();
+
+      if (v == '' || v.length <= 2) {
+        return false;
+      }
+
+      console.log(v)
+
+      $.ajax({
+        url: '<?php echo url('rcpadmin/user-search-ajax')  ?>',
+        data: {q: v},
+        type: 'POST',
+        success: function (res) {
+          $('#userData-ajax').html(res)
+          $('#pagination-container').html('')
+        }
+      });
+
+    }, 900);
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

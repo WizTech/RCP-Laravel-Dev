@@ -2,26 +2,54 @@
   <ul class="metismenu" id="menu">
     @if($modules)
       @foreach($modules as $module)
-        <li class="{{ ( $current_controller == $module['controller']) ? 'active': 'dd'}}"><a
-                  href="{{ url('rcpadmin/').'/'.$module['slug'] }}"
-                  class="waves-effect waves-cyan"><i
-                    class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
+
+        @if($module['slug'] == 'feature')
+          <li>
+            <a href="javascript:void(0)" aria-expanded="true"><i
+                class="ti-view-list"></i><span>Feature Manager</span></a>
+            <ul class="collapse">
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/feature/1'}}">Unit Features</a></li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/feature/2'}}">Utilities</a></li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/feature/3'}}">Property Features</a></li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/feature/4'}}">Outdoor Space</a></li>
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/feature/5'}}">Other</a></li>
+
+            </ul>
+          </li>
+        @elseif($module['slug'] == 'entrata')
+          <li>
+            <a href="javascript:void(0)" aria-expanded="true"><i
+                class="ti-view-list"></i><span>Entrata Manager</span></a>
+            <ul class="collapse">
+              <li class="child-element"><a href="{{ url('rcpadmin/').'/entrata'}}">Listing</a>
+
+            </ul>
+          </li>
+        @else
+          <li
+            class="{{ ( $current_controller == $module['controller']) ? 'active '.$module['controller']: 'dd'.$module['controller']}}">
+            <a
+              href="{{ url('rcpadmin/').'/'.$module['slug'] }}"
+              class="waves-effect waves-cyan"><i
+                class="ti-{{$module['icon']}}"></i> <span>{{$module['title']}}</span></a></li>
+        @endif;
       @endforeach
 
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-                  class="ti-view-list"></i><span>Content Manager</span></a>
+            class="ti-view-list"></i><span>Content Manager</span></a>
         <ul class="collapse">
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a>
-          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/pages'}}">Pages</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/news'}}">News</a></li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/testimonials'}}">Testimonials</a>
           </li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/careertype'}}">Careers Type</a>
           </li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/career'}}">Careers</a>
           </li>
-          <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a>
-          </li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/careerslider'}}">Career Slider</a></li>
+          <li class="child-element"><a href="{{ url('rcpadmin/').'/landing-page'}}">Landing Page</a></li>
+
           <li class="child-element"><a href="{{ url('rcpadmin/').'/campus-insight'}}">Campus Insight</a>
           </li>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/resources'}}">Resources</a>
@@ -32,7 +60,7 @@
       </li>
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-                  class="ti-view-list"></i><span>Stats</span></a>
+            class="ti-view-list"></i><span>Stats</span></a>
         <ul class="collapse">
           <li class="child-element"><a href="{{ url('rcpadmin/').'/email-leads'}}">Email Leads</a>
 
@@ -58,7 +86,7 @@
       </li>
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-                  class="ti-view-list"></i><span>Application Stats</span></a>
+            class="ti-view-list"></i><span>Application Stats</span></a>
         <ul class="collapse">
           <li class="child-element"><a href="{{ url('rcpadmin/').'/app-users'}}">App Users</a>
           </li>
@@ -90,12 +118,13 @@
       </li>
       <li>
         <a href="javascript:void(0)" aria-expanded="true"><i
-                  class="ti-view-list"></i><span>App Folio Manager</span></a>
+            class="ti-view-list"></i><span>App Folio Manager</span></a>
         <ul class="collapse">
           <li class="child-element"><a href="{{ url('rcpadmin/').'/rentlinx-listing'}}">Listing</a>
           <li class="child-element"><a href="{{ url('rcpadmin/').'/unapproved'}}">Unapproved</a></li>
         </ul>
       </li>
+
 
     @endif
 

@@ -19,10 +19,11 @@ use Illuminate\Database\Eloquent\Model;
 class CampusModel extends Model
 {
   protected $table = 'campus';
-  protected $fillable = [
-    'name', 'title', 'address', 'meta_title', 'meta_description', 'seo_block', 'h1', 'h2', 'lat', 'lng', 'live', 'status', 'rating', 'premium_banner', 'featured_landlord'
-  ];
-
+  /*protected $fillable = [
+    'name', 'title', 'address', 'meta_title', 'meta_description', 'seo_block', 'h1', 'h2', 'lat', 'lng', 'live', 'status', 'rating', 'premium_banner', 'featured_landlord',
+    'short_name','housing_link','imitation_email','zip_codes','campus_abbrevation','facebook_track_code'
+  ];*/
+  protected $guarded = [];
 
 
   public function users()

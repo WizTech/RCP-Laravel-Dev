@@ -15,18 +15,20 @@
 
 
     <div class="col-md-3 mb-2">
-
+      {!! Form::label('Campus',null,['class' => 'col-form-label']) !!}
       {!! Form::select('campus_id',$campusSelect,null,['class' => 'custom-select']) !!}
     </div>
     <div class="col-md-3 mb-2">
-
+      {!! Form::label('Category',null,['class' => 'col-form-label']) !!}
       {!! Form::select('category_id',$categorySelect,null,['class' => 'custom-select']) !!}
     </div>
     <div class="col-md-3 mb-2">
+      {!! Form::label('Landlord',null,['class' => 'col-form-label']) !!}
       {!! Form::select('landlord_id',$usersSelect,null,['class' => 'custom-select']) !!}
     </div>
     <div class="col-md-3 mb-2">
-      {!! Form::select('status',[''=>'Status','Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+      {!! Form::label('Status',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('status',['Active'=>'ACTIVE','Inactive'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
 
     </div>
     <div class="col-md-3 mb-2">
@@ -60,7 +62,8 @@
     </div>
 
     <div class="col-md-4 mb-3">
-      {!! Form::select('double_featured',[''=>'Double Featured','ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select double_featured']) !!}
+      {!! Form::label('Double Featured',null,['class' => 'col-form-label']) !!}
+      {!! Form::select('double_featured',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select double_featured']) !!}
       {!! Form::text('double_featured_order',null,['class' => 'form-control hide double_featured_order','placeholder' => 'Rank']) !!}
 
     </div>

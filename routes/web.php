@@ -17,13 +17,25 @@ Route::get('/clear-cache', function () {
   // return what you want
 });
 
-Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function () {
+Route::middleware(['auth:web', 'admin_modules'])->prefix('rcpadmin')->group(function () {
   Route::get('/', 'rcpadmin\DashboardController@index');
+  Route::get('export-activities', 'rcpadmin\AdminUsers@activityExport');
   Route::post('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules_update');
   Route::get('admin_users/{id}/modules', 'rcpadmin\AdminUsers@modules');
   Route::resource('admin_users', 'rcpadmin\AdminUsers');
+  Route::post('users/{id}/delete', 'rcpadmin\UsersController@delete');
+  Route::post('users/{id}/restoreUser', 'rcpadmin\UsersController@restoreUser');
+  Route::post('user-search-ajax', 'rcpadmin\UsersController@search_ajax');
   Route::post('user-search', 'rcpadmin\UsersController@search');
+  Route::get('users/trash', 'rcpadmin\UsersController@trash');
+
+  Route::get('users/edit_user/{id}', 'rcpadmin\UsersController@edit_user');
+  Route::patch('users/update_user/{id}', 'rcpadmin\UsersController@update_user');
+
   Route::resource('users', 'rcpadmin\UsersController');
+
+  Route::post('campus/saveZipcode', 'rcpadmin\CampusController@saveZipcode');
+  Route::post('campus/saveAbbr', 'rcpadmin\CampusController@saveAbbr');
   Route::post('campus/{id}/map', 'rcpadmin\CampusController@map_update');
   Route::get('campus/{id}/map', 'rcpadmin\CampusController@map');
 
@@ -39,6 +51,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('campus/addNeighborhood', 'rcpadmin\CampusController@addNeighborhood');
   Route::get('campus/addDestination', 'rcpadmin\CampusController@addDestination');
 
+
+  Route::post('campus-search-ajax', 'rcpadmin\CampusController@search_ajax');
   Route::post('campus-search', 'rcpadmin\CampusController@search');
   Route::resource('campus', 'rcpadmin\CampusController');
 
@@ -46,7 +60,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('property/{id}/delete', 'rcpadmin\PropertyController@delete_images');
   Route::post('property/{id}/images-save', 'rcpadmin\PropertyController@store_images');
   Route::get('property/{id}/images', 'rcpadmin\PropertyController@images');
-
+  Route::get('property/{id}/landlords', 'rcpadmin\PropertyController@landlord_listing');
+  Route::get('property/{id}/listing', 'rcpadmin\PropertyController@listing');
   Route::post('property/{id}/feature', 'rcpadmin\PropertyController@feature_update');
   Route::get('property/{id}/feature', 'rcpadmin\PropertyController@feature');
 
@@ -55,8 +70,13 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('property/{id}/floorplan', 'rcpadmin\PropertyController@floorplan');
   Route::get('property/addFloorplan', 'rcpadmin\PropertyController@addFloorplan');
 
+  Route::post('property-search-ajax', 'rcpadmin\PropertyController@search_ajax');
   Route::post('property-search', 'rcpadmin\PropertyController@search');
   Route::resource('property', 'rcpadmin\PropertyController');
+  Route::get('entrata/edit-property/{id}', 'rcpadmin\EntrataController@editProperty');
+  Route::put('entrata/update-property/{id}', 'rcpadmin\EntrataController@updateProperty');
+  Route::get('entrata/edit-campus/{id}', 'rcpadmin\EntrataController@editCampus');
+  Route::put('entrata/update-campus/{id}', 'rcpadmin\EntrataController@updateCampus');
   Route::resource('entrata', 'rcpadmin\EntrataController');
   Route::resource('yardi', 'rcpadmin\YardiController');
   Route::resource('category', 'rcpadmin\CategoryController');
@@ -64,10 +84,14 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::resource('block_email', 'rcpadmin\BlockEmailController');
   Route::resource('block_ip', 'rcpadmin\BlockIPController');
   Route::resource('unsubcribers', 'rcpadmin\UnsubscriberController');
+  Route::get('feature/{id}', 'rcpadmin\FeatureController@type');
   Route::resource('feature', 'rcpadmin\FeatureController');
   Route::resource('template', 'rcpadmin\TemplateController');
   Route::resource('testimonials', 'rcpadmin\TestimonialController');
+  Route::resource('pages', 'rcpadmin\PagesController');
   Route::resource('news', 'rcpadmin\NewsController');
+  Route::post('landing-page/{id}/edit', 'rcpadmin\LandingPageController@update');
+  Route::resource('landing-page', 'rcpadmin\LandingPageController');
   Route::resource('career', 'rcpadmin\CareerController');
   Route::resource('careertype', 'rcpadmin\CareerTypeController');
   Route::resource('careerslider', 'rcpadmin\CareerSliderController');
@@ -75,6 +99,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('expired-listing-report', 'rcpadmin\ExpiredPropertyController@leadExport');
   Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
   Route::resource('team-member', 'rcpadmin\TeamController');
+  Route::post('premium-landlord/{id}/web', 'rcpadmin\PreimumLandlordController@web_update');
+  Route::get('premium-landlord/{id}/web', 'rcpadmin\PreimumLandlordController@web');
   Route::resource('premium-landlord', 'rcpadmin\PreimumLandlordController');
   Route::resource('premium-listings', 'rcpadmin\PreimumListingsController');
 
@@ -154,9 +180,18 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::put('rentlinx-listing/update-campus/{id}', 'rcpadmin\RentlinxListingController@updateCampus');
   Route::resource('rentlinx-listing', 'rcpadmin\RentlinxListingController');
   Route::resource('unapproved', 'rcpadmin\UnapprovedController');
+  Route::resource('user-fee', 'rcpadmin\UserFeeController');
 
 });
+Route::middleware(['auth:student'])->prefix('student')->group(function () {
+  Route::get('/', 'StudentController@index');
+  Route::post('student', 'StudentController@update');
+});
 
+Route::post('student/change-password', 'StudentController@updatePassword');
+Route::post('student/add-sublease', 'StudentController@saveSublease');
+Route::post('student', 'StudentController@update');
+Route::get('/articles', 'ArticlesController@index');
 
 Route::get('/articles', 'ArticlesController@index');
 
@@ -166,5 +201,25 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('student/application', 'StudentController@application');
+Route::get('student/change-password', 'StudentController@changePassword');
+Route::get('student', 'StudentController@index');
+Route::post('student/{id}/edit', 'StudentController@updateSublease');
+Route::get('student/{id}/edit', 'StudentController@show');
+Route::get('student/add-sublease', 'StudentController@addSublease');
+Route::get('student/edit-sublease', 'StudentController@editSublease');
+Route::get('studentLogout', 'Auth\LoginController@studentLogout');
 
+
+Route::post('login/student', 'Auth\LoginController@studentLogin');
+Route::post('/login/landlord', 'Auth\LoginController@landlordLogin');
+Route::post('/register/student', 'Auth\RegisterController@createStudent');
+Route::post('/register/landlord', 'Auth\RegisterController@createLandlord');
+
+
+Route::get('/login/student', 'Auth\LoginController@showStudentLoginForm');
+Route::get('/login/landlord', 'Auth\LoginController@showLandlordLoginForm');
+Route::get('/register/student', 'Auth\RegisterController@showStudentRegisterForm');
+Route::get('/register/landlord', 'Auth\RegisterController@showLandlordRegisterForm');
+Route::view('/landlord', 'landlord');
 Route::get('/home', 'HomeController@index')->name('home');

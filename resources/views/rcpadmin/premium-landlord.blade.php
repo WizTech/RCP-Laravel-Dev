@@ -43,20 +43,27 @@
               @if(count($landlords) > 0)
                 @foreach($landlords as $data)
                   @if($data['user']['name'])
-                  <tr>
-                    <td> {{$data['user']['name']}}</td>
-                    <td> {{$data['user']['email']}}</td>
+                    <tr>
+                      <td> {{$data['user']['name']}}</td>
+                      <td> {{$data['user']['email']}}</td>
 
-                    <td> {{$data['domain_name']}} </td>
-                    <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/premium-landlord/'.$data['id'])}}"
-                                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
+                      <td> {{$data['domain_name']}} </td>
+                      <td>
+                        <ul class="d-flex justify-content-center">
+                          <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/premium-landlord/'.$data['id'])}}"
+                                              class="text-secondary"><i
+                                class="fa fa-edit"></i></a></li>
+                          <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/premium-landlord/'.$data['id'].'/web')}}"
+                                              class="text-secondary"><i
+                                class="fa fa-internet-explorer" title="Web Details"></i></a></li>
+                          <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/property/'.$data['id'].'/landlords')}}"
+                                              class="text-secondary" title="View Properties"><i
+                                class="fa fa-list"></i></a></li>
 
-                      </ul>
-                    </td>
-                  </tr>
+
+                        </ul>
+                      </td>
+                    </tr>
                   @endif
                 @endforeach
               @endif

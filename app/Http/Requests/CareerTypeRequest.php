@@ -32,11 +32,14 @@ class CareerTypeRequest extends FormRequest
     public function saveRequest(){
         $careertypeAdd = CareerType::create(['careers_type' => $this->careers_type]);
         $careertypeAdd->save();
+        $insertId = $careertypeAdd->id;
+        return $insertId;
     }
 
     public function updateRequest($id){
         $careertype = CareerType::find($id);
         $careertype->careers_type = $this->careers_type;
-        $careertype->save();
+        $career_type =  $careertype->save();
+        return $career_type;
     }
 }

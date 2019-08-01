@@ -48,7 +48,7 @@
   <div class="sidebar-menu">
     <div class="sidebar-header">
       <div class="logo">
-        <a href="index-2.html"><img src="{{ env('THEME_ASSETS_NEW') }}assets/images/rcp-logo-big.png" alt="logo"></a>
+        <a href="index-2.html"><img src="{{ env('THEME_ASSETS_NEW') }}assets/images/rcp-logo-white.png" alt="logo"></a>
       </div>
     </div>
     <div class="main-menu">
