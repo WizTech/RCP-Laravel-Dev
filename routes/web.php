@@ -31,6 +31,7 @@ Route::middleware(['auth:web', 'admin_modules'])->prefix('rcpadmin')->group(func
 
   Route::get('users/edit_user/{id}', 'rcpadmin\UsersController@edit_user');
   Route::patch('users/update_user/{id}', 'rcpadmin\UsersController@update_user');
+  
 
   Route::resource('users', 'rcpadmin\UsersController');
 
