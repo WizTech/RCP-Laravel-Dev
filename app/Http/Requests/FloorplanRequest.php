@@ -28,6 +28,7 @@ class FloorplanRequest extends FormRequest
             'bed' => 'required',
             'bath' => 'required',
             'price' => 'required',
+            'price' => 'required',
             'sq_footage' => 'required',
             'available_date' => 'required'
         ];

@@ -26,6 +26,9 @@ class RedirectIfAuthenticated
         case 'student':
           return redirect('/student');
           break;
+        case 'landlord':
+          return redirect('/landlord');
+          break;
         default:
           return redirect('/rcpadmin');
           break;

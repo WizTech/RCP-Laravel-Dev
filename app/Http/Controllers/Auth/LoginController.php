@@ -149,12 +149,13 @@ class LoginController extends Controller
       'email' => $request['email'],
       'password' => md5($request['password'])
     ])->first();
-    if ($user) {
+    if ($user && $role == 2) {
       $studentAuth = auth()->guard('student')->login($user, true);
-
+      return true;
+    } else if ($user && $role == 3) {
+      $landlordtAuth = auth()->guard('landlord')->login($user, true);
       return true;
     }
-
     return false;
   }
 
@@ -164,6 +165,25 @@ class LoginController extends Controller
     $request->session()->flush();
     $request->session()->regenerate();
     return redirect()->guest(url('login/student'));
+  }
+
+  public function landlordLogout(Request $request)
+  {
+    Auth::guard('landlord')->logout();
+    $request->session()->flush();
+    $request->session()->regenerate();
+    return redirect()->guest(url('login/landlord'));
+  }
+
+  public function logout(Request $request)
+  {
+    Auth::guard('student')->logout();
+    Auth::guard('landlord')->logout();
+    $this->guard()->logout();
+
+    $request->session()->invalidate();
+
+    return $this->loggedOut($request) ?: redirect('/');
   }
 
 }

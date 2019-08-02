@@ -199,8 +199,33 @@ Route::get('/articles', 'ArticlesController@index');
 Route::get('/', function () {
   return redirect(route('login'));
 });
-
 Auth::routes();
+/*Landlord Portal Routes*/
+Route::get('landlord', 'LandlordController@index');
+Route::get('landlord/listing', 'LandlordController@listing');
+Route::get('landlord/deleted-listing', 'LandlordController@deleted_listing');
+Route::post('landlord', 'LandlordController@update');
+Route::post('landlord/property', 'LandlordController@store');
+Route::post('landlord/change-password', 'LandlordController@updatePassword');
+Route::get('landlord/change-password', 'LandlordController@changePassword');
+Route::get('landlord/property/addFloorplan', 'LandlordController@addFloorplan');
+Route::post('landlord/active-listing', 'LandlordController@activeProperty');
+Route::post('landlord/property/{id}', 'LandlordController@updateProperty');
+Route::get('landlord/property/{id}', 'LandlordController@show');
+Route::post('landlord/property/{id}/floorplan', 'LandlordController@floorplan_update');
+Route::get('landlord/property/{id}/floorplan', 'LandlordController@floorplan');
+Route::post('landlord/property/{id}/feature', 'LandlordController@feature_update');
+Route::get('landlord/property/{id}/feature', 'LandlordController@feature');
+Route::post('landlord/property/images-delete', 'LandlordController@destroy_images');
+Route::get('landlord/property/{id}/delete', 'LandlordController@delete_images');
+Route::post('landlord/property/{id}/images-save', 'LandlordController@store_images');
+Route::get('landlord/property/{id}/images', 'LandlordController@images');
+Route::get('landlord/add-property', 'LandlordController@create');
+Route::get('landlord/campus-insight', 'LandlordController@campusInsight');
+
+/*Landlord Portal Routes*/
+
+
 Route::get('student/application', 'StudentController@application');
 Route::get('student/change-password', 'StudentController@changePassword');
 Route::get('student', 'StudentController@index');
@@ -221,5 +246,5 @@ Route::get('/login/student', 'Auth\LoginController@showStudentLoginForm');
 Route::get('/login/landlord', 'Auth\LoginController@showLandlordLoginForm');
 Route::get('/register/student', 'Auth\RegisterController@showStudentRegisterForm');
 Route::get('/register/landlord', 'Auth\RegisterController@showLandlordRegisterForm');
-Route::view('/landlord', 'landlord');
+//Route::view('/landlord', 'landlord');
 Route::get('/home', 'HomeController@index')->name('home');
