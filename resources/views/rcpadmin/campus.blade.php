@@ -20,6 +20,11 @@
     </ul>
   </div>
 @stop
+
+<!-- Modal Begin -->
+<div id="modals"></div>
+<!-- Modal End -->
+
 @section('content')
 
   <div class="row">
@@ -63,32 +68,35 @@
                     <td>
 
                       <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'])}}"
-                                            class="text-secondary" target="_blank"><i
-                              class="fa fa-edit" title="Detail"></i></a></li>
-                        <li class="mr-3"><a
+
+                          <li class="mr-3">
+                              <button type="button"
+                                      data-campusid="{{$campus['id']}}"
+                                      class="btn btn-success btn-xs fa fa-pencil-square-o editCampus" title="Edit Campus">
+                              </button>
+                          </li>
+                        {{--<li class="mr-3"><a href="{{ url('rcpadmin/campus/'.$campus['id'])}}"
+                                            class="btn btn-success btn-xs fa fa-edit" target="_blank"></a></li>--}}
+                        <li class="mr-3">
+                            <a
                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/map')}}"
-                            class="text-secondary" title="Map" target="_blank"><i
-                              class="fa fa-map"></i></a></li>
+                            class="btn btn-success btn-xs fa fa-map" title="Map" target="_blank"></a>
+                        </li>
                         <li class="mr-3"><a
                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/apartment')}}"
-                            class="text-secondary" title="Apartment" target="_blank"><i
-                              class="fa fa-building"></i></a></li>
+                            class="btn btn-primary btn-xs fa fa-building" title="Apartment" target="_blank"></a>
+                        </li>
                         <li class="mr-3"><a
                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/renting')}}"
-                            class="text-secondary" title="Renting Question" target="_blank"><i
-                              class="fa fa-question-circle"></i></a></li>
+                            class="btn btn-primary btn-xs fa fa-question-circle" title="Renting Question" target="_blank"></a></li>
                         <li class="mr-3"><a
                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/neighborhood')}}"
-                            class="text-secondary" title="Neighborhoods" target="_blank"><i
-                              class="fa fa-home"></i></a></li>
+                            class="btn btn-success btn-xs fa fa-home" title="Neighborhoods" target="_blank"></a></li>
                         <li class="mr-3"><a
                             href="{{ url('rcpadmin/campus/'.$campus['id'].'/destination')}}"
-                            class="text-secondary" title="Destinaion" target="_blank"><i
-                              class="fa fa-map-marker"></i></a></li>
-                        <li><a data-admin-id="{{$campus['id']}}" href="javascript:void(0)"
-                               data-method="delete" class="text-danger jquery-postback"><i
-                              class="ti-trash"></i></a>
+                            class="btn btn-success btn-xs fa fa-map-marker" title="Destinaion" target="_blank"></a></li>
+                        <li><a data-admin-id="{{$campus['id']}}" href="javascript:void(0)" title="Delete"
+                               data-method="delete" class="btn btn-danger btn-xs fa fa-trash-o jquery-postback"></a>
                         </li>
                       </ul>
                     </td>
@@ -181,6 +189,106 @@
       });
 
     })
+  </script>
 
+  <script>
+      $('.editCampus').on('click', function () {
+          campusId = $(this).data('campusid');
+          $.get('{{ URL::to("rcpadmin/campus/edit_campus")}}/' + campusId, function (data) {
+              $('#modals').empty().append(data);
+              $('#campusModal').modal('show');
+          });
+      });
+
+      $('#modals').on('submit', '#campusEditForm', function (e) {
+          e.preventDefault();
+          var formData = $(this).serialize();
+          $.ajax({
+              url: '{{ URL::to("rcpadmin/campus/update_campus")}}/' + campusId,
+              type: 'post',
+              data: formData,
+          }).done(function (data) {
+              $('#modals #errors').empty().append(data);
+              location.reload();
+          }).fail(function (error) {
+              var error = error.responseJSON;
+
+              var validationErrors = error.errors;
+
+              console.log(error);
+
+              if (typeof validationErrors.status !== "undefined") {
+                  validationErrors.status.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.name !== "undefined") {
+                  validationErrors.name.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.address !== "undefined") {
+                  validationErrors.address.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.title !== "undefined") {
+                  validationErrors.title.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.h1 !== "undefined") {
+                  validationErrors.h1.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.h2 !== "undefined") {
+                  validationErrors.h2.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.premium_banner !== "undefined") {
+                  validationErrors.premium_banner.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.live !== "undefined") {
+                  validationErrors.live.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.rating !== "undefined") {
+                  validationErrors.rating.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+              if (typeof validationErrors.meta_title !== "undefined") {
+                  validationErrors.meta_title.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+              if (typeof validationErrors.meta_description !== "undefined") {
+                  validationErrors.meta_description.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+              if (typeof validationErrors.seo_block !== "undefined") {
+                  validationErrors.seo_block.forEach(function (element, index) {
+                      $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                  });
+              }
+
+          });
+
+      });
   </script>
 @stop

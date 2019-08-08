@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\rcpadmin;
 
-/*use Illuminate\Http\Request;*/
 
+// use Request;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -11,8 +13,6 @@ use App\UserCampuses;
 use App\CampusModel;
 use App\LandlordDetails;
 use App\UserDetails;
-use Request;
-
 
 class UsersController extends Controller
 {
@@ -47,38 +47,56 @@ class UsersController extends Controller
 
     public function show($id)
     {
+
         $user = User::getUserDetail($id);
         $user_campuses = UserCampuses::where('user_id', '=', $id)->get()->pluck('campus_id')->toArray();
-
         $campuses = CampusModel::all('id', 'title')->toArray();
-
-
         $campusSelect = [];
-
-        //$campusSelect[''] = 'Campus (es)';
         foreach ($campuses as $campus) {
             $campusSelect[$campus['id']] = $campus['title'];
         }
-        // echo '<pre>';print_r($user_campuses );echo '</pre>';
-        //echo '<pre>';print_r($campusSelect );echo '</pre>';die('Call');
         return view('rcpadmin.users.edit', compact('user', 'campusSelect', 'user_campuses'));
+
 
     }
 
     public function store(Requests\UserRequest $request)
     {
-        $input = Request::all();
+        //$input = Request::all();
+        $input = $request->all();
         $user = User::create($input);
 
         if ($user && !empty($input['first_name'])) {
 
-            UserDetails::create(['user_id' => $user->id, 'first_name' => $input['first_name'], 'last_name' => $input['last_name'], 'address' => $input['address'], 'phone_no' => $input['phone_no']]);
+            UserDetails::create([
+                'user_id' => $user->id,
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+                'address' => $input['address'],
+                'phone_no' => $input['phone_no']]);
         }
 
         if ($user && !empty($input['role'] == 3)) {
-            LandlordDetails::create(['user_id' => $user->id, 'company' => $input['company'], 'fax' => $input['fax'], 'h1' => $input['h1'], 'h2' => $input['h2'], 'meta_title' => $input['meta_title'], 'about_details' => $input['about_details'], 'meta_description' => $input['meta_description'], 'activate_twilio' => $input['activate_twilio'], 'seo_block' => $input['seo_block'], 'twilio_number' => $input['twilio_number'], 'email_leads' => $input['email_leads'], 'landlord_dashboard_status' => $input['landlord_dashboard_status'], 'website' => $input['website'], 'free_trial' => $input['free_trial'], 'type' => $input['type'], 'activate_twilio' => $input['activate_twilio'], 'activate_twilio' => $input['activate_twilio'], 'is_entrata' => $input['is_entrata'], 'is_yardi' => $input['is_yardi']]);
+            LandlordDetails::create([
+                'user_id' => $user->id,
+                'company' => $input['company'],
+                'fax' => $input['fax'],
+                'h1' => $input['h1'],
+                'h2' => $input['h2'],
+                'meta_title' => $input['meta_title'],
+                'about_details' => $input['about_details'],
+                'meta_description' => $input['meta_description'],
+                'seo_block' => $input['seo_block'],
+                'twilio_number' => $input['twilio_number'],
+                'email_leads' => $input['email_leads'],
+                'landlord_dashboard_status' => $input['landlord_dashboard_status'],
+                'website' => $input['website'],
+                'free_trial' => $input['free_trial'],
+                'type' => $input['type'],
+                'activate_twilio' => $input['activate_twilio'],
+                'is_entrata' => $input['is_entrata'],
+                'is_yardi' => $input['is_yardi']]);
         }
-
 
         if ($user && !empty($input['campus_id'])) {
 
@@ -98,17 +116,15 @@ class UsersController extends Controller
     public function update($id, Requests\UserRequest $request)
     {
 
-
         $user = User::find($id);
-
 
         $user_details = UserDetails::where('user_id', '=', $id);
 
         $landlord_details = LandlordDetails::where('user_id', '=', $id);
 
 
-        $input = Request::all();
-
+        //$input = Request::all();
+        $input = $request->all();
         $input['password'] = bcrypt($input['password']);
 
         $user->update($input);
@@ -197,29 +213,51 @@ class UsersController extends Controller
                         <td> <?php echo $user['status'] ?> </td>
                         <td>
                             <ul class="d-flex justify-content-center">
-                                <li class="mr-3"><a target="_blank" href="<?php echo url('rcpadmin/users/' . $user['id']) ?>"
-                                                    class="text-secondary"><i
-                                                class="fa fa-edit"></i></a></li>
+
+                                <?php if($user['role'] == '3'): ?>
+                                <li class="mr-3"><a target="_blank"
+                                                    href="<?php echo url('rcpadmin/property/' . $user['id'].'/landlords') ?>"
+                                                    class="text-secondary"
+                                                    title="View Properties"><i
+                                                class="fa fa-list"></i></a></li>
+                                <?php endif; ?>
+                                <li class="mr-3"><a target="_blank"
+                                                    href="<?php echo url('rcpadmin/users/' . $user['id']) ?>"
+                                                    class="text-secondary"><button class="btn btn-primary btn-xs"><i
+                                                    class="fa fa-edit"></i> Edit </button></a></li>
                                 <li>
-                                    <form method="POST" action="users/<?php echo $user['id'] ?>">
-                                        <?php echo csrf_field() ?>
-                                        <?php echo method_field('DELETE') ?>
-                                        <div class="form-group">
-                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                   value="Delete">
-                                        </div>
-                                    </form>
-                                    </a>
+
+                                <li class="mr-3"><button
+                                            data-userid="<?php echo $user['id'] ?>"
+                                            class="btn btn-success btn-xs editUser"> Pop-up </button></li>
+
+                                <form method="POST" action="users/<?php echo $user['id'] ?>">
+                                    <?php echo csrf_field() ?>
+                                    <?php echo method_field('DELETE') ?>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-danger btn-xs delete"
+                                               value="Delete">
+                                    </div>
+                                </form>
+                                </a>
                                 </li>
                             </ul>
                         </td>
                     </tr>
                 <?php endforeach;
             endif ?>
+            <script>
+                $('.editUser').on('click', function () {
+                    userId = $(this).data('userid');
+                    $.get("<?=env('ADMIN_URL').'/users/edit_user/'?>"+ userId, function (data) {
+                        $('#modals').empty().append(data);
+                        $('#userModal').modal('show');
+                    });
+                });
+            </script>
             <?php
         }
     }
-
 
     public function delete($id)
     {
@@ -243,4 +281,66 @@ class UsersController extends Controller
 
         return redirect('rcpadmin/users');
     }
+
+    public function edit_user($id)
+    {
+
+        $user = User::getUserDetail($id);
+
+        $user_campuses = UserCampuses::where('user_id', '=', $id)->get()->pluck('campus_id')->toArray();
+        $campuses = CampusModel::all('id', 'title')->toArray();
+        $campusSelect = [];
+        foreach ($campuses as $campus) {
+            $campusSelect[$campus['id']] = $campus['title'];
+        }
+
+        return view('rcpadmin.users.edit_user', compact('user', 'campusSelect', 'user_campuses'));
+    }
+
+    public function update_user(Requests\UserRequest $request, $id)
+    {
+
+        $user = User::find($id);
+
+        $user_details = UserDetails::where('user_id', '=', $id);
+
+        $landlord_details = LandlordDetails::where('user_id', '=', $id);
+
+        $input = $request->all();
+
+        $input['password'] = bcrypt($input['password']);
+
+        $user->update($input);
+
+        if ($user_details && !empty($input['first_name'])) {
+            $user_details->update([
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+                'address' => $input['address'],
+                'phone_no' => $input['phone_no']]);
+        }
+        if ($landlord_details && $input['role'] == 3) {
+            $landlordData = array(
+                'h1' => $input['h1'],
+                'h2' => $input['h2'],
+                'meta_title' => $input['meta_title'],
+                'about_details' => $input['about_details'],
+                'meta_description' => $input['meta_description'],
+                'seo_block' => $input['seo_block'],
+                'domain_name' => $input['domain_name'],
+                'twilio_number' => $input['twilio_number'],
+                'activate_twilio' => $input['activate_twilio'],
+                'is_yardi' => $input['is_yardi'],
+                'is_entrata' => $input['is_entrata'],
+                'email_leads' => $input['email_leads'],
+                'landlord_dashboard_status' => $input['landlord_dashboard_status']);
+            $landlord_details->update($landlordData);
+        }
+
+
+        return redirect('rcpadmin/users');
+
+    }
+
+
 }

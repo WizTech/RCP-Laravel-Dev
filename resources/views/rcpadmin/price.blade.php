@@ -22,9 +22,12 @@
 @stop
 @section('content')
     <div class="row">
+
+
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
+
                     <a href="{{ url('rcpadmin/price/create')}}" class="btn btn-outline-dark header-title">Add Price</a>
                     <div class="table-responsive datatable-dark">
                         <table class="text-center table">
@@ -47,16 +50,20 @@
                                         <td> {{$p['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/price/'.$p['id'])}}"
-                                                                    class="text-secondary"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li>
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/price/'.$p['id'])}}" title="Edit Price">
+                                                        <button class="btn btn-primary btn-xs">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </button>
+                                                    </a>
+                                                </li>
                                                     <form method="POST" action="price/{{$p['id']}}">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
                                                         <div class="form-group">
-                                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                                   value="Delete">
+                                                            <button type="submit" title="Delete" class="btn btn-danger btn-xs delete">
+                                                               <i class="fa fa-trash-o"></i> Delete
+                                                            </button>
                                                         </div>
                                                     </form>
                                                     </a>

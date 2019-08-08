@@ -15,7 +15,6 @@
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
-
           {!! Form::model($user,['method'=>'PATCH'],['action' => ['rcpadmin/UsersController@update',$user['id']] ,'class' => 'col s12']) !!}
           {!! Form::hidden('id') !!}
           @include('rcpadmin.users.partials.form',['buttonText'=>'Update','user_campuses'=>$user_campuses])

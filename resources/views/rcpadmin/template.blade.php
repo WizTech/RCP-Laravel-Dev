@@ -21,64 +21,68 @@
     </div>
 @stop
 @section('content')
-  <div class="row">
-    <div class="col-12 mt-5">
-      <div class="card">
-        <div class="card-body">
-          <a href="{{ url('rcpadmin/template/create')}}" class="btn btn-outline-dark header-title">Add
-            Template</a>
-          <div class="table-responsive datatable-dark">
-            <table class="text-center table">
-              <thead class="text-capitalize">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Subject</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              @if(count($templates) > 0)
-                @foreach($templates as $template)
-                  <tr>
-                    <td> {{$template['id']}}</td>
-                    <td> {{$template['name']}} </td>
-                    <td> {{$template['subject']}} </td>
-                    <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a
-                            href="{{ url('rcpadmin/template/'.$template['id'])}}"
-                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-                        <li>
-                          <form method="POST" action="template/{{$template['id']}}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <div class="form-group">
-                              <input type="submit" class="btn btn-danger btn-xs delete"
-                                     value="Delete">
-                            </div>
-                          </form>
-                          </a>
-                        </li>
-                      </ul>
-                      </a>
-                    </td>
-                  </tr>
-                @endforeach
-              @endif
-              </tbody>
-            </table>
-            @if(isset($templates) && count($templates) > 0)
-              {{$templates->links()}}
-              Showing {{$templates->firstItem()}} to {{$templates->lastItem()}} of {{$templates->total()}}
-              Entities
-            @endif
-          </div>
+
+    <div class="row">
+        <div class="col-12 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ url('rcpadmin/template/create')}}" class="btn btn-outline-dark header-title">Add
+                        Template</a>
+                    <div class="table-responsive datatable-dark">
+                        <table class="text-center table">
+                            <thead class="text-capitalize">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(count($templates) > 0)
+                                @foreach($templates as $template)
+                                    <tr>
+                                        <td> {{$template['id']}}</td>
+                                        <td> {{$template['name']}} </td>
+                                        <td> {{$template['subject']}} </td>
+                                        <td>
+                                            <ul class="d-flex justify-content-center">
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/template/'.$template['id'])}}" title="Edit Template">
+                                                        <button class="btn btn-primary btn-xs">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </button>
+                                                    </a>
+                                                </li>
+                                                    <form method="POST" action="template/{{$template['id']}}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <div class="form-group">
+                                                            <button type="submit" title="Delete Template" class="btn btn-danger btn-xs delete">
+                                                               <i class="fa fa-trash-o"></i> Delete
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        @if(isset($templates) && count($templates) > 0)
+                            {{$templates->links()}}
+                            Showing {{$templates->firstItem()}} to {{$templates->lastItem()}} of {{$templates->total()}}
+                            Entities
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-  </div>
 @stop
 
 @section('scripts')

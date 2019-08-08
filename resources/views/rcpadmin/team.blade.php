@@ -51,10 +51,19 @@
                     <td> {{$user['status']}} </td>
                     <td>
                       <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a href="{{ url('rcpadmin/team-member/'.$user['id'])}}" class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-                        <li><a data-admin-id="{{$user['id']}}" href="{{url('rcpadmin/team-member/'.$user['id'])}}"
-                               data-method="delete" class="text-danger jquery-postback"><i class="ti-trash"></i></a>
+
+                        <li class="mr-3">
+                          <a href="{{ url('rcpadmin/team-member/'.$user['id'])}}" title="Edit Team">
+                            <button class="btn btn-primary btn-xs">
+                              <i class="fa fa-edit"></i> Edit
+                            </button>
+                          </a>
+                        </li>
+                        <li>
+                          <a data-admin-id="{{$user['id']}}" href="{{url('rcpadmin/team-member/'.$user['id'])}}"
+                               data-method="delete" class="btn btn-danger btn-xs jquery-postback" title="Delete">
+                              <i class="ti-trash-o"></i> Delete
+                            </a>
                         </li>
                       </ul>
                     </td>
@@ -80,9 +89,9 @@
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
   <script>
     $.ajaxSetup({

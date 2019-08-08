@@ -45,15 +45,11 @@
                     <td> {{$campus['id']}}</td>
                     <td> {{$campus['name']}} </td>
                     <td> {{$campus['title']}} </td>
-
                     <td>
-
                       <ul class="d-flex justify-content-center">
                         <li class="mr-3"><a href="{{ url('rcpadmin/meta-details/'.$campus['id'].'/edit')}}"
                                             class="text-secondary"><i
                               class="fa fa-edit" title="Detail"></i></a></li>
-
-
                       </ul>
                     </td>
                   </tr>

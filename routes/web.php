@@ -29,6 +29,9 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::post('user-search', 'rcpadmin\UsersController@search');
   Route::get('users/trash', 'rcpadmin\UsersController@trash');
 
+  Route::get('users/edit_user/{id}', 'rcpadmin\UsersController@edit_user');
+  Route::patch('users/update_user/{id}', 'rcpadmin\UsersController@update_user');
+
   Route::resource('users', 'rcpadmin\UsersController');
 
   Route::post('campus/saveZipcode', 'rcpadmin\CampusController@saveZipcode');
@@ -51,12 +54,17 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
 
   Route::post('campus-search-ajax', 'rcpadmin\CampusController@search_ajax');
   Route::post('campus-search', 'rcpadmin\CampusController@search');
+
+  Route::get('campus/edit_campus/{id}', 'rcpadmin\CampusController@edit_campus');
+  Route::patch('campus/update_campus/{id}', 'rcpadmin\CampusController@update_campus');
+
   Route::resource('campus', 'rcpadmin\CampusController');
 
   Route::post('property/images-delete', 'rcpadmin\PropertyController@destroy_images');
   Route::get('property/{id}/delete', 'rcpadmin\PropertyController@delete_images');
   Route::post('property/{id}/images-save', 'rcpadmin\PropertyController@store_images');
   Route::get('property/{id}/images', 'rcpadmin\PropertyController@images');
+  Route::get('property/{id}/landlords', 'rcpadmin\PropertyController@landlord_listing');
   Route::get('property/{id}/listing', 'rcpadmin\PropertyController@listing');
   Route::post('property/{id}/feature', 'rcpadmin\PropertyController@feature_update');
   Route::get('property/{id}/feature', 'rcpadmin\PropertyController@feature');
@@ -95,6 +103,8 @@ Route::middleware(['auth', 'admin_modules'])->prefix('rcpadmin')->group(function
   Route::get('expired-listing-report', 'rcpadmin\ExpiredPropertyController@leadExport');
   Route::resource('expired-property', 'rcpadmin\ExpiredPropertyController');
   Route::resource('team-member', 'rcpadmin\TeamController');
+  Route::post('premium-landlord/{id}/web', 'rcpadmin\PreimumLandlordController@web_update');
+  Route::get('premium-landlord/{id}/web', 'rcpadmin\PreimumLandlordController@web');
   Route::resource('premium-landlord', 'rcpadmin\PreimumLandlordController');
   Route::resource('premium-listings', 'rcpadmin\PreimumListingsController');
 

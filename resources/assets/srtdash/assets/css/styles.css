@@ -2831,4 +2831,16 @@ table.dataTable thead td {
     color: #fff!important;
 }
 
+#errors button.close{
+    font-size: 1.3em;
+}
+
+@media(min-width: 800px){
+    .modal-dialog{max-width: 700px}
+}
+@media(min-width: 1100px){
+    .modal-dialog{max-width: 1000px}
+}
+
+
 /*-------------------- END Offset Sidebar ------------------- */

@@ -23,6 +23,7 @@
 @section('content')
 
     <div class="row">
+
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
@@ -50,20 +51,22 @@
                                         <td> {{$category['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a
-                                                            href="{{ url('rcpadmin/category/'.$category['id'])}}"
-                                                            class="text-secondary"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li>
-                                                    <form method="POST" action="category/{{$category['id']}}">
-                                                        {{ csrf_field() }}
-                                                        {{ method_field('DELETE') }}
-                                                        <div class="form-group">
-                                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                                   value="Delete">
-                                                        </div>
-                                                    </form>
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/category/'.$category['id'])}}" title="Edit Category">
+                                                        <button class="btn btn-primary btn-xs">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </button>
                                                     </a>
+                                                </li>
+                                                <form method="POST" action="category/{{$category['id']}}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <div class="form-group">
+                                                        <button type="submit" title="Delete Category" class="btn btn-danger btn-xs delete">
+                                                            <i class="fa fa-trash-o"></i>  Delete </button>
+                                                    </div>
+                                                </form>
+                                                </a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -78,7 +81,6 @@
                             of {{$categories->total()}} Entities
                         @endif
                     </div>
-
                 </div>
             </div>
         </div>

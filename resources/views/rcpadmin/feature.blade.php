@@ -46,16 +46,20 @@
                                         <td> {{$feature['featureType']['name']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/feature/'.$feature['id'])}}"
-                                                                    class="text-secondary"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li>
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/feature/'.$feature['id'])}}" title="Edit Feature">
+                                                        <button class="btn btn-primary btn-xs">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </button>
+                                                    </a>
+                                                </li>
                                                     <form method="POST" action="feature/{{$feature['id']}}">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
                                                         <div class="form-group">
-                                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                                   value="Delete">
+                                                            <button type="submit" title="Delete Feature" class="btn btn-danger btn-xs delete">
+                                                            <i class="fa fa-trash-o"></i> Delete
+                                                            </button>
                                                         </div>
                                                     </form>
                                                     </a>

@@ -25,7 +25,7 @@ session_start();
 @stop
 
 <!-- Modal Begin -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div style="display: none" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -90,30 +90,33 @@ session_start();
                                         <td> {{$user['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-                                                <li class="mr-3"><a href="#" data-toggle="modal"
-                                                                    data-target="#exampleModal" class="text-secondary"
-                                                                    title="Export Activities"><i
-                                                                class="fa fa-download"></i></a></li>
-                                                <li>
-                                                <li class="mr-3"><a href="{{ url('rcpadmin/admin_users/'.$user['id'])}}"
-                                                                    class="text-secondary" title="Edit"><i
-                                                                class="fa fa-edit"></i></a></li>
-                                                <li>
-                                                <li class="mr-3"><a
-                                                            href="{{ url('rcpadmin/admin_users/'.$user['id'].'/modules')}}"
-                                                            class="text-secondary" title="Permissions"><i
-                                                                class="fa fa-lock"></i></a></li>
+
+                                                <li class="mr-3">
+                                                    <a href="#"
+                                                       class="btn btn-success btn-xs fa fa-download" title="Export Activities" data-toggle="modal" data-target="#exampleModal" ></a>
+                                                </li>
+
+
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/admin_users/'.$user['id'])}}"
+                                                       class="btn btn-primary btn-xs fa fa-edit" title="Edit" target="_blank"></a>
+                                                </li>
+
+                                                <li class="mr-3">
+                                                    <a href="{{ url('rcpadmin/admin_users/'.$user['id'].'/modules')}}"
+                                                            class="btn btn-primary btn-xs fa fa-lock" title="Permissions" target="_blank"></a>
+                                                </li>
                                                 <li>
                                                     <form method="POST" action="admin_users/{{$user['id']}}">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
                                                         <div class="form-group">
-                                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                                   value="Delete" title="Delete">
+                                                            <button type="submit" class="btn btn-danger btn-xs delete" title="Delete"><i class="fa fa-trash-o"></i></button>
                                                         </div>
                                                     </form>
                                                     </a>
                                                 </li>
+
                                             </ul>
                                         </td>
                                     </tr>
