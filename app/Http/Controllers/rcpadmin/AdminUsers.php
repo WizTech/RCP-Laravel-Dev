@@ -44,8 +44,8 @@ class AdminUsers extends Controller
 
     public function store(Requests\AdminUserRequest $request)
     {
-        $input = Request::all();
-
+        /*$input = Request::all();*/
+        $input = $request->all();
 
         $input['password'] = bcrypt($input['password']);
         $admin_user = AdminUser::create($input);
@@ -127,9 +127,9 @@ class AdminUsers extends Controller
     {
         $input = Request::all();
 
-       $date_from = date('Y-m-d', strtotime($input['date_from']));
-       $date_to = date('Y-m-d', strtotime($input['date_to']));
-       $user_id = $input['user_id'];
+        $date_from = date('Y-m-d', strtotime($input['date_from']));
+        $date_to = date('Y-m-d', strtotime($input['date_to']));
+        $user_id = $input['user_id'];
 
         $userActivities = AdminUser::activity_export($user_id, $date_from, $date_to);
 
@@ -163,7 +163,8 @@ class AdminUsers extends Controller
         $admin_user = AdminUser::find($id);
 
 
-        $input = Request::all();
+        /*$input = Request::all();*/
+        $input = $request->all();
 
         if (!empty($input['password'])) {
 
@@ -197,5 +198,69 @@ class AdminUsers extends Controller
         $admin_users->delete();
         return redirect('rcpadmin/admin_users');
     }
+
+    public function edit_admin($id)
+    {
+        $admin_user = AdminUser::find($id)->toArray();
+
+        $admin_campuses = AdminUser::find($id)->campuses->pluck('id')->toArray();
+        $campuses = CampusModel::all('id', 'title')->toArray();
+        $campusSelect = [];
+        $campusSelect[''] = 'Campus (es)';
+        foreach ($campuses as $campus) {
+            $campusSelect[$campus['id']] = $campus['title'];
+        }
+
+        $id = $admin_user['id'];
+
+        $admin_role = array('' => 'Admin Type', '1' => 'Supper Admin', '2' => 'Admin');
+        $selected_role = $admin_user['role_id'];
+
+        $export_leads = array(''=>'Export All Leads','Yes'=>'Yes','No'=>'No');
+        $selected_lead = $admin_user['export_all_leads'];
+
+        $status = array(''=>'Status','Active'=>'Active','Inactive'=>'Inactive');
+        $selected_status = $admin_user['status'];
+
+        return view('rcpadmin.admin-users.edit_modal', compact('id','admin_user', 'campusSelect', 'admin_campuses', 'admin_role', 'selected_role', 'export_leads', 'selected_lead', 'status', 'selected_status'));
+    }
+
+    public function update_admin(Requests\AdminUserRequest $request, $id)
+    {
+
+        $admin_user = AdminUser::find($id);
+
+
+        /*$input = Request::all();*/
+        $input = $request->all();
+
+        if (!empty($input['password'])) {
+
+            $input['password'] = bcrypt($input['password']);
+        } else {
+            $input['password'] = $admin_user['password'];
+        }
+
+
+        $admin_user->update($input);
+
+        if (!empty($input['campus_id'])) {
+
+            $admin_campuses = AdminCampuses::where('admin_id', '=', $id)->first();
+            if (!empty($admin_campuses)) {
+                $admin_user->campuses()->detach();
+            }
+
+            $campusIds = $input['campus_id'];
+            foreach ($campusIds as $campId) {
+                AdminCampuses::create(['admin_id' => $admin_user->id, 'campus_id' => $campId]);
+            }
+        }
+
+        return redirect('rcpadmin/admin_users');
+
+    }
+
+
 
 }

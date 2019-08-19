@@ -24,8 +24,9 @@ session_start();
     </div>
 @stop
 
-<!-- Modal Begin -->
-<div style="display: none" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- Data Export Modal Begin -->
+<div style="display: none" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -59,7 +60,11 @@ session_start();
         </div>
     </div>
 </div>
-<!-- Modal End -->
+<!-- Data Export Modal End -->
+
+<!-- Edit Modal Begin -->
+<div id="modals"></div>
+<!-- Edit Modal End -->
 @section('content')
     <div class="row">
         <div class="col-12 mt-5">
@@ -90,33 +95,40 @@ session_start();
                                         <td> {{$user['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
-
                                                 <li class="mr-3">
                                                     <a href="#"
-                                                       class="btn btn-success btn-xs fa fa-download" title="Export Activities" data-toggle="modal" data-target="#exampleModal" ></a>
+                                                       class="btn btn-success btn-xs fa fa-download"
+                                                       title="Export Activities" data-toggle="modal"
+                                                       data-target="#exampleModal"></a>
                                                 </li>
-
-
-                                                <li class="mr-3">
+                                                {{--<li class="mr-3">
                                                     <a href="{{ url('rcpadmin/admin_users/'.$user['id'])}}"
-                                                       class="btn btn-primary btn-xs fa fa-edit" title="Edit" target="_blank"></a>
+                                                       class="btn btn-primary btn-xs fa fa-edit" title="Edit"
+                                                       target="_blank"></a>
+                                                </li>--}}
+                                                <li class="mr-3">
+                                                    <button type="button"
+                                                            data-id="{{$user['id']}}"
+                                                            class="btn btn-primary btn-xs edit_Modal"> <i class="fa fa-edit"></i>
+                                                    </button>
                                                 </li>
-
                                                 <li class="mr-3">
                                                     <a href="{{ url('rcpadmin/admin_users/'.$user['id'].'/modules')}}"
-                                                            class="btn btn-primary btn-xs fa fa-lock" title="Permissions" target="_blank"></a>
+                                                       class="btn btn-primary btn-xs fa fa-lock" title="Permissions"
+                                                       target="_blank"></a>
                                                 </li>
                                                 <li>
                                                     <form method="POST" action="admin_users/{{$user['id']}}">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
                                                         <div class="form-group">
-                                                            <button type="submit" class="btn btn-danger btn-xs delete" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                                            <button type="submit" class="btn btn-danger btn-xs delete"
+                                                                    title="Delete"><i class="fa fa-trash-o"></i>
+                                                            </button>
                                                         </div>
                                                     </form>
                                                     </a>
                                                 </li>
-
                                             </ul>
                                         </td>
                                     </tr>
@@ -198,5 +210,60 @@ session_start();
         });
     </script>
 
-@stop
+    <script>
+        $('.edit_Modal').on('click', function () {
+            id = $(this).data('id');
+            $.get('{{ URL::to("rcpadmin/admin_users/edit_admin")}}/'+id, function (data) {
+                $('#modals').empty().append(data);
+                $('#editModal').modal('show');
+            });
+        });
 
+        $('#modals').on('submit', '#editForm', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                url: '{{ URL::to("rcpadmin/admin_users/update_admin")}}/' + id,
+                type: 'post',
+                data: formData,
+            }).done(function (data) {
+                $('#modals #errors').empty().append(data);
+                location.reload();
+            }).fail(function (error) {
+                var error = error.responseJSON;
+
+                console.log(error);
+                var validationErrors = error.errors;
+
+                console.log(validationErrors);
+
+                if (typeof validationErrors.role_id !== "undefined") {
+                    validationErrors.role_id.forEach(function (element, index) {
+                        $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                    });
+                }
+
+                if (typeof validationErrors.export_all_leads !== "undefined") {
+                    validationErrors.export_all_leads.forEach(function (element, index) {
+                        $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                    });
+                }
+
+                if (typeof validationErrors.status !== "undefined") {
+                    validationErrors.status.forEach(function (element, index) {
+                        $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                    });
+                }
+
+                if (typeof validationErrors.name !== "undefined") {
+                    validationErrors.name.forEach(function (element, index) {
+                        $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+                    });
+                }
+
+            });
+
+        });
+    </script>
+
+@stop

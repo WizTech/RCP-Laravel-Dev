@@ -47,9 +47,8 @@ class AdminUserRequest extends FormRequest
           'export_all_leads' => 'required',
           'status' => 'required',
           'name' => 'required',
-         /* 'password' => 'required',*/
           'username' => 'unique:admin_users,username,'.$this->id,
-          'email' => 'unique:admin_users,email,'.$this->id
+         // 'email' => 'unique:admin_users,email,'.$this->id
         ];
       }
       default:
