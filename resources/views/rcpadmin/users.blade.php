@@ -96,6 +96,11 @@
                                                     </button>
                                                 </li>
 
+
+
+
+
+
                                                 <li>
                                                     <form method="POST" action="{{$user['id']}}/delete">
                                                         {{ csrf_field() }}
