@@ -213,8 +213,8 @@ class AdminUsers extends Controller
 
         $id = $admin_user['id'];
 
-        $admin_role = array('' => 'Admin Type', '1' => 'Supper Admin', '2' => 'Admin');
-        $selected_role = $admin_user['role_id'];
+        $adminTypes = array('' => 'Admin Type', '1' => 'Supper Admin', '2' => 'Admin');
+        $selected_admin = $admin_user['role_id'];
 
         $export_leads = array(''=>'Export All Leads','Yes'=>'Yes','No'=>'No');
         $selected_lead = $admin_user['export_all_leads'];
@@ -222,7 +222,7 @@ class AdminUsers extends Controller
         $status = array(''=>'Status','Active'=>'Active','Inactive'=>'Inactive');
         $selected_status = $admin_user['status'];
 
-        return view('rcpadmin.admin-users.edit_modal', compact('id','admin_user', 'campusSelect', 'admin_campuses', 'admin_role', 'selected_role', 'export_leads', 'selected_lead', 'status', 'selected_status'));
+        return view('rcpadmin.admin-users.edit_modal', compact('id','admin_user', 'campusSelect', 'admin_campuses', 'adminTypes', 'selected_admin', 'export_leads', 'selected_lead', 'status', 'selected_status'));
     }
 
     public function update_admin(Requests\AdminUserRequest $request, $id)
