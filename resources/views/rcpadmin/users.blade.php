@@ -69,50 +69,64 @@
                                         <td> {{$user['status']}} </td>
                                         <td>
                                             <input type="hidden" id="user_id" value="{{$user['id']}}">
-                                            <ul class="d-flex justify-content-center">
+                                            <ul class="d-flex justify-content-end">
 
 
                                                 @if($user['role'] == '3')
                                                     <li class="mr-3"><a target="_blank"
                                                                         href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
-                                                                        class="text-secondary"
+                                                                        class="btn btn-success btn-xs"
                                                                         title="View Properties"><i
                                                                     class="fa fa-list"></i></a></li>
                                                 @endif
 
-                                                <li class="mr-3">
+                                                {{--<li class="mr-3">
                                                     <a href="{{ url('rcpadmin/users/'.$user['id'])}}"
                                                        class="text-secondary">
                                                         <button class="btn btn-primary btn-xs"><i
                                                                     class="fa fa-edit"></i> Edit
                                                         </button>
                                                     </a>
-                                                </li>
+                                                </li>--}}
 
                                                 <li class="mr-3">
-                                                    <button type="button"
-                                                            data-userid="{{$user['id']}}"
-                                                            class="btn btn-success btn-xs editUser"></i> Pop-up
+                                                    <button type="button" title="View Profile"
+                                                            class="btn btn-success btn-xs"><i
+                                                                class="fa fa-user"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="mr-3">
+                                                    <button type="button" title="View Tracker"
+                                                            class="btn btn-success btn-xs"><i
+                                                                class="fa fa-signal"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="mr-3">
+                                                    <button type="button" title="Update Yardi Listings"
+                                                            class="btn btn-primary btn-xs"><i
+                                                                class="fa fa-refresh"></i>
                                                     </button>
                                                 </li>
 
-
-
-
-
+                                                <li class="mr-3">
+                                                    <button type="button" title="Edit User"
+                                                            data-userid="{{$user['id']}}"
+                                                            class="btn btn-primary btn-xs editUser"><i
+                                                                class="fa fa-edit"></i>
+                                                    </button>
+                                                </li>
 
                                                 <li>
                                                     <form method="POST" action="{{$user['id']}}/delete">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
-                                                        <div class="form-group">
-                                                            <input type="submit" class="btn btn-danger btn-xs delete"
-                                                                   value="Delete">
-                                                        </div>
+                                                        <button type="submit" title="Delete User"
+                                                                class="btn btn-danger btn-xs delete">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </button>
                                                     </form>
                                                     </a>
                                                 </li>
-
 
                                             </ul>
                                         </td>

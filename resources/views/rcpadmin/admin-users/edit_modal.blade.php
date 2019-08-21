@@ -42,7 +42,7 @@
                                     {!! Form::password('password',['class' => 'form-control']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
-                                    {!! Form::label('Export',null,['class' => 'col-form-label']) !!}
+                                    {!! Form::label('Export All Leads',null,['class' => 'col-form-label']) !!}
                                     {!! Form::select('export_all_leads',$export_leads,$selected_lead,['class' => 'custom-select']) !!}
                                 </div>
                             </div>

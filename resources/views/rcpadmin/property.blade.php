@@ -19,20 +19,24 @@
             <li><span>Property Manager</span></li>
         </ul>
     </div>
+
 @stop
 @section('content')
 
-    <div class="row">
-        <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
+    <div class="row mt-3">
+        <div class="col-12 border">
+            <div class="breadcrumbs-area clearfix row bg-green">
+                <h4 class="page-title px-3 py-2 text-white">{{ucwords($landlord['name'])}}'s Properties </h4>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body p-0">
                     <a href="{{ url('rcpadmin/property/create')}}" class="btn btn-outline-dark header-title">Add
                         Property</a>
                     <form action="{{ url('rcpadmin/property-search')}}" method="POST" role="search">
                         {{ csrf_field() }}
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="q"
-                                   placeholder="Search property"> <span class="input-group-btn">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="q" id="searchBox"
+                                   placeholder="Search property"> <span class="input-group-btn ml-3">
                                                                     <button type="submit" class="btn btn-default">
                                                                         Submit
                                                                     </button>
@@ -52,15 +56,16 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="propertyData-ajax">
                             @if(count($properties) > 0)
+                                <?php $x = 1; ?>
                                 @foreach($properties as $property)
                                     <tr>
-                                        <td> {{$property['id']}}</td>
+                                        <td> {{$x}}</td>
                                         <td> {{$property['category']['name']}} </td>
                                         <td> {{$property['title']}} </td>
                                         <td> {{$property['address']}} </td>
-                                        <td> {{$property['property_expiry_date']}} </td>
+                                        <td> {{date("m/d/Y", strtotime($property['property_expiry_date']))}} </td>
                                         <td> {{$property['status']}} </td>
                                         <td>
                                             <ul class="d-flex justify-content-center">
@@ -89,15 +94,18 @@
                                             </ul>
                                         </td>
                                     </tr>
+                                    <?php $x++; ?>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
-                        @if(isset($properties) && count($properties) > 0)
-                            {{$properties->links()}}
-                            Showing {{$properties->firstItem()}} to {{$properties->lastItem()}}
-                            of {{$properties->total()}} Entities
-                        @endif
+                        {{--<div id="pagination-container">
+                            @if(isset($properties) && count($properties) > 0)
+                                {{$properties->links()}}
+                                Showing {{$properties->firstItem()}} to {{$properties->lastItem()}}
+                                of {{$properties->total()}} Entities
+                            @endif
+                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -117,7 +125,29 @@
             src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script
             src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script src="{{ env('ASSETS_PATH') }}js/ajax_viewer.js"></script>
     <script>
+        $('#searchBox').typeDone(function () {
+
+            var v = $('#searchBox').val();
+
+            if (v == '' || v.length <= 2) {
+                return false;
+            }
+
+            console.log(v)
+
+            $.ajax({
+                url: '<?php echo url('rcpadmin/property-search-ajax')  ?>',
+                data: {q: v},
+                type: 'POST',
+                success: function (res) {
+                    $('#propertyData-ajax').html(res)
+                    $('#pagination-container').html('')
+                }
+            });
+
+        }, 900);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

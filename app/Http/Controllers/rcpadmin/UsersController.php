@@ -212,32 +212,56 @@ class UsersController extends Controller
                         <td> <?php echo $user['email'] ?> </td>
                         <td> <?php echo $user['status'] ?> </td>
                         <td>
-                            <ul class="d-flex justify-content-center">
+                            <ul class="d-flex justify-content-end">
 
-                                <?php if($user['role'] == '3'): ?>
-                                <li class="mr-3"><a target="_blank"
-                                                    href="<?php echo url('rcpadmin/property/' . $user['id'].'/landlords') ?>"
-                                                    class="text-secondary"
-                                                    title="View Properties"><i
-                                                class="fa fa-list"></i></a></li>
+                                <?php if ($user['role'] == '3'): ?>
+                                    <li class="mr-3"><a target="_blank"
+                                                        href="<?php echo url('rcpadmin/property/' . $user['id'] . '/landlords') ?>"
+                                                        class="btn btn-success btn-xs"
+                                                        title="View Properties"><i
+                                                    class="fa fa-list"></i></a></li>
                                 <?php endif; ?>
-                                <li class="mr-3"><a target="_blank"
-                                                    href="<?php echo url('rcpadmin/users/' . $user['id']) ?>"
-                                                    class="text-secondary"><button class="btn btn-primary btn-xs"><i
-                                                    class="fa fa-edit"></i> Edit </button></a></li>
-                                <li>
+                                <!--<li class="mr-3"><a target="_blank"
+                                                    href="<?php /*echo url('rcpadmin/users/' . $user['id']) */?>"
+                                                    class="text-secondary">
+                                        <button class="btn btn-primary btn-xs"><i
+                                                    class="fa fa-edit"></i> Edit
+                                        </button>
+                                    </a></li>
+                                <li>-->
 
-                                <li class="mr-3"><button
+                                <li class="mr-3">
+                                    <button type="button" title="View Profile"
+                                            class="btn btn-success btn-xs"><i
+                                                class="fa fa-user"></i>
+                                    </button>
+                                </li>
+                                <li class="mr-3">
+                                    <button type="button" title="View Tracker"
+                                            class="btn btn-success btn-xs"><i
+                                                class="fa fa-signal"></i>
+                                    </button>
+                                </li>
+                                <li class="mr-3">
+                                    <button type="button" title="Update Yardi Listings"
+                                            class="btn btn-primary btn-xs"><i
+                                                class="fa fa-refresh"></i>
+                                    </button>
+                                </li>
+
+                                <li class="mr-3">
+                                    <button title="Edit User"
                                             data-userid="<?php echo $user['id'] ?>"
-                                            class="btn btn-success btn-xs editUser"> Pop-up </button></li>
+                                            class="btn btn-primary btn-xs editUser"><i class="fa fa-edit"></i>
+                                    </button>
+                                </li>
 
                                 <form method="POST" action="users/<?php echo $user['id'] ?>">
                                     <?php echo csrf_field() ?>
                                     <?php echo method_field('DELETE') ?>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-danger btn-xs delete"
-                                               value="Delete">
-                                    </div>
+                                    <button type="submit" title="Delete User" class="btn btn-danger btn-xs delete">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
                                 </form>
                                 </a>
                                 </li>
@@ -249,7 +273,7 @@ class UsersController extends Controller
             <script>
                 $('.editUser').on('click', function () {
                     userId = $(this).data('userid');
-                    $.get("<?=env('ADMIN_URL').'/users/edit_user/'?>"+ userId, function (data) {
+                    $.get("<?=env('ADMIN_URL') . '/users/edit_user/'?>" + userId, function (data) {
                         $('#modals').empty().append(data);
                         $('#userModal').modal('show');
                     });

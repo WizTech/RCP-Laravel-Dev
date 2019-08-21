@@ -35,30 +35,101 @@ class PropertyController extends Controller
 
     public function index()
     {
+        $campuses = CampusModel::paginate(10);
+
+        return view('rcpadmin.campus-listing', compact('campuses'));
+    }
+
+    public function listing($id)
+    {
         //
-        $properties = Property::with('category')->paginate(10);
+        $properties = Property::where('campus_id', '=', $id)->with('category')->paginate(10);
+
         return view('rcpadmin.property', compact('properties'));
     }
+    public function landlord_listing($id)
+    {
+
+        $landlord = User::where('id', '=', $id)->first();
+        $properties = Property::where('landlord_id', '=', $id)->with('category')->get();
+
+        return view('rcpadmin.property', compact('properties','landlord'));
+    }
+
     public function search()
-      {
+    {
         $q = $_REQUEST['q'];
         if ($q != "") {
 
             $properties = Property::where('title', 'LIKE', '%' . $q . '%')->orWhere('address', 'LIKE', '%' . $q . '%')->with('category')->paginate(10)->setPath('');
-          //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
-          $pagination = $properties->appends(array(
-            'q' => $q
-          ));
-          if (count($properties) > 0) {
+            //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+            $pagination = $properties->appends(array(
+                'q' => $q
+            ));
+            if (count($properties) > 0) {
 
-            return view('rcpadmin.property', compact('properties'))->withQuery($q);
-          }
-          //return view('rcpadmin.users', compact('webUsers'));
+                return view('rcpadmin.property', compact('properties'))->withQuery($q);
+            }
+            //return view('rcpadmin.users', compact('webUsers'));
         }
         //$campuses = CampusModel::paginate(10);
 
-       // return view('rcpadmin.campus', compact('campuses'));
-      }
+        // return view('rcpadmin.campus', compact('campuses'));
+    }
+
+    public function search_ajax()
+    {
+        $q = $_REQUEST['q'];
+        if ($q != "") {
+
+            $properties = Property::where('title', 'LIKE', '%' . $q . '%')->orWhere('address', 'LIKE', '%' . $q . '%')->with('category')->paginate(10)->setPath('');
+            //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
+            $pagination = $properties->appends(array(
+                'q' => $q
+            ));
+            if (count($properties) > 0):
+                foreach ($properties as $property): ?>
+                    <tr>
+                        <td> <?php echo $property['id'] ?></td>
+                        <td> <?php echo $property['category']['name'] ?></td>
+                        <td> <?php echo $property['title'] ?> </td>
+                        <td> <?php echo $property['address'] ?> </td>
+                        <td> <?php echo date("m/d/Y", strtotime($property['property_expiry_date'])); ?> </td>
+                        <td> <?php echo $property['status'] ?> </td>
+                        <td>
+
+                            <ul class="d-flex justify-content-center">
+                                <li class="mr-3"><a
+                                            href="<?php echo url('rcpadmin/property/' . $property['id']) ?>"
+                                            class="text-secondary" target="_blank"><i
+                                                class="fa fa-edit" title="Detail"></i></a></li>
+
+                                <li class="mr-3"><a
+                                            href="<?php echo url('rcpadmin/property/' . $property['id'] . '/floorplan') ?>"
+                                            class="text-secondary" target="_blank"><i
+                                                class="fa fa-university" title="Floorplans"></i></a>
+                                </li>
+                                <li class="mr-3"><a
+                                            href="<?php echo url('rcpadmin/property/' . $property['id'] . '/feature') ?>"
+                                            class="text-secondary" target="_blank"><i
+                                                class="fa fa-folder-open" title="Features"></i></a></li>
+                                <li class="mr-3"><a
+                                            href="<?php echo url('rcpadmin/property/' . $property['id'] . '/images') ?>"
+                                            class="text-secondary" target="_blank"><i
+                                                class="fa fa-image" title="Photos"></i></a></li>
+                                <li><a data-admin-id="<?php echo $property['id'] ?>" href="javascript:void(0)"
+                                       data-method="delete" class="text-danger jquery-postback"><i
+                                                class="ti-trash"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                <?php endforeach;
+            endif ?>
+            <?php
+        }
+    }
+
     public function create()
     {
         $campuses = CampusModel::all('id', 'title')->toArray();
@@ -76,10 +147,10 @@ class PropertyController extends Controller
             $categorySelect[$category['id']] = $category['name'];
         }
         $users = User::all_landlords('id', 'name');
-    $usersSelect[''] = 'Featured Landlord';
-    foreach ($users as $user) {
-      $usersSelect[$user->id] = $user->name;
-    }
+        $usersSelect[''] = 'Featured Landlord';
+        foreach ($users as $user) {
+            $usersSelect[$user->id] = $user->name;
+        }
         return view('rcpadmin.property.add', compact('campusSelect', 'usersSelect', 'categorySelect'));
     }
 
@@ -116,10 +187,10 @@ class PropertyController extends Controller
             $campusSelect[$campus2['id']] = $campus2['title'];
         }
         $users = User::all_landlords('id', 'name');
-           $usersSelect[''] = 'Featured Landlord';
-           foreach ($users as $user) {
-             $usersSelect[$user->id] = $user->name;
-           }
+        $usersSelect[''] = 'Featured Landlord';
+        foreach ($users as $user) {
+            $usersSelect[$user->id] = $user->name;
+        }
         $categorySelect[''] = 'Category';
         foreach ($categories as $category) {
             $categorySelect[$category['id']] = $category['name'];
@@ -389,6 +460,7 @@ class PropertyController extends Controller
 
         return Response::json(['message' => 'File successfully delete'], 200);
     }
+
     public function delete_images($id)
     {
 
@@ -423,7 +495,7 @@ class PropertyController extends Controller
             $uploaded_image->delete();
         }
 
-        return redirect('rcpadmin/property/'.$uploaded_image->property_id.'/images');
+        return redirect('rcpadmin/property/' . $uploaded_image->property_id . '/images');
 
     }
 
