@@ -214,14 +214,15 @@
                 }
 
             });
+
             $('select.is_entrata').on('change', function () {
                 if ($(this).val() == 'ACTIVE') {
                     $('.entrata_client_id').removeClass('hide');
                 } else {
                     $('.entrata_client_id').addClass('hide');
                 }
-
             });
+
             $('select.is_yardi').on('change', function () {
                 if ($(this).val() == 'ACTIVE') {
                     $('.yardi_user_id').removeClass('hide');
