@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\UserDetails;
+use App\LandlordWebDetails;
 use App\UserCampuses;
 use App\LandlordDetails;
 use App\Role;
@@ -22,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'role_id', 'password', 'status', 'user_deleted'
+        'name', 'email', 'role', 'password', 'status', 'user_deleted'
     ];
 
     /**
@@ -48,9 +49,13 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\LandlordDetails');
     }
+    public function landlord_web_details()
+    {
+        return $this->hasOne('App\LandlordWebDetails');
+    }
 
 
-    public static function getUserDetail($id)
+    public static function getUserDetail($id, $page = "")
     {
 
         $user = self::find($id)->toArray();
@@ -59,6 +64,10 @@ class User extends Authenticatable
         $details = UserDetails::where('user_id', '=', $id)->first();
 
         $landlord_details = LandlordDetails::where('user_id', '=', $id)->first();
+
+
+        $web_details = LandlordWebDetails::where('landlord_id', '=', $id)->first();
+
         if (isset($details->id)) {
             $details = $details->toArray();
             unset($details['id']);
@@ -74,8 +83,22 @@ class User extends Authenticatable
             $landlord_details = [];
         }
 
+        if (isset($web_details->id)) {
+            $web_details = $web_details->toArray();
+            unset($web_details['id']);
+            if ($page == 'web') {
+                if ($details) {
+                    unset($details['address']);
+                    unset($user['email']);
+                }
 
-        return array_merge($user, $details, $landlord_details);
+            }
+        } else {
+            $web_details = [];
+        }
+
+
+        return array_merge($user, $details, $landlord_details, $web_details);
     }
 
     public static function landlords()
@@ -118,20 +141,20 @@ class User extends Authenticatable
     public static function company_lanlords($id)
     {
 
-        if($id == 0){
+        if ($id == 0) {
             $landlrods = DB::table(env('DB_DATABASE') . '.users AS u')
                 ->join('landlord_details', 'landlord_details.user_id', '=', 'u.id')
-                ->where([['landlord_details.company', '<>', ''],['u.role', '=', 3]])
+                ->where([['landlord_details.company', '<>', ''], ['u.role', '=', 3]])
                 ->select('landlord_details.company', 'u.id', 'u.name', 'u.email', 'u.campus_id');
 
-        }else{
+        } else {
             $landlrods = DB::table(env('DB_DATABASE') . '.users AS u')
                 ->join('landlord_details', 'landlord_details.user_id', '=', 'u.id')
-                ->where([['u.campus_id', '=', $id], ['landlord_details.company', '<>', ''],['u.role', '=', 3]])
+                ->where([['u.campus_id', '=', $id], ['landlord_details.company', '<>', ''], ['u.role', '=', 3]])
                 ->select('landlord_details.company', 'u.id', 'u.name', 'u.email', 'u.campus_id');
 
         }
-            /*->paginate(10);*/
+        /*->paginate(10);*/
         return $landlrods;
         /*$landlrods = LandlordDetails::where('company', '>', '')->with('user')->get()->toArray();*/
 //        $landlrods = LandlordDetails::where('company', '<>', '')->with('user')->paginate(10);

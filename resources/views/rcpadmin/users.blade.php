@@ -70,14 +70,35 @@
                                         <td>
                                             <input type="hidden" id="user_id" value="{{$user['id']}}">
                                             <ul class="d-flex justify-content-end">
-
-
+                                                {{--  <li class="mr-3">
+                                                    <button type="button" title="View Profile"
+                                                            class="btn btn-success btn-xs"><i
+                                                        class="fa fa-user"></i>
+                                                    </button>
+                                                  </li>--}}
+                                                <li class="mr-3"><a target="_blank"
+                                                                    href="{{ url('rcpadmin/users/'.$user['id'].'/login')}}"
+                                                                    class="btn btn-success btn-xs"
+                                                                    title="View Profile"><i
+                                                                class="fa fa-user"></i></a></li>
                                                 @if($user['role'] == '3')
+
+                                                    <li class="mr-3"><a target="_blank"
+                                                                        href="{{ url('rcpadmin/users/'.$user['id'].'/tracker')}}"
+                                                                        class="btn btn-success btn-xs"
+                                                                        title="View Tracker"><i
+                                                                    class="fa fa-signal"></i></a></li>
                                                     <li class="mr-3"><a target="_blank"
                                                                         href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
                                                                         class="btn btn-success btn-xs"
                                                                         title="View Properties"><i
                                                                     class="fa fa-list"></i></a></li>
+                                                    <li class="mr-3">
+                                                        <button type="button" title="Update Yardi Listings"
+                                                                class="btn btn-primary btn-xs"><i
+                                                                    class="fa fa-refresh"></i>
+                                                        </button>
+                                                    </li>
                                                 @endif
 
                                                 {{--<li class="mr-3">
@@ -89,24 +110,6 @@
                                                     </a>
                                                 </li>--}}
 
-                                                <li class="mr-3">
-                                                    <button type="button" title="View Profile"
-                                                            class="btn btn-success btn-xs"><i
-                                                                class="fa fa-user"></i>
-                                                    </button>
-                                                </li>
-                                                <li class="mr-3">
-                                                    <button type="button" title="View Tracker"
-                                                            class="btn btn-success btn-xs"><i
-                                                                class="fa fa-signal"></i>
-                                                    </button>
-                                                </li>
-                                                <li class="mr-3">
-                                                    <button type="button" title="Update Yardi Listings"
-                                                            class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-refresh"></i>
-                                                    </button>
-                                                </li>
 
                                                 <li class="mr-3">
                                                     <button type="button" title="Edit User"

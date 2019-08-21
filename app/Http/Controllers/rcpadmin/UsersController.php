@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcpadmin;
 
 
 // use Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Request;
 use App\Http\Requests;
@@ -14,12 +15,13 @@ use App\CampusModel;
 use App\LandlordDetails;
 use App\UserDetails;
 
+use Auth;
+
 class UsersController extends Controller
 {
     public function index()
     {
         $webUsers = User::where('user_deleted', '=', 0)->with('role')->paginate(10);
-
 
         return view('rcpadmin.users', compact('webUsers'));
     }
@@ -62,8 +64,8 @@ class UsersController extends Controller
 
     public function store(Requests\UserRequest $request)
     {
-        //$input = Request::all();
         $input = $request->all();
+
         $user = User::create($input);
 
         if ($user && !empty($input['first_name'])) {
@@ -100,13 +102,15 @@ class UsersController extends Controller
 
         if ($user && !empty($input['campus_id'])) {
 
-            $campusIds = $input['campus_id'];
+            $campusId = $input['campus_id'];
+            UserCampuses::create(['user_id' => $user->id, 'campus_id' => $campusId]);
+
+            /*$campusIds = $input['campus_id'];
             foreach ($campusIds as $campId) {
                 if ($campId):
                     UserCampuses::create(['user_id' => $user->id, 'campus_id' => $campId]);
                 endif;
-            }
-
+            }*/
 
         }
         return redirect('rcpadmin/users');
@@ -122,8 +126,6 @@ class UsersController extends Controller
 
         $landlord_details = LandlordDetails::where('user_id', '=', $id);
 
-
-        //$input = Request::all();
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
 
@@ -163,12 +165,10 @@ class UsersController extends Controller
 
     public function search()
     {
-//    echo '<pre>';print_r($_REQUEST );echo '</pre>';
         $q = $_REQUEST['q'];
         if ($q != "") {
 
             $webUsers = User::where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(10)->setPath('');
-            //echo '<pre>';print_r($webUsers );echo '</pre>';die('Call');
             $pagination = $webUsers->appends(array(
                 'q' => $q
             ));
@@ -214,15 +214,32 @@ class UsersController extends Controller
                         <td>
                             <ul class="d-flex justify-content-end">
 
+                                <li class="mr-3"><a target="_blank"
+                                                    href="<?php echo url('rcpadmin/users/' . $user['id'] . '/login') ?>"
+                                                    class="btn btn-success btn-xs"
+                                                    title="View Profile"><i
+                                                class="fa fa-user"></i></a></li>
                                 <?php if ($user['role'] == '3'): ?>
+
+                                    <li class="mr-3"><a target="_blank"
+                                                        href="<?php echo url('rcpadmin/users/' . $user['id'] . '/login') ?>"
+                                                        class="btn btn-success btn-xs"
+                                                        title="View Tracker"><i
+                                                    class="fa fa-signal"></i></a></li>
                                     <li class="mr-3"><a target="_blank"
                                                         href="<?php echo url('rcpadmin/property/' . $user['id'] . '/landlords') ?>"
                                                         class="btn btn-success btn-xs"
                                                         title="View Properties"><i
                                                     class="fa fa-list"></i></a></li>
+                                    <li class="mr-3">
+                                        <button type="button" title="Update Yardi Listings"
+                                                class="btn btn-primary btn-xs"><i
+                                                    class="fa fa-refresh"></i>
+                                        </button>
+                                    </li>
                                 <?php endif; ?>
                                 <!--<li class="mr-3"><a target="_blank"
-                                                    href="<?php /*echo url('rcpadmin/users/' . $user['id']) */?>"
+                                                    href="<?php /*echo url('rcpadmin/users/' . $user['id']) */ ?>"
                                                     class="text-secondary">
                                         <button class="btn btn-primary btn-xs"><i
                                                     class="fa fa-edit"></i> Edit
@@ -230,24 +247,6 @@ class UsersController extends Controller
                                     </a></li>
                                 <li>-->
 
-                                <li class="mr-3">
-                                    <button type="button" title="View Profile"
-                                            class="btn btn-success btn-xs"><i
-                                                class="fa fa-user"></i>
-                                    </button>
-                                </li>
-                                <li class="mr-3">
-                                    <button type="button" title="View Tracker"
-                                            class="btn btn-success btn-xs"><i
-                                                class="fa fa-signal"></i>
-                                    </button>
-                                </li>
-                                <li class="mr-3">
-                                    <button type="button" title="Update Yardi Listings"
-                                            class="btn btn-primary btn-xs"><i
-                                                class="fa fa-refresh"></i>
-                                    </button>
-                                </li>
 
                                 <li class="mr-3">
                                     <button title="Edit User"
@@ -299,7 +298,6 @@ class UsersController extends Controller
 
     public function restoreUser($id)
     {
-//    echo '<pre>';print_r($_REQUEST );echo '</pre>';
         $user = User::find($id);
         $user->update(['user_deleted' => '0']);
 
@@ -363,6 +361,51 @@ class UsersController extends Controller
 
 
         return redirect('rcpadmin/users');
+
+    }
+
+    public function attempt($request, $remember = '', $role = '')
+    {
+        $user = User::where('name', '=', $request['name'])->first();
+
+
+        auth()->guard('student')->logout();
+        auth()->guard('landlord')->logout();
+
+        if ($user && $role == 2) {
+
+            $studentAuth = auth()->guard('student')->login($user, true);
+            return true;
+        } else if ($user && $role == 3) {
+            $landlordtAuth = auth()->guard('landlord')->login($user, true);
+            return true;
+        }
+        return false;
+    }
+
+    public function login($id)
+    {
+        $user = User::getUserDetail($id);
+        if ($this->attempt(['name' => $user['name']], 1, $user['role'])) {
+            if ($user['role'] == 3) {
+                return redirect()->intended('/landlord');
+            } else {
+                return redirect()->intended('/student');
+            }
+
+        }
+
+    }
+
+    public function tracker($id)
+    {
+        $user = User::getUserDetail($id);
+        if ($this->attempt(['name' => $user['name']], 1, $user['role'])) {
+            if ($user['role'] == 3) {
+                return redirect()->intended('/landlord/tracker');
+            }
+
+        }
 
     }
 

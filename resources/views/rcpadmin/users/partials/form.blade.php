@@ -39,11 +39,11 @@
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Password',null,['class' => 'col-form-label']) !!}
-            {!! Form::password('password',['class' => 'form-control']) !!}
+            {!! Form::password('password',['class' => 'form-control','id'=>'password']) !!}
         </div>
         <div class="col-md-4 mb-3">
-            {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!}
-            {!! Form::password('c_password',['class' => 'form-control']) !!}
+            {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!}  <i id="message"></i>
+            {!! Form::password('password_confirmation',['class' => 'form-control','id'=>'confirm_password']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::hidden('id') !!}
@@ -51,8 +51,8 @@
             {!! Form::select('type',['Personal'=>'Personal','Company'=>'Company'],null,['class' => 'custom-select']) !!}
         </div>
         <div class="col-md-4 mb-3">
-            {!! Form::label('Free (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('free_trial',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+            {!! Form::label('Free/Paid (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
+            {!! Form::select('free_trial',['Free'=>'Free','Paid'=>'Paid'],null,['class' => 'custom-select']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Premium Landlord',null,['class' => 'col-form-label']) !!}
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-<h5> Landlord Details </h5>
+    <h5> Landlord Details </h5>
     <div class="form-row">
         <div class="col-md-4 mb-3">
             {!! Form::label('First Name',null,['class' => 'col-form-label']) !!}
@@ -110,7 +110,7 @@
         </div>
         <divs class="col-md-4 mb-3">
             {!! Form::label('Rent Style',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('rent_style',['per_month'=>'Per Month','per_year'=>'Per Year'],null,['class' => 'custom-select']) !!}
+            {!! Form::select('rent_style',['per_person'=>'Per Person','per_unit'=>'Per Unit'],null,['class' => 'custom-select']) !!}
         </divs>
         <div class="col-md-4 mb-3">
             {!! Form::label('Activate Twilio',null,['class' => 'col-form-label']) !!}
@@ -334,5 +334,16 @@
 
 
         })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#confirm_password').on('keyup', function () {
+                if ($('#password').val() == $('#confirm_password').val()) {
+                    $('#message').html('').css('color', 'green');
+                } else
+                    $('#message').html(' (Password Not Matched) ').css('color', 'red');
+            });
+        });
     </script>
 @stop

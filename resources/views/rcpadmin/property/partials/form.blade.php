@@ -2,6 +2,7 @@
     <div id="card-alert" class="card red lighten-5">
         <div class="card-content red-text">
 
+
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
             @endforeach
@@ -56,7 +57,7 @@
         </div>
         <div class="col-md-3 mb-3">
             {!! Form::label('Rent Style',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('pricing',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+            {!! Form::select('pricing',['per_unit'=>'Per Unit','per_bed'=>'Per Bed'],null,['class' => 'custom-select']) !!}
 
         </div>
 
