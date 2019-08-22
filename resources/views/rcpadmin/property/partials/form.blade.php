@@ -12,8 +12,6 @@
 @endif
 <div class="form-group">
     <div class="form-row">
-
-
         <div class="col-md-3 mb-2">
             {!! Form::label('Campus',null,['class' => 'col-form-label']) !!}
             {!! Form::select('campus_id',$campusSelect,null,['class' => 'custom-select']) !!}
@@ -48,24 +46,18 @@
             {!! Form::label('Phone',null,['class' => 'col-form-label']) !!}
             {!! Form::text('phone',null,['class' => 'form-control']) !!}
         </div>
-
-
         <div class="col-md-3 mb-3">
             {!! Form::label('Type of listing',null,['class' => 'col-form-label']) !!}
             {!! Form::select('free_trial',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
-
         </div>
         <div class="col-md-3 mb-3">
             {!! Form::label('Rent Style',null,['class' => 'col-form-label']) !!}
             {!! Form::select('pricing',['per_unit'=>'Per Unit','per_bed'=>'Per Bed'],null,['class' => 'custom-select']) !!}
-
         </div>
-
         <div class="col-md-3 mb-3">
             {!! Form::label('Double Featured',null,['class' => 'col-form-label']) !!}
             {!! Form::select('double_featured',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select double_featured']) !!}
             {!! Form::text('double_featured_order',null,['class' => 'form-control hide double_featured_order','placeholder' => 'Rank']) !!}
-
         </div>
         <div class="col-md-3 mb-3">
             {!! Form::label('Twilio Number',null,['class' => 'col-form-label']) !!}
@@ -94,9 +86,7 @@
             {!! Form::label('Special Expiry',null,['class' => 'col-form-label']) !!}
             {!! Form::text('special_expiry',null,['class' => 'datePicker form-control']) !!}
         </div>
-
     </div>
-
 </div>
 
 <div class="form-group">
