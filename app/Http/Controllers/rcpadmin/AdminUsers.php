@@ -8,6 +8,7 @@ use App\AdminCampuses;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use App\AdminUser;
 use App\CampusModel;
 /*use App\AdminModulePermissions;*/
@@ -213,8 +214,8 @@ class AdminUsers extends Controller
 
         $id = $admin_user['id'];
 
-        $adminTypes = array('' => 'Admin Type', '1' => 'Supper Admin', '2' => 'Admin');
-        $selected_admin = $admin_user['role_id'];
+        $admin_role = array('' => 'Admin Type', '1' => 'Supper Admin', '2' => 'Admin');
+        $selected_role = $admin_user['role_id'];
 
         $export_leads = array(''=>'Export All Leads','Yes'=>'Yes','No'=>'No');
         $selected_lead = $admin_user['export_all_leads'];
@@ -222,7 +223,7 @@ class AdminUsers extends Controller
         $status = array(''=>'Status','Active'=>'Active','Inactive'=>'Inactive');
         $selected_status = $admin_user['status'];
 
-        return view('rcpadmin.admin-users.edit_modal', compact('id','admin_user', 'campusSelect', 'admin_campuses', 'adminTypes', 'selected_admin', 'export_leads', 'selected_lead', 'status', 'selected_status'));
+        return view('rcpadmin.admin-users.edit_modal', compact('id','admin_user', 'campusSelect', 'admin_campuses', 'admin_role', 'selected_role', 'export_leads', 'selected_lead', 'status', 'selected_status'));
     }
 
     public function update_admin(Requests\AdminUserRequest $request, $id)
@@ -261,6 +262,26 @@ class AdminUsers extends Controller
 
     }
 
+    public function changePassword()
+    {
+        $user = Auth::user();
+        return view('rcpadmin.admin-users.change-password', compact('user'));
+    }
+
+    public function updatePassword(Requests\PasswordRequest $request)
+    {
+        /*$input = Request::all();*/
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $id = $input['id'];
+        $user = AdminUser::find($id);
+        $current_password = bcrypt($input['current_password']);
+        if ($user['password'] == $current_password){
+            $user->update($input);
+        }
+
+        return redirect('/');
+    }
 
 
 }

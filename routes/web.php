@@ -26,7 +26,12 @@ Route::middleware(['auth:web', 'admin_modules'])->prefix('rcpadmin')->group(func
     Route::get('admin_users/edit_admin/{id}', 'rcpadmin\AdminUsers@edit_admin');
     Route::patch('admin_users/update_admin/{id}', 'rcpadmin\AdminUsers@update_admin');
 
+    Route::post('admin-users/change-password', 'rcpadmin\AdminUsers@updatePassword');
+    Route::get('admin-users/change-password', 'rcpadmin\AdminUsers@changePassword');
+
     Route::resource('admin_users', 'rcpadmin\AdminUsers');
+    Route::get('users/{id}/login', 'rcpadmin\UsersController@login');
+    Route::get('users/{id}/tracker', 'rcpadmin\UsersController@tracker');
     Route::post('users/{id}/delete', 'rcpadmin\UsersController@delete');
     Route::post('users/{id}/restoreUser', 'rcpadmin\UsersController@restoreUser');
     Route::post('user-search-ajax', 'rcpadmin\UsersController@search_ajax');
@@ -230,8 +235,12 @@ Route::post('landlord/property/{id}/images-save', 'LandlordController@store_imag
 Route::get('landlord/property/{id}/images', 'LandlordController@images');
 Route::get('landlord/add-property', 'LandlordController@create');
 Route::get('landlord/campus-insight', 'LandlordController@campusInsight');
+Route::post('landlord/tracker', 'LandlordController@tracker');
 Route::get('landlord/tracker', 'LandlordController@tracker');
-
+Route::post('landlord/ajax', 'LandlordController@ajax');
+Route::post('landlord/ajax_count_show', 'LandlordController@ajax_count_show');
+Route::post('landlord/ajax_leads', 'LandlordController@ajax_leads');
+Route::post('landlord/ajax_count_show_lead', 'LandlordController@ajax_count_show_lead');
 /*Landlord Portal Routes*/
 
 

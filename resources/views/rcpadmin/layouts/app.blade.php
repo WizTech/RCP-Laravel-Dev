@@ -30,6 +30,7 @@
   <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
         rel = "stylesheet">
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/jquery-2.2.4.min.js"></script>
 </head>
 
 <body>
@@ -107,8 +108,9 @@
             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }} <i
                       class="fa fa-angle-down"></i></h4>
             <div class="dropdown-menu">
-               <a class="dropdown-item" href="#">Message</a>
-               <a class="dropdown-item" href="#">Settings</a>
+               {{--<a class="dropdown-item" href="#">Message</a>
+               <a class="dropdown-item" href="#">Settings</a>--}}
+               <a class="dropdown-item" href="{{ url('rcpadmin/admin-users/change-password') }}">Change Password</a>
               <a class="dropdown-item" href="{{ route('logout') }}"
                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
             </div>

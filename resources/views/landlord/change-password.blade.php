@@ -16,8 +16,6 @@
     <div class="col-12 mt-5">
       <div class="card">
         <div class="card-body">
-
-
           {!! Form::model($user,['method'=>'POST'],['action' => ['LandlordController@update',$user['id']] ,'class' => 'col s12']) !!}
           @include('landlord.partials.password-form',['buttonText'=>'Update'])
           {!! Form::close() !!}
