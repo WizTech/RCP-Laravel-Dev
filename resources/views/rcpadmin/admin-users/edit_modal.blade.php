@@ -39,17 +39,17 @@
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Password',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::password('password',['class' => 'form-control']) !!}
+                                    {!! Form::password('password',['class' => 'form-control','id'=>'password']) !!}
+                                </div>
+                                <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
+                                    {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!}  <i id="message"></i>
+                                    {!! Form::password('password_confirmation',['class' => 'form-control','id'=>'confirm_password']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Export All Leads',null,['class' => 'col-form-label']) !!}
                                     {!! Form::select('export_all_leads',$export_leads,$selected_lead,['class' => 'custom-select']) !!}
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="form-row">
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Select Campus',null,['class' => 'col-form-label']) !!}
                                     {!! Form::select('campus_id[]',$campusSelect,$admin_campuses,
@@ -73,4 +73,16 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#confirm_password').on('keyup', function () {
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#message').html(' ( Password Matched ) ').css('color', 'green');
+            } else
+                $('#message').html(' ( Password Not Matched ) ').css('color', 'red');
+        });
+    });
+</script>
 

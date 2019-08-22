@@ -1,20 +1,20 @@
 @if (isset($errors) && count($errors) > 0)
 
 
-  <div id="card-alert" class="card red lighten-5">
-    <div class="card-content red-text">
+    <div id="card-alert" class="card red lighten-5">
+        <div class="card-content red-text">
 
 
-      @foreach ($errors->all() as $error)
-        <p>{{ $error }}</p>
-      @endforeach
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
 
+        </div>
     </div>
-  </div>
 @endif
 
 <div class="form-group">
-  {!! Form::hidden('id') !!}
+    {!! Form::hidden('id') !!}
 
     {!! Form::select('role_id',[''=>'User Type','1'=>'Super Admin','2'=>'Admin'],null,['class' => 'custom-select']) !!}
 
@@ -37,10 +37,13 @@
 
 </div>
 <div class="form-group">
-
     {!! Form::label('Password',null,['class' => 'col-form-label']) !!}
-    {!! Form::password('password',['class' => 'form-control']) !!}
+    {!! Form::password('password',['class' => 'form-control', 'id'=>'password']) !!}
+</div>
 
+<div class="form-group">
+    {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!}  <i id="message"></i>
+    {!! Form::password('password_confirmation',['class' => 'form-control','id'=>'confirm_password']) !!}
 </div>
 
 

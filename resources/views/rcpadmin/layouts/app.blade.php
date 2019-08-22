@@ -357,6 +357,16 @@
   gtag('config', 'UA-23581568-13');
 
 </script>
+<script>
+  $(document).ready(function () {
+    $('#confirm_password').on('keyup', function () {
+      if ($('#password').val() == $('#confirm_password').val()) {
+        $('#message').html(' ( Password Matched ) ').css('color', 'green');
+      } else
+        $('#message').html(' ( Password Not Matched ) ').css('color', 'red');
+    });
+  });
+</script>
 </body>
 
 

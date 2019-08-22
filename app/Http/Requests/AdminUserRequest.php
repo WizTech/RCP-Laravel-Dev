@@ -37,7 +37,7 @@ class AdminUserRequest extends FormRequest
           'name' => 'required',
           'username' => 'required|min:3|unique:admin_users',
           'email' => 'required|unique:admin_users',
-          'password' => 'required'
+          'password' => 'required|confirmed',
         ];
       }
       case 'PUT':
@@ -47,7 +47,7 @@ class AdminUserRequest extends FormRequest
           'export_all_leads' => 'required',
           'status' => 'required',
           'name' => 'required',
-          'username' => 'unique:admin_users,username,'.$this->id,
+         //'username' => 'unique:admin_users,username,'.$this->id,
          // 'email' => 'unique:admin_users,email,'.$this->id
         ];
       }
