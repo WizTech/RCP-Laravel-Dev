@@ -59,10 +59,12 @@
                             </button>
                           </a>
                         </li>
-                        <li>
-                          <a data-admin-id="{{$user['id']}}" href="{{url('rcpadmin/team-member/'.$user['id'])}}"
+
+                        <li><a data-admin-id="{{$user['id']}}" href="{{url('rcpadmin/team-member/'.$user['id'])}}"
                                data-method="delete" class="btn btn-danger btn-xs jquery-postback" title="Delete">
+
                               <i class="ti-trash-o"></i> Delete
+
                             </a>
                         </li>
                       </ul>

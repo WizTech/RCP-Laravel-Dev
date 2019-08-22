@@ -8,7 +8,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <img src="{{ env('THEME_ASSETS_NEW') }}assets/images/loading.jpg" id="img" style="display:none"/>
             <?php  $user_id = $user['id']; ?>
             <form action="{{ URL::to('rcpadmin/users/update_user/'.$user_id)}}" id="userEditForm" method="post">
                 {{ method_field('PATCH') }}
@@ -189,7 +188,7 @@
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-xs" id="loader"> Update </button>
+                    <button type="submit" class="btn btn-success btn-xs"> Update</button>
                     <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -247,10 +246,6 @@
                 $('#message').html('').css('color', 'green');
             } else
                 $('#message').html(' (Password Not Matched) ').css('color', 'red');
-        });
-
-        $('#loader').click(function() {
-            $('#img').show();
         });
     });
 </script>

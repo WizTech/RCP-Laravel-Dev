@@ -13,15 +13,15 @@
 @stop
 @section('breadcrumbs')
     <div class="breadcrumbs-area clearfix">
-        <h4 class="page-title pull-left">Entrata Landlords</h4>
+        <h4 class="page-title pull-left">Entrata Listing</h4>
         <ul class="breadcrumbs pull-left">
             <li><a href="{{ url('rcpadmin/').'/' }}">Dashboard</a></li>
-            <li><span>Entrata Landlords</span></li>
+            <li><span>Entrata Manager / </span></li>
+            <li><a href="{{'entrata'}}">Entrata Listing</a></li>
         </ul>
     </div>
 @stop
 @section('content')
-    <!-- START CONTENT -->
     <div class="row">
         <div class="col-12 mt-5">
             <div class="card">
@@ -30,38 +30,44 @@
                         <table class="text-center table">
                             <thead class="text-capitalize">
                             <tr>
-                                <th>ID</th>
+                                <th>Enrata ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Status</th>
+                                <th>Address</th>
+                                <th>Company</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($webUsers) > 0)
-                                @foreach($webUsers as $user)
+                            @if(isset($listings) && count($listings) > 0)
+                                @foreach($listings as $listing)
                                     <tr>
-                                        <td> {{$user['id']}}</td>
-                                        <td> {{$user['name']}} </td>
-                                        <td> {{$user['email']}} </td>
-                                        <td> {{$user['status']}} </td>
+                                        <td> {{$listing->property_id}}</td>
+                                        <td> {{$listing->name}} </td>
+                                        <td> {{$listing->address}} </td>
+                                        <td> {{$listing->company}} </td>
                                         <td>
-                                            {{--<ul class="d-flex justify-content-center">
-                                              <li class="mr-3"><a href="{{ url('rcpadmin/users/'.$user['id'])}}" class="text-secondary"><i
-                                                    class="fa fa-edit"></i></a></li>
-                                              <li><a data-admin-id="{{$user['id']}}" href="{{url('rcpadmin/users/'.$user['id'])}}"
-                                                     data-method="delete" class="text-danger jquery-postback"><i class="ti-trash"></i></a>
-                                              </li>
-                                            </ul>--}}
+                                            <ul class="d-flex justify-content-center">
+                                                <li class="mr-3"><a href="{{ url('rcpadmin/entrata/'.$listing->property_id)}}"
+                                                                    class="btn btn-success btn-sm approve">Approve</a></li>
+
+                                                <form method="POST" action="entrata/{{$listing->property_id}}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-danger btn-sm deny"
+                                                               value="Deny">
+                                                    </div>
+                                                </form>
+                                            </ul>
                                         </td>
                                     </tr>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
-                        @if(isset($webUsers) && count($webUsers) > 0 )
-                            {{$webUsers->links()}}
-                            Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
+                        @if(isset($listings) && count($listings) > 0)
+                            {{$listings->links()}}
+                            Showing {{$listings->firstItem()}} to {{$listings->lastItem()}} of {{$listings->total()}}
                             Entities
                         @endif
                     </div>
@@ -80,7 +86,6 @@
             src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script
             src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-
     <script>
         $.ajaxSetup({
             headers: {
@@ -105,10 +110,9 @@
 
                 url: $this.data('href'),
 
-                data: {"id": id, "_method": "DELETE", "_token": "{{ csrf_token() }}"},
+                data: {"id": id, "_token": "{{ csrf_token() }}"},
 
                 success: function (result) {
-
 
                     window.location.reload()
                     //  console.log(result)
@@ -118,5 +122,15 @@
 
         })
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.deny').click(function () {
+                return confirm("Are you sure you want to Deny?");
+            });
+            $('.approve').click(function () {
+                return confirm("Are you sure to approve?");
+            });
+        });
     </script>
 @stop

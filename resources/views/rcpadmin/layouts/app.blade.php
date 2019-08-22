@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/metisMenu.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/owl.carousel.min.css">
   <link rel="stylesheet" href="{{ env('THEME_ASSETS_NEW') }}assets/css/slicknav.min.css">
-  <link rel="stylesheet" href="{{ env('APP_URL') }}css/custom.css">
+  <link rel="stylesheet" href="{{ env('APP_URL') }}/css/custom.css">
   <!-- modernizr css -->
 
   @yield('styles')
@@ -48,7 +48,7 @@
   <div class="sidebar-menu">
     <div class="sidebar-header">
       <div class="logo">
-        <a href="index-2.html"><img src="{{ env('THEME_ASSETS_NEW') }}assets/images/rcp-logo-big.png" alt="logo"></a>
+        <a href="index-2.html"><img src="{{ env('THEME_ASSETS_NEW') }}assets/images/rcp-logo-white.png" alt="logo"></a>
       </div>
     </div>
     <div class="main-menu">
@@ -83,8 +83,8 @@
           <ul class="notification-area pull-right">
             <li id="full-view"><i class="ti-fullscreen"></i></li>
             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                        
-               
+
+
           </ul>
         </div>
       </div>
@@ -105,10 +105,10 @@
             <img class="avatar user-thumb" src="{{ env('THEME_ASSETS_NEW') }}assets/images/author/avatar.png"
                  alt="avatar">
             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }} <i
-                class="fa fa-angle-down"></i></h4>
+                      class="fa fa-angle-down"></i></h4>
             <div class="dropdown-menu">
-              {{-- <a class="dropdown-item" href="#">Message</a>
-               <a class="dropdown-item" href="#">Settings</a>--}}
+               <a class="dropdown-item" href="#">Message</a>
+               <a class="dropdown-item" href="#">Settings</a>
               <a class="dropdown-item" href="{{ route('logout') }}"
                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
             </div>
@@ -126,7 +126,7 @@
   <!-- footer area start-->
   <footer>
     <div class="footer-area">
-      <p>Â© Copyright {{ date('Y')  }}. All right reserved. <a href="https://www.rentcollegepads.com/">Rent College
+      <p>© Copyright {{ date('Y')  }}. All right reserved. <a href="https://www.rentcollegepads.com/">Rent College
           Pads</a>.</p>
     </div>
   </footer>
