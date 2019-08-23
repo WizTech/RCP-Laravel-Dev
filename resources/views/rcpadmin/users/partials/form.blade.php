@@ -42,7 +42,7 @@
             {!! Form::password('password',['class' => 'form-control','id'=>'password']) !!}
         </div>
         <div class="col-md-4 mb-3">
-            {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!}  <i id="message"></i>
+            {!! Form::label('Confirm Password',null,['class' => 'col-form-label']) !!} <i id="message"></i>
             {!! Form::password('password_confirmation',['class' => 'form-control','id'=>'confirm_password']) !!}
         </div>
         <div class="col-md-4 mb-3">
@@ -51,12 +51,13 @@
             {!! Form::select('type',['Personal'=>'Personal','Company'=>'Company'],null,['class' => 'custom-select']) !!}
         </div>
         <div class="col-md-4 mb-3">
-            {!! Form::label('Free/Paid (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('free_trial',['Free'=>'Free','Paid'=>'Paid'],null,['class' => 'custom-select']) !!}
+            {!! Form::label('Free (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
+            {!! Form::select('free_trial',['No'=>'No','Yes'=>'Yes'],null,['class' => 'custom-select landlord_free_trial']) !!}
+            {!! Form::text('free_trial_expiry_date',null,['class' => 'form-control hide datePicker free_trial', 'placeholder' => 'Free Trial Expiry Date']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Premium Landlord',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('preimum',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+            {!! Form::select('preimum',['INACTIVE'=>'No','ACTIVE'=>'Yes'],null,['class' => 'custom-select']) !!}
         </div>
     </div>
 
@@ -102,7 +103,7 @@
     <div class="form-row">
         <div class="col-md-4 mb-3">
             {!! Form::label('Email Type',null,['class' => 'col-form-label']) !!}
-            {!! Form::text('email_type',null,['class' => 'form-control']) !!}
+            {!! Form::select('email_type',['Template'=>'Template','Plain-Text'=>'Plain Text'],null,['class' => 'custom-select']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Property Email Leads',null,['class' => 'col-form-label']) !!}
@@ -110,20 +111,21 @@
         </div>
         <divs class="col-md-4 mb-3">
             {!! Form::label('Rent Style',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('rent_style',['per_person'=>'Per Person','per_unit'=>'Per Unit'],null,['class' => 'custom-select']) !!}
+            {!! Form::select('rent_style',['per_unit'=>'Per Unit', 'per_person'=>'Per Person'],null,['class' => 'custom-select']) !!}
         </divs>
         <div class="col-md-4 mb-3">
             {!! Form::label('Activate Twilio',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('activate_twilio',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
+            {!! Form::select('activate_twilio',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
             {!! Form::text('twilio_number',null,['class' => 'form-control hide twilio_number','placeholder' => 'Twilio Number']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Landlord\'s Dashboard Link',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('landlord_dashboard_status',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+            {!! Form::select('landlord_dashboard_status',['INACTIVE'=>'INACTIVE', 'ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Landlord Website',null,['class' => 'col-form-label']) !!}
-            {!! Form::text('landlord_website',null,['class' => 'form-control']) !!}
+            {!! Form::select('landlord_website',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select landlordWebsite']) !!}
+            {!! Form::text('landlord_website',null,['class' => 'form-control hide landlord_website','placeholder' => 'Landlord Website']) !!}
         </div>
     </div>
 
@@ -133,28 +135,25 @@
     <div class="form-row">
         <div class="col-md-4 mb-3">
             {!! Form::label('Yardi Landlord?',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('is_yardi',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
+            {!! Form::select('is_yardi',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
             {!! Form::text('yardi_user_id',null,['class' => 'form-control hide yardi_user_id','placeholder' => 'Yardi ID']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Entrata Landlord?',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('is_entrata',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
+            {!! Form::select('is_entrata',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
             {!! Form::text('entrata_client_id',null,['class' => 'form-control hide entrata_client_id','placeholder' => 'Client ID']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Lease Signing Options',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('lease_singing_options',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
+            {!! Form::select('lease_singing_options',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Emma Trial Landlord?',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('emma_trial_landlord',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
-        </div>
-        <div class="col-md-4 mb-3">
-            {!! Form::label('Domain',null,['class' => 'col-form-label']) !!}
-            {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
+            {!! Form::select('emma_trial_landlord',['INACTIVE'=>'No', 'ACTIVE'=>'Yes'],null,['class' => 'custom-select emma_trial_landlord']) !!}
         </div>
     </div>
 
+    <h5> SEO Details </h5>
     <div class="form-row">
         <div class="col-md-4 mb-3">
             {!! Form::label('H1',null,['class' => 'col-form-label']) !!}
@@ -168,9 +167,6 @@
             {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
             {!! Form::text('meta_title',null,['class' => 'form-control']) !!}
         </div>
-    </div>
-
-    <div class="form-row">
         <div class="col-md-4 mb-3">
             <div class="input-group">
                 {!! Form::label('Seo Block',null,['class' => 'input-group-text']) !!}
@@ -212,8 +208,24 @@
                 } else {
                     $('.twilio_number').addClass('hide');
                 }
-
             });
+
+            $('select.landlordWebsite').on('change', function () {
+                if ($(this).val() == 'ACTIVE') {
+                    $('.landlord_website').removeClass('hide');
+                } else {
+                    $('.landlord_website').addClass('hide');
+                }
+            });
+
+            $('select.landlord_free_trial').on('change', function () {
+                if ($(this).val() == 'Yes') {
+                    $('.free_trial').removeClass('hide');
+                } else {
+                    $('.free_trial').addClass('hide');
+                }
+            });
+
             $('select.is_entrata').on('change', function () {
                 if ($(this).val() == 'ACTIVE') {
                     $('.entrata_client_id').removeClass('hide');
@@ -345,5 +357,6 @@
                     $('#message').html(' (Password Not Matched) ').css('color', 'red');
             });
         });
+
     </script>
 @stop

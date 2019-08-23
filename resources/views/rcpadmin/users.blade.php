@@ -54,6 +54,7 @@
                 <th>Role</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Free/Paid</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -66,37 +67,38 @@
                     <td> {{$user['role'] == '3'?'Landlord':'Student'}} </td>
                     <td> {{$user['name']}} </td>
                     <td> {{$user['email']}} </td>
+                    <td>  </td>
                     <td> {{$user['status']}} </td>
                     <td>
                       <input type="hidden" id="user_id" value="{{$user['id']}}">
                       <ul class="d-flex justify-content-end">
-                      {{--  <li class="mr-3">
-                          <button type="button" title="View Profile"
-                                  class="btn btn-success btn-xs"><i
-                              class="fa fa-user"></i>
-                          </button>
-                        </li>--}}
+                        {{--  <li class="mr-3">
+                            <button type="button" title="View Profile"
+                                    class="btn btn-success btn-xs"><i
+                                class="fa fa-user"></i>
+                            </button>
+                          </li>--}}
                         <li class="mr-3"><a target="_blank"
                                             href="{{ url('rcpadmin/users/'.$user['id'].'/login')}}"
                                             class="btn btn-success btn-xs"
                                             title="View Profile"><i
-                              class="fa fa-user"></i></a></li>
+                                    class="fa fa-user"></i></a></li>
                         @if($user['role'] == '3')
 
                           <li class="mr-3"><a target="_blank"
                                               href="{{ url('rcpadmin/users/'.$user['id'].'/tracker')}}"
                                               class="btn btn-success btn-xs"
                                               title="View Tracker"><i
-                                class="fa fa-signal"></i></a></li>
+                                      class="fa fa-signal"></i></a></li>
                           <li class="mr-3"><a target="_blank"
                                               href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
                                               class="btn btn-success btn-xs"
                                               title="View Properties"><i
-                                class="fa fa-list"></i></a></li>
+                                      class="fa fa-list"></i></a></li>
                           <li class="mr-3">
                             <button type="button" title="Update Yardi Listings"
                                     class="btn btn-primary btn-xs"><i
-                                class="fa fa-refresh"></i>
+                                      class="fa fa-refresh"></i>
                             </button>
                           </li>
                         @endif
@@ -115,7 +117,7 @@
                           <button type="button" title="Edit User"
                                   data-userid="{{$user['id']}}"
                                   class="btn btn-primary btn-xs editUser"><i
-                              class="fa fa-edit"></i>
+                                    class="fa fa-edit"></i>
                           </button>
                         </li>
 
@@ -163,9 +165,9 @@
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
   <script src="{{ env('ASSETS_PATH') }}js/ajax_viewer.js"></script>
   <script>
 

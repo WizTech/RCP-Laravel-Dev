@@ -39,7 +39,7 @@ class UserRequest extends FormRequest
                     'free_trial' => (isset($_REQUEST['role']) && $_REQUEST['role'] == 3) ? 'required' : '',
                     'type' => (isset($_REQUEST['role']) && $_REQUEST['role'] == 3) ? 'required' : '',
                     'role' => 'required',
-                    'address' => 'required|unique:user_details|min:3',
+                    'address' => 'required|min:3',
                     'name' => 'required|unique:users|min:3',
                     'last_name' => 'required',
                     'first_name' => 'required',
