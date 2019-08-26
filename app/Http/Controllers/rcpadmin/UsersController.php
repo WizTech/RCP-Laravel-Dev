@@ -114,6 +114,7 @@ class UsersController extends Controller
             }*/
 
         }
+
         return redirect('rcpadmin/users');
 
     }
