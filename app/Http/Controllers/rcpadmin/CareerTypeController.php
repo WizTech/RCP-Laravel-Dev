@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\rcpadmin;
 
 use App\rcpadmin\CareerType;
+use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CareerTypeRequest;
-
+use DB;
 
 class CareerTypeController extends Controller
 {
+
+    protected $module;
+    public function __construct()
+    {
+        $this->module = GeneralHelper::module_data('CareerTypeController');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +46,15 @@ class CareerTypeController extends Controller
      */
     public function store(CareerTypeRequest $form)
     {
-        $form->saveRequest();
+        $insert_id = $form->saveRequest();
+
+        /* Activity Log Begin */
+        $module = $this->module;
+        $insertedData = CareerType::find($insert_id);
+        $logs = "A new Career Type: '". $insertedData->careers_type . "' is created";
+        GeneralHelper::EditLogFile($module->id, $logs);
+        /* Activity Log End */
+
         return redirect('rcpadmin/careertype');
     }
 
@@ -74,7 +90,32 @@ class CareerTypeController extends Controller
      */
     public function update(CareerTypeRequest $form, $id)
     {
+        /* Activity Log Before Update Begin */
+        $before= CareerType::find($id);
+        $beforeUpdate = [
+            'Careers Type' => $before['careers_type']
+        ];
+        /* Acitvity Log Before Updated End */
+
+        /* Update data Using Form Request*/
         $form->updateRequest($id);
+        /* Update End */
+
+        /* Acitvity Log After Update Begin  */
+        $after = CareerType::find($id);
+        $afterUpdate = [
+            'Careers Type' => $after['careers_type']
+        ];
+
+        $module = $this->module;
+        $befor_change = !empty($beforeUpdate) ? json_encode($beforeUpdate) : '';
+        $after_change = !empty($afterUpdate) ? json_encode($afterUpdate) : '';
+
+        $data = GeneralHelper::getNameById('career_type', 'careers_type', $id);
+        $logs = "Career Type: '".$data . "' is Updated '";
+        GeneralHelper::EditLogFile($module->id, $logs, $befor_change, $after_change);
+        /* Activity Log End */
+
         return redirect('rcpadmin/careertype');
     }
 
@@ -87,8 +128,16 @@ class CareerTypeController extends Controller
      */
     public function destroy($id)
     {
-        $news = CareerType::find($id);
-        $news->delete();
+        $career_type = CareerType::find($id);
+
+        if ($career_type) {
+            $module = $this->module;
+            $data = GeneralHelper::getNameById('career_type', 'careers_type', $id);
+            $logs = "Career Type: '".$data . "' was Deleted from ".$module->title;
+            CareerType::destroy($id);
+            GeneralHelper::EditLogFile($module->id, $logs);
+        }
+
         return redirect('rcpadmin/careertype');
     }
 }

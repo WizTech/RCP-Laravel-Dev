@@ -32,7 +32,7 @@ class TestimonialRequest extends FormRequest
             'company' => 'required',
             'market' => 'required',
             'text' => 'required',
-            'photo' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
+            /*'photo' => 'required|mimes:jpeg,jpg,png,gif|max:10000'*/
         ];
     }
 
@@ -53,11 +53,12 @@ class TestimonialRequest extends FormRequest
             'title' => $this->title,
             'company' => $this->company,
             'market' => $this->market,
-            'text' => $this->text,
-            'photo' => $imageName,
+            'text' => strip_tags($this->text),
+            'photo' => isset($imageName) ? $imageName : '' ,
         ]);
-
         $testimonial->save();
+        $insertId = $testimonial->id;
+        return $insertId;
 
     }
 
@@ -79,9 +80,9 @@ class TestimonialRequest extends FormRequest
         $testimonial->title = $this->title;
         $testimonial->company = $this->company;
         $testimonial->market = $this->market;
-        $testimonial->text = $this->text;
-        $testimonial->photo = $imageName;
-
-        $testimonial->save();
+        $testimonial->text = strip_tags($this->text);
+        $testimonial->photo = isset($imageName) ? $imageName : '';
+        $testimonial = $testimonial->save();
+        return $testimonial;
     }
 }

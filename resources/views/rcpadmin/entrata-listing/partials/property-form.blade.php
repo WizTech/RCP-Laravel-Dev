@@ -251,7 +251,7 @@
                                     <input type="hidden" name="_method" value="PUT">
                                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                                     <input type="hidden" name="rentlinx_listing_id"
-                                           value="<?= $data['listing']['rentlinx_listing_id'] ?>">
+                                           value="<?= $data['listing']['entrata_listing_id'] ?>">
                                 </div>
                             </div>
                             <div class="form-row clear"></div>
@@ -259,7 +259,7 @@
                                 <div class="col-md-10 offset-md-1 mb-6">
                                     <button type="submit" class="btn btn-flat btn-success btn-sm">Save and Continue
                                     </button>
-                                    <button class="btn btn-flat btn-sm"><a href="{{'../../rcpadmin/rentlinx-listing'}}">Cancle</a>
+                                    <button class="btn btn-flat btn-sm"><a href="{{'../../rcpadmin/entrata-listing'}}">Cancle</a>
                                     </button>
                                 </div>
                             </div>

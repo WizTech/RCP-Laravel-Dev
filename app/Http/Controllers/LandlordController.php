@@ -23,13 +23,15 @@ use Intervention\Image\Facades\Image;
 use App\UserDetails;
 use App\rcpadmin\CampusInsight;
 use App\Http\Requests\CampusInsightRequest;
-use App\landlord\Sublease;
-use App\landlord\Application;
+use App\landlord\Leads;
+
 use Request;
 
 class LandlordController extends BaseController
 {
   private $photos_path;
+  public $landlordId;
+  public $landlordData;
 
 
   public function __construct()
@@ -53,12 +55,12 @@ class LandlordController extends BaseController
   {
     $property = Property::find($id);
     $categories = CategoryModel::all('id', 'name')->toArray();
-    $campuses = CampusModel::all('id', 'title')->toArray();
+    $campuses = CampusModel::all('id', 'title')->where('id', '=', $property['campus_id'])->toArray();
 
     $campusSelect = [];
     $usersSelect = [];
 
-    $campusSelect[''] = 'Campus (es)';
+
     foreach ($campuses as $campus2) {
       $campusSelect[$campus2['id']] = $campus2['title'];
     }
@@ -72,7 +74,16 @@ class LandlordController extends BaseController
       $categorySelect[$category['id']] = $category['name'];
     }
 
-    return view('landlord.property.edit', compact('property', 'campusSelect', 'usersSelect', 'categorySelect'));
+    $propertyData =  json_decode(json_encode($property, true), true);
+   // $propertyData = Property::find($id)->toArray();
+    $floorplans = Property::getFloorplans($id);
+
+
+    $features = Property::getFeatures($id);
+    $property_features = Property::getsPropertyFeatures($id);
+    $images = Property::getImages($id);
+
+    return view('landlord.property.edit', compact('property','images','property_features','features', 'campusSelect', 'usersSelect', 'categorySelect','floorplans','propertyData'));
   }
 
   public function update()
@@ -94,7 +105,7 @@ class LandlordController extends BaseController
       UserDetails::create($input);
     endif;
 
-    return redirect('landlord');
+    return redirect('landlord/listing');
   }
 
   public function updateProperty(Request $request, $id)
@@ -149,7 +160,30 @@ class LandlordController extends BaseController
   {
     $user = auth()->guard('landlord')->user();
     $id = $user['id'];
-    $properties = Property::where([['landlord_id', '=', $id], ['deleted', '=', 'Inactive']])->with('category')->paginate(10);
+    $properties = Property::where('landlord_id', '=', $id)->with('category')->get()->groupBy('subscription_plan_id');
+
+
+    foreach ($properties as $plan => $data) {
+
+      foreach ($data as &$prop) {
+        $floorplans = Property::getFloorplans($prop['id']);
+        $prop['floorplans'] = $floorplans;
+      }
+
+
+    }
+   /* $properties = Property::where([['landlord_id', '=', $id], ['deleted', '<>', 'Active']])->with('category')->groupBy('subscription_plan_id')->get()->toArray();
+
+
+    foreach ($properties as &$prop) {
+      if (isset($prop['id'])) {
+        $floorplans = Property::getFloorplans($prop['id']);
+        $prop['floorplans'] = $floorplans;
+      } else {
+        $prop['floorplans'] = [];
+      }
+
+    }*/
 
     return view('landlord.listing', compact('properties'));
   }
@@ -159,13 +193,18 @@ class LandlordController extends BaseController
     $user = auth()->guard('landlord')->user();
     $id = $user['id'];
     $properties = Property::where([['landlord_id', '=', $id], ['deleted', '=', 'Active']])->with('category')->paginate(10);
+    //   echo '<pre>';print_r($properties );echo '</pre>';die('Call');
+
     $module = 'deleted';
-    return view('landlord.listing', compact('properties', 'module'));
+    return view('landlord.deleted-listing', compact('properties', 'module'));
   }
 
   public function create()
   {
-    $campuses = CampusModel::all('id', 'title')->toArray();
+    $user = auth()->guard('landlord')->user();
+    $id = $user['id'];
+    $campusIds = explode(',',$user['campus_id']);
+    $campuses = CampusModel::all('id', 'title')->whereIn('id', $campusIds)->toArray();
     $categories = CategoryModel::all('id', 'name')->toArray();
     $campusSelect = [];
     $usersSelect = [];
@@ -175,7 +214,6 @@ class LandlordController extends BaseController
       $campusSelect[$campus['id']] = $campus['title'];
     }
 
-    $categorySelect[''] = 'Category';
     foreach ($categories as $category) {
       $categorySelect[$category['id']] = $category['name'];
     }
@@ -187,7 +225,7 @@ class LandlordController extends BaseController
     return view('landlord.property.add', compact('campusSelect', 'usersSelect', 'categorySelect'));
   }
 
-  public function store(Requests\Property $request)
+  public function store(Requests\LandlordProperty $request)
   {
     $input = Request::all();
 
@@ -482,11 +520,23 @@ class LandlordController extends BaseController
   public function activeProperty()
   {
     $input = Request::all();
+    unset($input['_token']);
+
+
     $id = $input['id'];
+    unset($input['id']);
     $property = Property::find($id);
+    // echo '<pre>';print_r($property );echo '</pre>';
+
     $data = [];
-    $data['deleted'] = 'Inactive';
-    $property->update($data);
+    if ($property['deleted'] == 'Active') {
+      $input['deleted'] = 'Inactive';
+    } else {
+      $input['deleted'] = 'Active';
+    }
+
+
+    $property->update($input);
     echo 'done';
   }
 
@@ -497,5 +547,111 @@ class LandlordController extends BaseController
     $user = User::getUserDetail($id);
     $campus = CampusInsight::where('campus_id', '=', $user['campus_id'])->paginate(10);
     return view('landlord.campus_insight', compact('campus'));
+  }
+
+  public function tracker($pId = 0)
+  {
+
+    $input = Request::all();
+
+
+    $FromDate = ((isset($input['date-from']) === true) ? date('Y-m-d', strtotime($input['date-from'] . ' 00:00:00')) : '');
+
+    $ToDate = isset($input['date-to']) ? date('Y-m-d', strtotime($input['date-to'] . ' 23:59:59')) : '';
+
+
+    $user = auth()->guard('landlord')->user();
+    $id = $user['id'];
+    $pids = Property::landlord_lisitngs($id);
+
+    if (empty($pids[0]->ids)) {
+      $pids[0]->ids = 0;
+    }
+    $pids = rtrim($pids[0]->ids, ',');
+    if ($pId) {
+      $pids = $pId;
+    }
+
+    $siteLeadData = Leads::site_leads($pids, $id, $FromDate, $ToDate);
+    $leadData = Leads::leads($pids, $id, $FromDate, $ToDate);
+    $total = count($leadData);
+    $limit = 10;
+    $leads = json_decode(json_encode($leadData['email_leads'], true), true);
+    $site_leads = json_decode(json_encode($siteLeadData, true), true);
+    //$input = Request::all();
+    $page = Request::get('page', 1);
+    $paginate = 20;
+    $slice = array_slice($leads, $paginate * ($page - 1), $paginate);
+    $leads = new \Illuminate\Pagination\LengthAwarePaginator($slice, count($leads), $paginate, $page);
+    $parameters = Request::getQueryString();
+    $parameters = preg_replace('/&page(=[^&]*)?|^page(=[^&]*)?&?/', '', $parameters);
+    $path = url('/') . '/landlord/tracker?' . 'date-from=' . $FromDate . '&date-to=' . $ToDate . '&' . $parameters;;
+    if ($pId) {
+      $path = url('/') . '/landlord/tracker/' . $pId . '?date-from=' . $FromDate . '&date-to=' . $ToDate . '&' . $parameters;
+    }
+    $paginator = $leads->withPath($path);
+    return view('landlord.tracker', compact('leads', 'site_leads', 'paginator', 'pids'));
+  }
+
+  public function ajax()
+  {
+    $input = Request::all();
+    if (isset($input['start']) AND isset($input['end']) AND isset($input['id'])) {
+
+      $start = $input['start'];
+      $end = $input['end'];
+      $id = $input['id'];
+
+      $siteLeadData = Leads::ajax($start, $end, $id);
+      return $siteLeadData;
+
+    }
+  }
+
+  public function ajax_count_show()
+  {
+    $input = Request::all();
+    if (isset($input['start']) AND isset($input['end']) AND isset($input['id'])) {
+
+      $start = $input['start'];
+      $end = $input['end'];
+      $id = $input['id'];
+
+      $siteLeadData = Leads::ajax_count_show($start, $end, $id);
+      return $siteLeadData;
+
+    }
+  }
+
+  public function ajax_leads()
+  {
+    $user = auth()->guard('landlord')->user();
+    $landlordId = $user['id'];
+    $input = Request::all();
+    if (isset($input['start']) AND isset($input['end']) AND isset($input['id'])) {
+
+      $start = $input['start'];
+      $end = $input['end'];
+      $id = $input['id'];
+
+      $siteLeadData = Leads::ajax_leads($start, $end, $id, $landlordId);
+      return $siteLeadData;
+
+    }
+  }
+
+  public function ajax_count_show_lead()
+  {
+    $input = Request::all();
+    if (isset($input['start']) AND isset($input['end']) AND isset($input['id'])) {
+
+      $start = $input['start'];
+      $end = $input['end'];
+      $id = $input['id'];
+
+      $siteLeadData = Leads::ajax_count_show_lead($start, $end, $id);
+      return $siteLeadData;
+
+    }
   }
 }

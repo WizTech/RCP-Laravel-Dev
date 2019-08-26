@@ -15,8 +15,8 @@ class CreateCampusInsightTable extends Migration
     {
         Schema::create('campus_insight', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->integer('campus_id');
+            $table->string('title')->nullable();
+            $table->integer('campus_id')->nullable();
             $table->string('pdf_file')->nullable();
             $table->string('link')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');

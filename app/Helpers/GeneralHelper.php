@@ -64,7 +64,7 @@ class GeneralHelper
         return $columnName->$column;
     }
 
-    static function EditLogFile($module_id, $logs, $beforeData = '', $afterData = '', $filters = 0)
+    static function EditLogFile($module_id, $logs, $before_change = '', $after_change = '', $filters = 0)
     {
         $user_id = Auth::user()->id;
         DB::table('admin_user_logs')->insert(
@@ -73,8 +73,8 @@ class GeneralHelper
                 'filters' => $filters,
                 'user_id' => $user_id,
                 'text' => $logs,
-                'before_change' => $beforeData,
-                'after_change' => $afterData
+                'before_change' => $before_change,
+                'after_change' => $after_change
             ]
         );
         return true;

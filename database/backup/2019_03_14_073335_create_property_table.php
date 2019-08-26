@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePropertyTable extends Migration
 {
@@ -35,6 +35,15 @@ class CreatePropertyTable extends Migration
       $table->double('lng', 10, 6);
       $table->float('distance_from_campus')->nullable();
       $table->double('duration_from_campus', 10, 2)->nullable();
+
+
+      $table->string('homepage_h1')->nullable();
+      $table->string('homepage_h2')->nullable();
+      $table->text('homepage_description')->nullable();
+
+      $table->string('neighborhood_h1')->nullable();
+      $table->string('neighborhood_h2')->nullable();
+      $table->text('neighborhood_description')->nullable();
 
       $table->string('slug')->nullable();
       $table->string('twilio_number')->nullable();

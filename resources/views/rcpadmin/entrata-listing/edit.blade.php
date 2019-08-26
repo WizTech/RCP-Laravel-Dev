@@ -14,7 +14,7 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::model($listing['rentlinx'],['method'=>'PATCH'],['action' => ['rcpadmin/RentlinxListingController@update',$listing['rentlinx']['property_id'],] ,'class' => 'col s12']) !!}
+                    {!! Form::model($listing['rentlinx'],['method'=>'PATCH'],['action' => ['rcpadmin/EntrataController@update',$listing['rentlinx']['property_id'],] ,'class' => 'col s12']) !!}
                     {!! Form::hidden('id') !!}
                     @include('rcpadmin.entrata-listing.partials.form',['buttonText'=>'Update'])
                     {!! Form::close() !!}

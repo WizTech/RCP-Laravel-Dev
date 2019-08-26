@@ -30,6 +30,7 @@
   <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
         rel = "stylesheet">
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="{{ env('THEME_ASSETS_NEW') }}assets/js/vendor/jquery-2.2.4.min.js"></script>
 </head>
 
 <body>
@@ -83,8 +84,8 @@
           <ul class="notification-area pull-right">
             <li id="full-view"><i class="ti-fullscreen"></i></li>
             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                        
-               
+
+
           </ul>
         </div>
       </div>
@@ -105,10 +106,11 @@
             <img class="avatar user-thumb" src="{{ env('THEME_ASSETS_NEW') }}assets/images/author/avatar.png"
                  alt="avatar">
             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }} <i
-                class="fa fa-angle-down"></i></h4>
+                      class="fa fa-angle-down"></i></h4>
             <div class="dropdown-menu">
-              {{-- <a class="dropdown-item" href="#">Message</a>
+               {{--<a class="dropdown-item" href="#">Message</a>
                <a class="dropdown-item" href="#">Settings</a>--}}
+               <a class="dropdown-item" href="{{ url('rcpadmin/admin-users/change-password') }}">Change Password</a>
               <a class="dropdown-item" href="{{ route('logout') }}"
                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
             </div>
@@ -354,6 +356,16 @@
 
   gtag('config', 'UA-23581568-13');
 
+</script>
+<script>
+  $(document).ready(function () {
+    $('#confirm_password').on('keyup', function () {
+      if ($('#password').val() == $('#confirm_password').val()) {
+        $('#message').html(' ( Password Matched ) ').css('color', 'green');
+      } else
+        $('#message').html(' ( Password Not Matched ) ').css('color', 'red');
+    });
+  });
 </script>
 </body>
 

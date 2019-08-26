@@ -20,6 +20,9 @@
     </ul>
   </div>
 @stop
+<!-- Modal Begin -->
+<div id="modals"></div>
+<!-- Modal End -->
 @section('content')
   <!-- START CONTENT -->
   <div class="row">
@@ -51,6 +54,7 @@
                 <th>Role</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Free/Paid</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -59,33 +63,76 @@
               @if(count($webUsers) > 0)
                 @foreach($webUsers as $user)
                   <tr>
-                    <td> {{$user['id']}}</td>
-                    <td> {{$user['role'] == '3'?'Landlord':'Student'}} </td>
-                    <td> {{$user['name']}} </td>
-                    <td> {{$user['email']}} </td>
-                    <td> {{$user['status']}} </td>
+                    <td> {{$user->id}}</td>
+                    <td> {{$user->role == '3'?'Landlord':'Student'}} </td>
+                    <td> {{$user->name}} </td>
+                    <td> {{$user->email}} </td>
+                    <td> {{$user->free_trial == 'ACTIVE' ? 'Paid' : 'Free Trial'}} </td>
+                    <td> {{$user->status}} </td>
                     <td>
-                      <ul class="d-flex justify-content-center">
-                        <li class="mr-3"><a target="_blank" href="{{ url('rcpadmin/users/'.$user['id'])}}"
-                                            class="text-secondary"><i
-                              class="fa fa-edit"></i></a></li>
-                        @if($user['role'] == '3')
+                      <input type="hidden" id="user_id" value="{{$user->id}}">
+                      <ul class="d-flex justify-content-end">
+                        {{--  <li class="mr-3">
+                            <button type="button" title="View Profile"
+                                    class="btn btn-success btn-xs"><i
+                                class="fa fa-user"></i>
+                            </button>
+                          </li>--}}
                         <li class="mr-3"><a target="_blank"
-                                            href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
-                                            class="text-secondary" title="View Properties"><i
-                              class="fa fa-list"></i></a></li>
+                                            href="{{ url('rcpadmin/users/'.$user->id.'/login')}}"
+                                            class="btn btn-success btn-xs"
+                                            title="View Profile"><i
+                                    class="fa fa-user"></i></a></li>
+                        @if($user->role == '3')
+
+                          <li class="mr-3"><a target="_blank"
+                                              href="{{ url('rcpadmin/users/'.$user->id.'/tracker')}}"
+                                              class="btn btn-success btn-xs"
+                                              title="View Tracker"><i
+                                      class="fa fa-signal"></i></a></li>
+                          <li class="mr-3"><a target="_blank"
+                                              href="{{ url('rcpadmin/property/'.$user->id.'/landlords')}}"
+                                              class="btn btn-success btn-xs"
+                                              title="View Properties"><i
+                                      class="fa fa-list"></i></a></li>
+                          <li class="mr-3">
+                            <button type="button" title="Update Yardi Listings"
+                                    class="btn btn-primary btn-xs"><i
+                                      class="fa fa-refresh"></i>
+                            </button>
+                          </li>
                         @endif
+
+                        {{--<li class="mr-3">
+                            <a href="{{ url('rcpadmin/users/'.$user['id'])}}"
+                               class="text-secondary">
+                                <button class="btn btn-primary btn-xs"><i
+                                            class="fa fa-edit"></i> Edit
+                                </button>
+                            </a>
+                        </li>--}}
+
+
+                        <li class="mr-3">
+                          <button type="button" title="Edit User"
+                                  data-userid="{{$user->id}}"
+                                  class="btn btn-primary btn-xs editUser"><i
+                                    class="fa fa-edit"></i>
+                          </button>
+                        </li>
+
                         <li>
-                          <form method="POST" action="{{$user['id']}}/delete">
+                          <form method="POST" action="{{$user->id}}/delete">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <div class="form-group">
-                              <input type="submit" class="btn btn-danger btn-xs delete"
-                                     value="Delete">
-                            </div>
+                            <button type="submit" title="Delete User"
+                                    class="btn btn-danger btn-xs delete">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
                           </form>
                           </a>
                         </li>
+
                       </ul>
                     </td>
                   </tr>
@@ -96,7 +143,8 @@
             <div id="pagination-container">
               @if(isset($webUsers) && count($webUsers) > 0)
                 {{$webUsers->links() }}
-                Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}} of {{$webUsers->total()}}
+                Showing {{$webUsers->firstItem()}} to {{$webUsers->lastItem()}}
+                of {{$webUsers->total()}}
                 Entities
               @endif
             </div>
@@ -117,9 +165,9 @@
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script
-    src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+          src="{{ env('THEME_ASSETS_NEW') }}assets/cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
   <script src="{{ env('ASSETS_PATH') }}js/ajax_viewer.js"></script>
   <script>
 
@@ -180,5 +228,90 @@
 
     })
 
+  </script>
+
+
+  <script>
+    $('.editUser').on('click', function () {
+      userId = $(this).data('userid');
+      $.get('{{ URL::to("rcpadmin/users/edit_user")}}/' + userId, function (data) {
+        $('#modals').empty().append(data);
+        $('#userModal').modal('show');
+      });
+    });
+
+    $('#modals').on('submit', '#userEditForm', function (e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+      $.ajax({
+        url: '{{ URL::to("rcpadmin/users/update_user")}}/' + userId,
+        type: 'post',
+        data: formData,
+      }).done(function (data) {
+        $('#modals #errors').empty().append(data);
+        location.reload();
+      }).fail(function (error) {
+        var error = error.responseJSON;
+        var validationErrors = error.errors;
+
+        console.log(validationErrors);
+
+        if (typeof validationErrors.phone_no !== "undefined") {
+          validationErrors.phone_no.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.status !== "undefined") {
+          validationErrors.status.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.last_name !== "undefined") {
+          validationErrors.last_name.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.first_name !== "undefined") {
+          validationErrors.first_name.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.is_entrata !== "undefined") {
+          validationErrors.is_entrata.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.is_yardi !== "undefined") {
+          validationErrors.is_yardi.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.address !== "undefined") {
+          validationErrors.address.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.name !== "undefined") {
+          validationErrors.name.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+        if (typeof validationErrors.email !== "undefined") {
+          validationErrors.email.forEach(function (element, index) {
+            $('#modals #errors').append('<li class="alert alert-danger">' + element + ' <button type = "button" class="close" data-dismiss = "alert">x</button></li>');
+          });
+        }
+
+      });
+
+    });
   </script>
 @stop
