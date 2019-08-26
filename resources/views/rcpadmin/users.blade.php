@@ -63,14 +63,14 @@
               @if(count($webUsers) > 0)
                 @foreach($webUsers as $user)
                   <tr>
-                    <td> {{$user['id']}}</td>
-                    <td> {{$user['role'] == '3'?'Landlord':'Student'}} </td>
-                    <td> {{$user['name']}} </td>
-                    <td> {{$user['email']}} </td>
-                    <td>  </td>
-                    <td> {{$user['status']}} </td>
+                    <td> {{$user->id}}</td>
+                    <td> {{$user->role == '3'?'Landlord':'Student'}} </td>
+                    <td> {{$user->name}} </td>
+                    <td> {{$user->email}} </td>
+                    <td> {{$user->free_trial == 'ACTIVE' ? 'Paid' : 'Free Trial'}} </td>
+                    <td> {{$user->status}} </td>
                     <td>
-                      <input type="hidden" id="user_id" value="{{$user['id']}}">
+                      <input type="hidden" id="user_id" value="{{$user->id}}">
                       <ul class="d-flex justify-content-end">
                         {{--  <li class="mr-3">
                             <button type="button" title="View Profile"
@@ -79,19 +79,19 @@
                             </button>
                           </li>--}}
                         <li class="mr-3"><a target="_blank"
-                                            href="{{ url('rcpadmin/users/'.$user['id'].'/login')}}"
+                                            href="{{ url('rcpadmin/users/'.$user->id.'/login')}}"
                                             class="btn btn-success btn-xs"
                                             title="View Profile"><i
                                     class="fa fa-user"></i></a></li>
-                        @if($user['role'] == '3')
+                        @if($user->role == '3')
 
                           <li class="mr-3"><a target="_blank"
-                                              href="{{ url('rcpadmin/users/'.$user['id'].'/tracker')}}"
+                                              href="{{ url('rcpadmin/users/'.$user->id.'/tracker')}}"
                                               class="btn btn-success btn-xs"
                                               title="View Tracker"><i
                                       class="fa fa-signal"></i></a></li>
                           <li class="mr-3"><a target="_blank"
-                                              href="{{ url('rcpadmin/property/'.$user['id'].'/landlords')}}"
+                                              href="{{ url('rcpadmin/property/'.$user->id.'/landlords')}}"
                                               class="btn btn-success btn-xs"
                                               title="View Properties"><i
                                       class="fa fa-list"></i></a></li>
@@ -115,14 +115,14 @@
 
                         <li class="mr-3">
                           <button type="button" title="Edit User"
-                                  data-userid="{{$user['id']}}"
+                                  data-userid="{{$user->id}}"
                                   class="btn btn-primary btn-xs editUser"><i
                                     class="fa fa-edit"></i>
                           </button>
                         </li>
 
                         <li>
-                          <form method="POST" action="{{$user['id']}}/delete">
+                          <form method="POST" action="{{$user->id}}/delete">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button type="submit" title="Delete User"

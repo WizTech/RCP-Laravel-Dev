@@ -14,6 +14,7 @@ use App\UserCampuses;
 use App\CampusModel;
 use App\LandlordDetails;
 use App\UserDetails;
+use DB;
 
 use Auth;
 
@@ -21,8 +22,8 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $webUsers = User::where('user_deleted', '=', 0)->with('role')->paginate(10);
-
+        //$webUsers = User::where('user_deleted', '=', 0)->with('role')->paginate(10);
+        $webUsers = User::all_users();
         return view('rcpadmin.users', compact('webUsers'));
     }
 
@@ -167,12 +168,11 @@ class UsersController extends Controller
     {
         $q = $_REQUEST['q'];
         if ($q != "") {
-
-            $webUsers = User::where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(10)->setPath('');
+            /*$webUsers = User::where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(10)->setPath('');*/
+            $webUsers = User::search_result($q);
             $pagination = $webUsers->appends(array(
                 'q' => $q
             ));
-
 
             if (count($webUsers) > 0) {
 
@@ -185,8 +185,6 @@ class UsersController extends Controller
     public function search_ajax()
     {
         $q = $_REQUEST['q'];
-
-
         if ($q != "") {
             if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'trash') {
                 //$webUsers = User::where('user_deleted', 1)->where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(20)->setPath('');
@@ -196,7 +194,9 @@ class UsersController extends Controller
                         ->orWhere('email', 'LIKE', '%' . $q . '%');
                 })->with('role')->paginate(20)->setPath('');
             } else {
-                $webUsers = User::where('user_deleted', 0)->where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(20)->setPath('');
+                //$webUsers = User::where('user_deleted', 0)->where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->with('role')->paginate(20)->setPath('');
+                $webUsers = User::searchAjax($q);
+
             }
 
             $pagination = $webUsers->appends(array(
@@ -206,28 +206,29 @@ class UsersController extends Controller
             if (count($webUsers) > 0):
                 foreach ($webUsers as $user): ?>
                     <tr>
-                        <td> <?php echo $user['id'] ?></td>
-                        <td> <?php echo $user['role'] == '3' ? 'Landlord' : 'Student' ?> </td>
-                        <td> <?php echo $user['name'] ?> </td>
-                        <td> <?php echo $user['email'] ?> </td>
-                        <td> <?php echo $user['status'] ?> </td>
+                        <td> <?= $user->id ?></td>
+                        <td> <?= $user->role == '3' ? 'Landlord' : 'Student' ?> </td>
+                        <td> <?= $user->name ?> </td>
+                        <td> <?= $user->email ?> </td>
+                        <td> <?= $user->free_trial == 'ACTIVE' ? 'Paid' : 'Free Trial' ?> </td>
+                        <td> <?= $user->status ?> </td>
                         <td>
                             <ul class="d-flex justify-content-end">
 
                                 <li class="mr-3"><a target="_blank"
-                                                    href="<?php echo url('rcpadmin/users/' . $user['id'] . '/login') ?>"
+                                                    href="<?php echo url('rcpadmin/users/'.$user->id.'/login') ?>"
                                                     class="btn btn-success btn-xs"
                                                     title="View Profile"><i
                                                 class="fa fa-user"></i></a></li>
-                                <?php if ($user['role'] == '3'): ?>
+                                <?php if ($user->role == '3'): ?>
 
                                     <li class="mr-3"><a target="_blank"
-                                                        href="<?php echo url('rcpadmin/users/' . $user['id'] . '/login') ?>"
+                                                        href="<?php echo url('rcpadmin/users/'.$user->id.'/login') ?>"
                                                         class="btn btn-success btn-xs"
                                                         title="View Tracker"><i
                                                     class="fa fa-signal"></i></a></li>
                                     <li class="mr-3"><a target="_blank"
-                                                        href="<?php echo url('rcpadmin/property/' . $user['id'] . '/landlords') ?>"
+                                                        href="<?php echo url('rcpadmin/property/'.$user->id.'/landlords') ?>"
                                                         class="btn btn-success btn-xs"
                                                         title="View Properties"><i
                                                     class="fa fa-list"></i></a></li>
@@ -250,12 +251,12 @@ class UsersController extends Controller
 
                                 <li class="mr-3">
                                     <button title="Edit User"
-                                            data-userid="<?php echo $user['id'] ?>"
+                                            data-userid="<?php echo $user->id ?>"
                                             class="btn btn-primary btn-xs editUser"><i class="fa fa-edit"></i>
                                     </button>
                                 </li>
 
-                                <form method="POST" action="users/<?php echo $user['id'] ?>">
+                                <form method="POST" action="users/<?php echo $user->id ?>">
                                     <?php echo csrf_field() ?>
                                     <?php echo method_field('DELETE') ?>
                                     <button type="submit" title="Delete User" class="btn btn-danger btn-xs delete">
@@ -388,7 +389,7 @@ class UsersController extends Controller
         $user = User::getUserDetail($id);
         if ($this->attempt(['name' => $user['name']], 1, $user['role'])) {
             if ($user['role'] == 3) {
-                return redirect()->intended('/landlord');
+                return redirect()->intended('/landlord/listing');
             } else {
                 return redirect()->intended('/student');
             }

@@ -35,6 +35,37 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    static function all_users(){
+        $users = DB::table('users')
+            ->leftJoin('landlord_details', 'users.id', '=', 'landlord_details.user_id')
+            ->select('users.*', 'landlord_details.free_trial')
+            ->where('users.user_deleted',0)
+            ->paginate(10);
+        return $users;
+    }
+
+    static function search_result($q){
+        $users = DB::table('users')
+            ->leftJoin('landlord_details', 'users.id', '=', 'landlord_details.user_id')
+            ->select('users.*', 'landlord_details.free_trial')
+            ->where('users.user_deleted',0)
+            ->where('users.name', 'LIKE', '%' . $q . '%')
+            ->orWhere('users.email', 'LIKE', '%' . $q . '%')
+            ->paginate(10)->setPath('');
+        return $users;
+    }
+
+    static function searchAjax($q){
+        $users = DB::table('users')
+            ->leftJoin('landlord_details', 'users.id', '=', 'landlord_details.user_id')
+            ->select('users.*', 'landlord_details.free_trial')
+            ->where('users.user_deleted',0)
+            ->where('users.name', 'LIKE', '%' . $q . '%')
+            ->orWhere('users.email', 'LIKE', '%' . $q . '%')
+            ->paginate(100)->setPath('');
+        return $users;
+    }
+
     public function campuses()
     {
         return $this->belongsToMany('App\CampusModel', 'user_campuses', 'user_id', 'campus_id');
