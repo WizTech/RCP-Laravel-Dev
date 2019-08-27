@@ -89,8 +89,8 @@
             {!! Form::text('address',null,['class' => 'form-control']) !!}
         </div>
         <div class="col-md-4 mb-3">
-            {!! Form::label('Website',null,['class' => 'col-form-label']) !!}
-            {!! Form::text('website',null,['class' => 'form-control']) !!}
+            {!! Form::label('Website/ Domain Name',null,['class' => 'col-form-label']) !!}
+            {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Company',null,['class' => 'col-form-label']) !!}
