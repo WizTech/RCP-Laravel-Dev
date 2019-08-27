@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Free (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('free_trial',['No'=>'No','Yes'=>'Yes'],null,['class' => 'custom-select landlord_free_trial']) !!}
+            {!! Form::select('free_trial',['0'=>'No','1'=>'Yes'],null,['class' => 'custom-select landlord_free_trial']) !!}
             {!! Form::text('free_trial_expiry_date',null,['class' => 'form-control hide datePicker free_trial', 'placeholder' => 'Free Trial Expiry Date']) !!}
         </div>
         <div class="col-md-4 mb-3">
@@ -88,10 +88,10 @@
             {!! Form::label('Address',null,['class' => 'col-form-label']) !!}
             {!! Form::text('address',null,['class' => 'form-control']) !!}
         </div>
-        <div class="col-md-4 mb-3">
+        {{--<div class="col-md-4 mb-3">
             {!! Form::label('Website/ Domain Name',null,['class' => 'col-form-label']) !!}
             {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
-        </div>
+        </div>--}}
         <div class="col-md-4 mb-3">
             {!! Form::label('Company',null,['class' => 'col-form-label']) !!}
             {!! Form::text('company',null,['class' => 'form-control']) !!}
@@ -124,7 +124,7 @@
         </div>
         <div class="col-md-4 mb-3">
             {!! Form::label('Landlord Website',null,['class' => 'col-form-label']) !!}
-            {!! Form::select('landlord_website',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select landlordWebsite']) !!}
+            {!! Form::select('landlord_website_link',['INACTIVE'=>'INACTIVE', 'ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select landlordWebsite']) !!}
             {!! Form::text('landlord_website',null,['class' => 'form-control hide landlord_website','placeholder' => 'Landlord Website']) !!}
         </div>
     </div>
@@ -219,7 +219,7 @@
             });
 
             $('select.landlord_free_trial').on('change', function () {
-                if ($(this).val() == 'Yes') {
+                if ($(this).val() == '1') {
                     $('.free_trial').removeClass('hide');
                 } else {
                     $('.free_trial').addClass('hide');
@@ -267,10 +267,7 @@
 
     <script src="{{ env('ASSETS_PATH') }}tinymce/tinymce.min.js"></script>
     <script>
-
         $(document).ready(function () {
-
-
             tinymce.remove();
             tinyMCE.PluginManager.add('stylebuttons', function (editor, url) {
                 ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function (name) {
@@ -338,12 +335,8 @@
                     {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
 
                 ],
-
                 filemanager_title: "File Manager"
-
-
             });
-
 
         })
     </script>

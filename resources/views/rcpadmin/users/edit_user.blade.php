@@ -50,7 +50,8 @@
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Free (Applicable only for Landlord)',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('free_trial',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+                                    {!! Form::select('free_trial',['0'=>'No','1'=>'Yes'],null,['class' => 'custom-select landlord_free_trial']) !!}
+                                    {!! Form::text('free_trial_expiry_date',null,['class' => 'form-control hide datePicker free_trial', 'placeholder' => 'Free Trial Expiry Date']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Premium Landlord',null,['class' => 'col-form-label']) !!}
@@ -85,13 +86,13 @@
                                     {!! Form::label('Address',null,['class' => 'col-form-label']) !!}
                                     {!! Form::text('address', $user['address'] ,['class' => 'form-control']) !!}
                                 </div>
-                                <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
+                                {{--<div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Website',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('website',null,['class' => 'form-control']) !!}
-                                </div>
+                                    {!! Form::text('website',$user['domain_name'],['class' => 'form-control']) !!}
+                                </div>--}}
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Company',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('company',null,['class' => 'form-control']) !!}
+                                    {!! Form::text('company',$user['company'],['class' => 'form-control']) !!}
                                 </div>
                             </div>
                         </div>
@@ -100,7 +101,7 @@
                             <div class="form-row">
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Email Type',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('email_type',null,['class' => 'form-control']) !!}
+                                    {!! Form::select('email_type',['Template'=>'Template','Plain-Text'=>'Plain Text'],null,['class' => 'custom-select']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Property Email Leads',null,['class' => 'col-form-label']) !!}
@@ -108,20 +109,21 @@
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Rent Style',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('rent_style',['per_person'=>'Per Person','per_unit'=>'Per Unit'],null,['class' => 'custom-select']) !!}
+                                    {!! Form::select('rent_style',['per_unit'=>'Per Unit','per_person'=>'Per Person'],null,['class' => 'custom-select']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Activate Twilio',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('activate_twilio',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
+                                    {!! Form::select('activate_twilio',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select activate_twilio']) !!}
                                     {!! Form::text('twilio_number',null,['class' => 'form-control hide twilio_number','placeholder' => 'Twilio Number']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Landlord\'s Dashboard Link',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('landlord_dashboard_status',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select']) !!}
+                                    {!! Form::select('landlord_dashboard_status',['INACTIVE'=>'INACTIVE', 'ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select']) !!}
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     {!! Form::label('Landlord Website',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('landlord_website',null,['class' => 'form-control']) !!}
+                                    {!! Form::select('landlord_website_link',['INACTIVE'=>'INACTIVE', 'ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select landlordWebsite']) !!}
+                                    {!! Form::text('landlord_website',null,['class' => 'form-control hide landlord_website','placeholder' => 'Landlord Website']) !!}
                                 </div>
                             </div>
 
@@ -129,54 +131,54 @@
                             <div class="form-row">
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Yardi Landlord?',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('is_yardi',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
+                                    {!! Form::select('is_yardi',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select is_yardi']) !!}
                                     {!! Form::text('yardi_user_id',null,['class' => 'form-control hide yardi_user_id','placeholder' => 'Yardi ID']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Entrata Landlord?',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::select('is_entrata',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
+                                    {!! Form::select('is_entrata',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select is_entrata']) !!}
                                     {!! Form::text('entrata_client_id',null,['class' => 'form-control hide entrata_client_id','placeholder' => 'Client ID']) !!}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {!! Form::label('Lease Signing Options',null,['class' => 'col-form-label']) !!}
+                                    {!! Form::select('lease_singing_options',['INACTIVE'=>'INACTIVE','ACTIVE'=>'ACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Emma Trial Landlord?',null,['class' => 'col-form-label']) !!}
                                     {!! Form::select('emma_trial_landlord',['ACTIVE'=>'ACTIVE','INACTIVE'=>'INACTIVE'],null,['class' => 'custom-select emma_trial_landlord']) !!}
                                 </div>
-                                <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
-                                    {!! Form::label('Domain',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('domain_name',null,['class' => 'form-control']) !!}
-                                </div>
                             </div>
+                            <h5> SEO Details </h5>
                             <div class="form-row">
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('H1',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('h1',null,['class' => 'form-control']) !!}
+                                    {!! Form::text('h1',$user['h1'],['class' => 'form-control']) !!}
                                 </div>
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('H2',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('h2',null,['class' => 'form-control']) !!}
+                                    {!! Form::text('h2',$user['h2'],['class' => 'form-control']) !!}
                                 </div>
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     {!! Form::label('Meta Title',null,['class' => 'col-form-label']) !!}
-                                    {!! Form::text('meta_title',null,['class' => 'form-control']) !!}
+                                    {!! Form::text('meta_title',$user['meta_title'],['class' => 'form-control']) !!}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     <div class="input-group">
                                         {!! Form::label('Seo Block',null,['class' => 'input-group-text']) !!}
-                                        {!! Form::textarea('seo_block',null,['class' => 'form-control']) !!}
+                                        {!! Form::textarea('seo_block',$user['seo_block'],['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     <div class="input-group">
                                         {!! Form::label('About Details',null,['class' => 'input-group-text']) !!}
-                                        {!! Form::textarea('about_details',null,['class' => 'form-control']) !!}
+                                        {!! Form::textarea('about_details',$user['about_details'],['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-xl-4 col-md-6 col-12 mb-3">
                                     <div class="input-group">{!! Form::label('Meta Description',null,['class' => 'input-group-text']) !!}
-                                        {!! Form::textarea('meta_description',null,['class' => 'form-control']) !!}</div>
-
+                                        {!! Form::textarea('meta_description',$user['meta_description'],['class' => 'form-control']) !!}</div>
                                 </div>
                             </div>
                             {{ csrf_field() }}
@@ -204,16 +206,32 @@
             } else {
                 $('.landlord-form').addClass('hide');
             }
-
         });
+
+        $('select.landlord_free_trial').on('change', function () {
+            if ($(this).val() == '1') {
+                $('.free_trial').removeClass('hide');
+            } else {
+                $('.free_trial').addClass('hide');
+            }
+        });
+
+        $('select.landlordWebsite').on('change', function () {
+            if ($(this).val() == 'ACTIVE') {
+                $('.landlord_website').removeClass('hide');
+            } else {
+                $('.landlord_website').addClass('hide');
+            }
+        });
+
         $('select.activate_twilio').on('change', function () {
             if ($(this).val() == 'ACTIVE') {
                 $('.twilio_number').removeClass('hide');
             } else {
                 $('.twilio_number').addClass('hide');
             }
-
         });
+
         $('select.is_entrata').on('change', function () {
             if ($(this).val() == 'ACTIVE') {
                 $('.entrata_client_id').removeClass('hide');
@@ -239,13 +257,90 @@
     })
 </script>
 
+<script src="{{ env('ASSETS_PATH') }}tinymce/tinymce.min.js"></script>
+<script>
+    $(document).ready(function () {
+        tinymce.remove();
+        tinyMCE.PluginManager.add('stylebuttons', function (editor, url) {
+            ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function (name) {
+                editor.addButton("style-" + name, {
+                    tooltip: "Toggle " + name,
+                    text: name.toUpperCase(),
+                    onClick: function () {
+                        editor.execCommand('mceToggleFormat', false, name);
+                    },
+                    onPostRender: function () {
+                        var self = this, setup = function () {
+                            editor.formatter.formatChanged(name, function (state) {
+                                self.active(state);
+                            });
+                        };
+                        editor.formatter ? setup() : editor.on('init', setup);
+                    }
+                })
+            });
+        });
+        tinymce.init({
+
+            selector: "textarea",
+
+            theme: "modern",
+
+            width: "100%",
+
+            height: "30%",
+
+            relative_urls: false,
+
+            remove_script_host: false,
+
+
+            plugins: [
+
+                "stylebuttons advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+
+                "save table contextmenu directionality template paste textcolor"/*responsivefilemanager*/
+
+            ],
+
+
+            /*  content_css: "css/content.css",*/
+
+            toolbar: "insertfile undo redo | styleselect | style-h1 style-h2 style-h3 style-h4 style-h5 style-h6 | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | responsivefilemanager |  media fullpage | forecolor backcolor",
+
+            style_formats: [
+
+                {title: 'Bold text', inline: 'b'},
+
+                {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+
+                {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+
+                {title: 'Example 1', inline: 'span', classes: 'example1'},
+
+                {title: 'Example 2', inline: 'span', classes: 'example2'},
+
+                {title: 'Table styles'},
+
+                {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+
+            ],
+            filemanager_title: "File Manager"
+        });
+
+    })
+</script>
+
+
 <script>
     $(document).ready(function () {
         $('#conf_password').on('keyup', function () {
             if ($('#password').val() == $('#conf_password').val()) {
-                $('#message').html('').css('color', 'green');
+                $('#message').html(' ( Password Matched ) ').css('color', 'green');
             } else
-                $('#message').html(' (Password Not Matched) ').css('color', 'red');
+                $('#message').html(' ( Password Not Matched ) ').css('color', 'red');
         });
     });
 </script>

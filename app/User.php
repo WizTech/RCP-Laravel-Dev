@@ -91,11 +91,9 @@ class User extends Authenticatable
 
         $user = self::find($id)->toArray();
 
-
         $details = UserDetails::where('user_id', '=', $id)->first();
 
         $landlord_details = LandlordDetails::where('user_id', '=', $id)->first();
-
 
         $web_details = LandlordWebDetails::where('landlord_id', '=', $id)->first();
 

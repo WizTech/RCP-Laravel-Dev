@@ -318,9 +318,7 @@ class UsersController extends Controller
 
     public function edit_user($id)
     {
-
         $user = User::getUserDetail($id);
-
         $user_campuses = UserCampuses::where('user_id', '=', $id)->get()->pluck('campus_id')->toArray();
         $campuses = CampusModel::all('id', 'title')->toArray();
         $campusSelect = [];
@@ -329,6 +327,19 @@ class UsersController extends Controller
         }
 
         return view('rcpadmin.users.edit_user', compact('user', 'campusSelect', 'user_campuses'));
+    }
+
+    public function edit_my_user($id){
+
+        $user = User::getUserDetail($id);
+        $user_campuses = UserCampuses::where('user_id', '=', $id)->get()->pluck('campus_id')->toArray();
+        $campuses = CampusModel::all('id', 'title')->toArray();
+        $campusSelect = [];
+        foreach ($campuses as $campus) {
+            $campusSelect[$campus['id']] = $campus['title'];
+        }
+
+        return view('rcpadmin.users.edit_my_user', compact('user', 'campusSelect', 'user_campuses'));
     }
 
     public function update_user(Requests\UserRequest $request, $id)
@@ -357,6 +368,8 @@ class UsersController extends Controller
             $landlordData = array(
                 'h1' => $input['h1'],
                 'h2' => $input['h2'],
+                'company' => $input['company'],
+                'fax' => $input['fax'],
                 'meta_title' => $input['meta_title'],
                 'about_details' => $input['about_details'],
                 'meta_description' => $input['meta_description'],
@@ -365,12 +378,23 @@ class UsersController extends Controller
                 'twilio_number' => $input['twilio_number'],
                 'activate_twilio' => $input['activate_twilio'],
                 'is_yardi' => $input['is_yardi'],
+                'yardi_user_id' => $input['yardi_user_id'],
                 'is_entrata' => $input['is_entrata'],
+                'entrata_client_id' => $input['entrata_client_id'],
                 'email_leads' => $input['email_leads'],
-                'landlord_dashboard_status' => $input['landlord_dashboard_status']);
+                'landlord_dashboard_status' => $input['landlord_dashboard_status'],
+                'free_trial' => $input['free_trial'],
+                'free_trial_expiry_date' => $input['free_trial_expiry_date'],
+                'type' => $input['type'],
+                'emma_trial_landlord' => $input['emma_trial_landlord'],
+                'email_type' => $input['email_type'],
+                'rent_style' => $input['rent_style'],
+                'lease_singing_options' => $input['lease_singing_options'],
+                'landlord_website' => $input['landlord_website']
+            );
+
             $landlord_details->update($landlordData);
         }
-
 
         return redirect('rcpadmin/users');
 
